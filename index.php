@@ -3,11 +3,40 @@
 require_once("db/conexao.php");
 session_start();
 
-if(isset($_POST['entrar'])){
-    
-    $email = $_POST['email'];
+if (isset($_POST['entrar'])) {
+    $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
     $senha = $_POST['senha'];
 
+    if (!empty($email) && !empty($senha)) {
+        $prepara = mysqli_prepare($conexao, "SELECT * FROM usuarios WHERE email = ?");
+        mysqli_stmt_bind_param($prepara, "s", $email);
+        mysqli_stmt_execute($prepara);
+        $resultado = mysqli_stmt_get_result($prepara);
+
+        if ($usuario = mysqli_fetch_assoc($resultado)) {
+            if ($senha === $usuario['senha']) {
+
+                $_SESSION['login'] = [
+                    "id" => $usuario['id'],
+                    "nome" => $usuario['nome'],
+                    "funcao" => $usuario['funcao'],
+                ];
+
+                if ($_SESSION['login']['funcao'] === 'Administrador') {
+                    header("Location: admin/index.php");
+                } else if ($_SESSION['login']['funcao'] === 'Membro') {
+                    header("Location: pages/inicio.php");
+                }
+                exit;
+            } else {
+                $_SESSION['mensagem-login'] = 'Senha Incorreta.';
+            }
+        } else {
+            $_SESSION['mensagem-login'] = 'Usuario não encontrado.';
+        }
+
+        mysqli_stmt_close($prepara);
+    }
 }
 
 ?>
@@ -20,6 +49,7 @@ if(isset($_POST['entrar'])){
     <title>Login</title>
     <link rel="stylesheet" href="css/login.css">
     <script src="https://kit.fontawesome.com/8ec7b849f5.js" crossorigin="anonymous"></script>
+    <link rel="shortcut icon" href="img/login.svg" type="image/x-icon">
 </head>
 
 <body>
@@ -32,13 +62,21 @@ if(isset($_POST['entrar'])){
         <div class="direita">
 
             <form action="" method="post">
+                <div>
+                    <?php
+                    if (!empty($_SESSION['mensagem-login'])) {
+                        echo "<h4>" . $_SESSION['mensagem-login'] . "</h4>";
+                        unset($_SESSION['mensagem-login']);
+                    }
+                    ?>
+                </div>
                 <div class="bloco">
                     <label><i class="fa-solid fa-circle-user"></i> E-mail:</label>
-                    <input type="email" name="email" placeholder="Digite o e-mail...">
+                    <input type="email" name="email" placeholder="Digite o e-mail..." required>
                 </div>
                 <div class="bloco">
                     <label><i class="fa-solid fa-unlock-keyhole"></i> Senha:</label>
-                    <input type="password" name="senha" placeholder="Digite a senha...">
+                    <input type="password" name="senha" placeholder="Digite a senha..." required>
                 </div>
 
                 <input type="submit" value="ENTRAR" name="entrar">
