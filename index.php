@@ -22,6 +22,12 @@ if (isset($_POST['entrar'])) {
                     "funcao" => $usuario['funcao'],
                 ];
 
+                $consulta_empresa = mysqli_query($conexao, "SELECT * FROM empresa");
+                $dados_empresa = mysqli_fetch_assoc($consulta_empresa);
+                $_SESSION['empresa'] = [
+                    "nome" => $dados_empresa['nome'],
+                ];
+
                 if ($_SESSION['login']['funcao'] === 'Administrador') {
                     header("Location: admin/index.php");
                 } else {

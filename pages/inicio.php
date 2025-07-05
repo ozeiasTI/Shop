@@ -12,8 +12,10 @@ session_start();
     <title>Inicio</title>
     <link rel="stylesheet" href="/Shop/css/padrao.css">
     <link rel="shortcut icon" href="/Shop/img/login.svg" type="image/x-icon">
+    <script src="https://kit.fontawesome.com/8ec7b849f5.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <?php include_once("../components/header.php")?>
+    <?php include_once("../components/menu.php")?>
 </body>
 </html>
