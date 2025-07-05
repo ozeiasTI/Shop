@@ -24,7 +24,7 @@ if (isset($_POST['entrar'])) {
 
                 if ($_SESSION['login']['funcao'] === 'Administrador') {
                     header("Location: admin/index.php");
-                } else if ($_SESSION['login']['funcao'] === 'Membro') {
+                } else {
                     header("Location: pages/inicio.php");
                 }
                 exit;
