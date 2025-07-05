@@ -1,0 +1,74 @@
+============================================
+   GUIA RÁPIDO DE GIT + GITHUB – PROJETO PHP
+============================================
+
+🔁 FLUXO DIÁRIO DE TRABALHO (REPETIR SEMPRE)
+--------------------------------------------
+git status                          # Verifica arquivos modificados
+git add .                           # Prepara todos os arquivos para commit
+git commit -m "feat: mensagem"     # Salva alterações localmente
+git push                            # Envia para o GitHub
+
+🌐 CLONAR O REPOSITÓRIO EM OUTRA MÁQUINA
+--------------------------------------------
+cd C:\xampp\htdocs\
+git clone https://github.com/ozeiasTI/Shop.git
+cd Shop
+git status
+
+⬆️ ENVIAR ALTERAÇÕES PARA O GITHUB (UPLOAD)
+--------------------------------------------
+git add .
+git commit -m "feat: cria endpoint para listar clientes"
+git push
+
+⬇️ RECEBER ALTERAÇÕES DO GITHUB (DOWNLOAD)
+--------------------------------------------
+git pull
+
+📜 VER HISTÓRICO DE COMMITS
+--------------------------------------------
+git log --oneline
+
+🎯 RECUPERAR OU EXPLORAR UM PONTO ESPECÍFICO
+--------------------------------------------
+
+# Ver como era o projeto em um commit antigo
+git checkout b2d1a4c
+
+# Criar uma nova branch a partir desse commit
+git checkout -b teste-antigo
+
+# Restaurar apenas um arquivo de um commit antigo
+git checkout b2d1a4c -- caminho/do/arquivo.php
+
+# Voltar todo o projeto para um commit antigo (CUIDADO!)
+git reset --hard b2d1a4c
+
+🚫 IGNORAR ARQUIVOS COM .gitignore
+--------------------------------------------
+
+# O que é:
+# Arquivo que lista tudo que NÃO deve ser enviado ao GitHub
+
+# Exemplo de conteúdo do .gitignore para projetos PHP:
+-------------------------------------------------------
+
+.env
+config.php
+vendor/
+node_modules/
+*.log
+tmp/
+.DS_Store
+.vscode/
+
+# Como aplicar:
+---------------
+git rm -r --cached .
+git add .
+git commit -m "chore: aplica .gitignore"
+
+--------------------------------------------
+FIM DO GUIA - por Ozeias TI ✨
+--------------------------------------------

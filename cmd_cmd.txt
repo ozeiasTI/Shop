@@ -1,0 +1,62 @@
+============================================
+       GUIA RÁPIDO – COMANDOS CMD (WINDOWS)
+============================================
+
+📂 NAVEGAÇÃO ENTRE PASTAS
+--------------------------------------------
+cd                          # Mostra o diretório atual
+cd nome_da_pasta            # Entra em uma pasta
+cd ..                       # Volta uma pasta
+cd \                        # Vai para a raiz do disco
+
+dir                         # Lista arquivos e pastas do diretório atual
+tree                        # Mostra estrutura de pastas (hierarquia)
+
+🗂️ CRIAÇÃO, RENOMEAÇÃO E EXCLUSÃO
+--------------------------------------------
+mkdir nome_da_pasta         # Cria uma nova pasta
+rmdir nome_da_pasta         # Remove uma pasta (se estiver vazia)
+rmdir /s nome_da_pasta      # Remove pasta e todo o conteúdo (perigoso)
+del nome_do_arquivo         # Deleta um arquivo
+del *.txt                   # Deleta todos os arquivos .txt da pasta
+ren antigo.txt novo.txt     # Renomeia arquivos
+
+📁 COPIAR E MOVER ARQUIVOS
+--------------------------------------------
+copy origem destino         # Copia arquivos
+ex: copy arquivo.txt D:\Backup
+
+move origem destino         # Move arquivos
+ex: move texto.doc C:\Docs
+
+📄 CRIAR ARQUIVOS E VISUALIZAR CONTEÚDO
+--------------------------------------------
+echo Texto > arquivo.txt    # Cria um arquivo com uma linha de texto
+type arquivo.txt            # Mostra o conteúdo de um arquivo
+more arquivo.txt            # Exibe conteúdo paginado
+
+🧰 INFORMAÇÕES DO SISTEMA
+--------------------------------------------
+cls                         # Limpa a tela
+hostname                    # Mostra o nome do computador
+ipconfig                    # Mostra configurações de rede
+ping google.com             # Testa conexão com servidor
+systeminfo                  # Exibe informações completas do sistema
+tasklist                    # Lista processos em execução
+
+⚙️ OUTROS COMANDOS ÚTEIS
+--------------------------------------------
+exit                        # Fecha o terminal
+help                        # Lista comandos disponíveis
+comando /?                  # Mostra ajuda detalhada de um comando
+ex: xcopy /?
+
+📌 ATALHOS ÚTEIS
+--------------------------------------------
+Ctrl + C                    # Interrompe comando em execução
+Seta ↑                     # Reutiliza último comando digitado
+Tab                         # Autocompleta nomes de arquivos e pastas
+
+--------------------------------------------
+FIM DO GUIA - por Ozeias TI ✨
+--------------------------------------------
