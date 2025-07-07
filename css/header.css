@@ -1,12 +1,14 @@
 :root {
     /* Paleta de cores */
-    --cor-login-direita: #635EF2;
-    --cor-titulo: #414059;
-    --cor-input-hover: #2d2d47;
 
-    --cor-padrao: white;
-    --cor-msg: #C95068;
+    --cor-branco: white;
+    --cor-alert: #C95068;
+
     --cor-principal: #333840;
+    --cor-secundaria: #635EF2;
+
+     --cor-titulo: #414059;
+    --cor-input-hover: #2d2d47;
 }
 
 .header{
@@ -16,7 +18,7 @@
     display: flex;
     justify-content: space-between;
     padding: 10px;
-    color: var(--cor-padrao);
+    color: var(--cor-branco)
 }
 .header .esquerda{
     display: flex;
@@ -29,7 +31,7 @@
     cursor: pointer;
 }
 .header .esquerda i:hover{
-    color: var(--cor-msg);
+    color: var(--cor-secundaria)
 }
 .header .direita{
     font-size: 20px;

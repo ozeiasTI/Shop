@@ -1,6 +1,32 @@
+:root {
+    /* Paleta de cores */
+
+    --cor-branco: white;
+    --cor-alert: #C95068;
+
+    --cor-principal: #333840;
+    --cor-secundaria: #635EF2;
+
+     --cor-titulo: #414059;
+    --cor-input-hover: #2d2d47;
+}
+
 .menu{
     width: 12%;
     height: 93vh;
-    background-color:#333940 ;
+    background-color: var(--cor-principal);
     display: block;
+    padding: 10px;
+    text-align: center;
+}
+.menu li a{
+    color: var(--cor-branco);
+    text-decoration: none;
+}
+.menu li a:hover{
+    color: var(--cor-secundaria)
+
+}
+.submenu-item{
+    display: none;
 }
