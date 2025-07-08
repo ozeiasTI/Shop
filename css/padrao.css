@@ -3,3 +3,23 @@
     padding: 0;
     box-sizing: border-box;
 }
+.btnSalvar {
+    background-color: #4CAF50; /* Verde */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+.btnCancelar {
+    background-color: #f44336; /* Vermelho */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.btnSalvar:hover, .btnCancelar:hover {
+    opacity: 0.8;
+}
