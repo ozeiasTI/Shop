@@ -1,12 +1,20 @@
 <link rel="stylesheet" href="/Shop/css/header.css">
+<script src="https://kit.fontawesome.com/8ec7b849f5.js" crossorigin="anonymous"></script>
 
 <div class="header">
     <div class="esquerda">
-        <?php echo $_SESSION['empresa']['nome']; ?>
-        <i class="fa-solid fa-bars" onclick="menu()"></i>
+        <i class="fa-solid fa-bars" id="btnMenuToggle"></i>
+        <h1><?php echo $_SESSION['empresa']['nome']; ?></h1>
     </div>
+
     <div class="direita">
-        <i class="fa-solid fa-user"></i>
+        <div class="user-info">
+            <span><?php echo $_SESSION['usuario_nome']; ?></span>
+            <i class="fa-solid fa-user-circle"></i>
+        </div>
+        <a href="/Shop/logout.php" class="logout" title="Sair">
+            <i class="fa-solid fa-right-from-bracket"></i>
+        </a>
     </div>
 </div>
 

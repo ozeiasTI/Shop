@@ -1,41 +1,74 @@
-:root {
-    /* Paleta de cores */
-
-    --cor-branco: white;
-    --cor-alert: #C95068;
-
-    --cor-principal: #333840;
-    --cor-secundaria: #635EF2;
-
-     --cor-titulo: #414059;
-    --cor-input-hover: #2d2d47;
-}
-
-.header{
-    height: 7vh;
+.header {
+    height: 8vh;
     width: 100%;
     background-color: var(--cor-principal);
     display: flex;
     justify-content: space-between;
-    padding: 10px;
-    color: var(--cor-branco)
-}
-.header .esquerda{
-    display: flex;
-    font-size: 20px;
-    justify-content: space-between;
     align-items: center;
-    width: 12%;
+    padding: 0 20px;
+    color: var(--cor-branco);
+    font-size: 18px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    position: relative;
+    z-index: 10;
 }
-.header .esquerda i{
+
+.header h1 {
+    margin-left: 15px;
+    font-size: 22px;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.header h1:hover {
+    color: var(--cor-secundaria);
+}
+
+.header .esquerda {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.header .esquerda i {
     cursor: pointer;
+    font-size: 22px;
+    transition: color 0.3s;
 }
-.header .esquerda i:hover{
-    color: var(--cor-secundaria)
+.header .esquerda i:hover {
+    color: var(--cor-secundaria);
 }
-.header .direita{
-    font-size: 20px;
+
+.header .direita {
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    gap: 15px;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+}
+
+.user-info i {
+    font-size: 24px;
+    color: var(--cor-secundaria);
+}
+
+.logout {
+    color: var(--cor-alert);
+    font-size: 20px;
+    transition: transform 0.2s;
+}
+.logout:hover {
+    transform: scale(1.2);
+}
+.menu.colapsado {
+   display: none;
+    overflow: hidden;
+}
+.menu.colapsado .menu li a span {
+    display: none;
 }
