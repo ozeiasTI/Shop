@@ -19,7 +19,16 @@ if (isset($_POST['entrar'])) {
                 $_SESSION['login'] = [
                     "id" => $usuario['id'],
                     "nome" => $usuario['nome'],
+                    "cpf" => $usuario['cpf'],
+                    "data_cadastro" => $usuario['data_cadastro'],
+                    "data_nascimento" => $usuario['data_nascimento'],
+                    "foto" => $usuario['foto'],
+                    "ativo" => $usuario['ativo'],
+                    "email" => $usuario['email'],
+                    "senha" => $usuario['senha'],
                     "funcao" => $usuario['funcao'],
+                    "telefone" => $usuario['telefone'],
+                    "endereco" => $usuario['endereco'],                 
                 ];
 
                 $consulta_empresa = mysqli_query($conexao, "SELECT * FROM empresa");
