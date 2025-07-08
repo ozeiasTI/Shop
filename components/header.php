@@ -8,8 +8,8 @@
     </div>
 
     <div class="direita">
-        <div class="user-info">
-            <span><?php echo $_SESSION['usuario_nome']; ?></span>
+        <div class="user-info" onclick="modalPerfil()">
+            <span><?php echo $_SESSION['login']['nome']; ?></span>
             <i class="fa-solid fa-user-circle"></i>
         </div>
         <a href="/Shop/logout.php" class="logout" title="Sair">
@@ -17,5 +17,3 @@
         </a>
     </div>
 </div>
-
-<script src="/Shop/js/funcoes.js"></script>

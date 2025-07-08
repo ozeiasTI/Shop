@@ -56,7 +56,9 @@
     font-size: 24px;
     color: var(--cor-secundaria);
 }
-
+.user-info span:hover{
+    color: var(--cor-secundaria);
+}
 .logout {
     color: var(--cor-alert);
     font-size: 20px;

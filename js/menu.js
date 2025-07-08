@@ -14,3 +14,8 @@ document.querySelectorAll('.submenu-toggle').forEach(toggle => {
 document.getElementById('dark-toggle').addEventListener('change', function () {
     document.body.classList.toggle('dark-mode');
 });
+
+document.getElementById('btnMenuToggle')?.addEventListener('click', () => {
+    const menu = document.getElementById('menu');
+    menu.classList.toggle('colapsado');
+});

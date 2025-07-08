@@ -3,6 +3,11 @@
 require_once("../db/conexao.php");
 session_start();
 
+if (!isset($_SESSION['login'])) {
+    header("Location: /Shop/index.php");
+    exit;
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
