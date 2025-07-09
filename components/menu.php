@@ -2,6 +2,14 @@
 <script src="https://kit.fontawesome.com/8ec7b849f5.js" crossorigin="anonymous"></script>
 
 <nav class="menu" id="menu">
+        <?php
+            if (!empty($_SESSION['empresa']['logo'])) {
+                echo "<img style='height:100px;' src='/Shop/admin/empresa/imagens/" . $_SESSION['empresa']['logo'] . "' alt='Foto de perfil''>";
+            } else {
+                echo "<img style='height:100px;' src='/Shop/img/login.svg' alt='Foto de perfil'>";
+            }
+            ?>
+    
     <div class="menu-bloco">
         <ul>
             <li>
