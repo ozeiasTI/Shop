@@ -17,5 +17,10 @@ CREATE TABLE usuarios (
 ------------------------Empresa------------------------------------------
 CREATE TABLE empresa(
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    nome VARCHAR(255) NOT NULL
+    nome VARCHAR(255) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    telefone VARCHAR(50) NOT NULL,
+    endereco VARCHAR(255) NOT NULL,
+    cnpj VARCHAR(25) NOT NULL,
+    logo VARCHAR(255)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;

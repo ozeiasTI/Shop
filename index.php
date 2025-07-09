@@ -35,6 +35,7 @@ if (isset($_POST['entrar'])) {
                 $dados_empresa = mysqli_fetch_assoc($consulta_empresa);
                 $_SESSION['empresa'] = [
                     "nome" => $dados_empresa['nome'],
+                    "logo" => $dados_empresa['logo']
                 ];
 
                 if ($_SESSION['login']['funcao'] === 'Administrador') {

@@ -32,8 +32,8 @@ if (!isset($_SESSION['login'])) {
             }
         ?>
         <h2><i class="fas fa-user-shield"></i> Administrador</h2>
-        <p>Esta é a página de administrador. Aqui você pode gerenciar todo o sistema.</p>
-        
+        <p>Esta é a página de administrador. Aqui você pode gerenciar todo a empresa.</p>
+        <button class="btnAdicionar" onclick="window.location.href='empresa/editarEmpresa.php'"><i class="fa-solid fa-wand-magic-sparkles"></i> Editar Empresa</button>
     </main>
 </body>
 
