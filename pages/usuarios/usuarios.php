@@ -41,7 +41,10 @@ $consultaUsuarios = mysqli_query($conexao, "SELECT * FROM usuarios");
             echo ' <button class="btnAdicionar" onclick="window.location.href=\'adicionar.php\'"><i class="fas fa-plus"></i> Adicionar Usuário</button>';
         }
         ?>
-        <button class="btnPDF" onclick="window.location.href='relatorios/usuarios.php'"><i class="fas fa-file-pdf"></i> PDF</button>
+        <button class="btnPDF" onclick="window.open('relatorios/usuarios.php', '_blank')">
+            <i class="fas fa-file-pdf"></i> PDF
+        </button>
+
 
         <table>
             <tr>
