@@ -1,3 +1,77 @@
+<?php
+
+if (isset($_POST['btnSalvar'])) {
+
+    $nome = $_POST['nome'];
+    $cpf = $_POST['cpf'];
+    $email = $_POST['email'];
+    $funcao = $_POST['funcao'];
+    $senha = $_POST['senha'];
+    $telefone = $_POST['telefone'];
+    $ativo = $_POST['ativo'];
+    $data_nascimento = $_POST['data_nascimento'];
+    $endereco = $_POST['endereco'];
+    $id_usuario = $_SESSION['login']['id'];
+
+    if (!empty($_FILES['foto']['name'])) {
+        $foto = $_FILES['foto']['name'];
+
+        $diretorio = $_SERVER['DOCUMENT_ROOT'] .'/Shop/pages/usuarios/imagens/';
+        $caminhoCompleto = $diretorio . $foto;
+
+        move_uploaded_file($_FILES['foto']['tmp_name'], $caminhoCompleto);
+
+        if(isset($_SESSION['login']['foto']) && $_SESSION['login']['foto'] != 'user.png') {
+            $fotoAntiga = $_SERVER['DOCUMENT_ROOT'] . '/Shop/pages/usuarios/imagens/' . $_SESSION['login']['foto'];
+            if (is_file($fotoAntiga) && file_exists($fotoAntiga)) {
+                unlink($fotoAntiga);
+            }
+        }
+
+        $sql = "UPDATE usuarios SET 
+            nome = '$nome', 
+            cpf = '$cpf', 
+            email = '$email', 
+            funcao = '$funcao', 
+            senha = '$senha', 
+            telefone = '$telefone', 
+            ativo = '$ativo', 
+            data_nascimento = '$data_nascimento', 
+            endereco = '$endereco',
+            foto = '$foto'
+            WHERE id = $id_usuario";
+    } else {
+        $sql = "UPDATE usuarios SET 
+            nome = '$nome', 
+            cpf = '$cpf', 
+            email = '$email', 
+            funcao = '$funcao', 
+            senha = '$senha', 
+            telefone = '$telefone', 
+            ativo = '$ativo', 
+            data_nascimento = '$data_nascimento', 
+            endereco = '$endereco'
+            WHERE id = $id_usuario";
+    }
+
+    if ($conexao->query($sql) === TRUE) {
+        $_SESSION['login']['nome'] = $nome;
+        $_SESSION['login']['cpf'] = $cpf;
+        $_SESSION['login']['email'] = $email;
+        $_SESSION['login']['funcao'] = $funcao;
+        $_SESSION['login']['senha'] = $senha;
+        $_SESSION['login']['telefone'] = $telefone;
+        $_SESSION['login']['ativo'] = $ativo;
+        $_SESSION['login']['data_nascimento'] = date('d/m/Y', strtotime($data_nascimento));
+        $_SESSION['login']['endereco'] = $endereco;
+        if (!empty($_FILES['foto']['name'])) {
+            $_SESSION['login']['foto'] = $foto;
+        }
+    }
+}
+
+?>
+
 <link rel="stylesheet" href="/Shop/css/header.css">
 <script src="https://kit.fontawesome.com/8ec7b849f5.js" crossorigin="anonymous"></script>
 
@@ -21,10 +95,16 @@
 <div class="modalPerfil">
     <div class="modalconteudo">
         <div class="foto">
-            <img src="/Shop/img/user.png" style="width: 100%;" alt="Foto de perfil">
+            <?php
+            if (!empty($_SESSION['login']['foto'])) {
+                echo "<img src='/Shop/pages/usuarios/imagens/" . $_SESSION['login']['foto'] . "' style='width: 100%;'>";
+            } else {
+                echo '<img src="/Shop/img/user.png" style="width: 100%;" alt="Foto de perfil">';
+            }
+            ?>
         </div>
         <div class="dados">
-            <form action="" method="post">
+            <form action="" method="post" enctype="multipart/form-data">
                 <div class="blocos-container">
                     <div class="blocoform">
                         <label>Nome</label>
@@ -82,6 +162,10 @@
                     <div class="blocoform">
                         <label>Endereço</label>
                         <input type="text" name="endereco" value="<?php echo $_SESSION['login']['endereco']; ?>" required>
+                    </div>
+                    <div class="blocoform">
+                        <label>Foto</label>
+                        <input type="file" name="foto" accept="image/*" style="padding: 7px;">
                     </div>
                 </div>
                 <div class="botoes">

@@ -85,20 +85,21 @@
 }
 .modalconteudo {
     position: absolute;
-    top: 45%;
+    top: 50%;
     left: 55%;
     transform: translate(-50%, -50%);
     background-color: var(--cor-branco);
     padding: 10px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-    width: 900px;
-    height: 630px;
+    width: 880px;
+    height: 550px;
 }
 .modalconteudo .foto {
     width: 100px;
     height: 100px;
     border-radius: 50%;
+    overflow: hidden;
     margin: 0 auto;
     display: block;
     margin-bottom: 20px;
@@ -108,15 +109,15 @@
     flex-direction: column;
     flex: 1 1 30%;
     min-width: 250px;
-    margin: 10px;
+    margin: 5px;
     padding: 0;
 }
 .blocoform label {
     display: block;
     font-weight: bold;
     color: var(--cor-principal);
-    font-size: 20px;
-    margin-bottom: 10px;
+    font-size: 18px;
+    margin-bottom: 5px;
 }
 .blocoform input, .blocoform select {
     width: 100%;
@@ -130,5 +131,5 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    gap: 10px;
+    gap: 5px;
 }
