@@ -19,7 +19,10 @@
     font-weight: 600;
     transition: color 0.3s ease;
 }
-
+.header h1 a {
+    color: var(--cor-branco);
+    text-decoration: none;
+}
 .header h1:hover {
     color: var(--cor-secundaria);
 }

@@ -64,6 +64,8 @@ if (isset($_POST['btnSalvar'])) {
             $_SESSION['login']['foto'] = $foto;
         }
         $_SESSION['mensagem'] = "Perfil Editado com sucesso!";
+        header("Location: " . $_SERVER['REQUEST_URI']);
+        exit;
         
     }
 }
@@ -76,13 +78,19 @@ if (isset($_POST['btnSalvar'])) {
 <div class="header">
     <div class="esquerda">
         <i class="fa-solid fa-bars" id="btnMenuToggle"></i>
-        <h1><?php echo $_SESSION['empresa']['nome']; ?></h1>
+        <h1><a href="/Shop/pages/inicio.php"><?php echo $_SESSION['empresa']['nome']; ?></a></h1>
     </div>
 
     <div class="direita">
         <div class="user-info" onclick="modalPerfil()">
             <span><?php echo $_SESSION['login']['nome']; ?></span>
-            <i class="fa-solid fa-user-circle"></i>
+            <?php
+            if (!empty($_SESSION['login']['foto'])) {
+                echo "<img src='/Shop/pages/usuarios/imagens/" . $_SESSION['login']['foto'] . "' alt='Foto de perfil' style='width: 50px; height: 50px; border-radius: 50%;'>";
+            } else {
+                echo '<img src="/Shop/img/user.png" alt="Foto de perfil" style="width: 50px; height: 50px; border-radius: 50%;">';
+            }
+            ?>
         </div>
         <a href="/Shop/logout.php" class="logout" title="Sair">
             <i class="fa-solid fa-right-from-bracket"></i>

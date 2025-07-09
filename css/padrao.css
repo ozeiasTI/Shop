@@ -24,7 +24,7 @@ h2{
     color: var(--cor-secundaria);
     margin-bottom: 10px;
 }
-.btnSalvar, .btnEditar {
+.btnSalvar {
     background-color: #4CAF50; /* Verde */
     color: white;
     padding: 10px 30px;
@@ -33,10 +33,27 @@ h2{
     cursor: pointer;
     margin-left: 10px;
 }
-.btnCancelar, .btnExcluir {
+.btnCancelar {
     background-color: #f44336; /* Vermelho */
     color: white;
     padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.btnEditar {
+    background-color: #4CAF50; /* Verde */
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+.btnExcluir {
+    background-color: #f44336; /* Vermelho */
+    color: white;
+    padding: 5px 10px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -51,7 +68,16 @@ h2{
     border-radius: 5px;
     cursor: pointer;
 }
-.btnSalvar:hover, .btnCancelar:hover, .btnAdicionar:hover{
+.btnPDF {
+    background-color: #ff6f61; /* Laranja */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+.btnSalvar:hover, .btnCancelar:hover, .btnAdicionar:hover, .btnPDF:hover, .btnEditar:hover, .btnExcluir:hover {
     opacity: 0.8;
 }
 .mensagem{
@@ -91,4 +117,32 @@ tr:nth-child(even) {
 tr:hover {
     background-color: #ddd;
     transition: background 0.2s;
+}
+.formulario {
+    margin: 2.5% auto;
+    padding: 10px;
+    width: 95%;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    border-radius: 10px;
+}
+.formulario label{
+    display: block;
+    margin-bottom: 5px;
+    color: var(--cor-principal);
+    font-weight: bold;
+}
+.formulario input,select{
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid var(--cor-borda);
+    border-radius: 5px;
+    background-color: var(--cor-branco);
+    transition: background-color 0.3s, border-color 0.3s;
+    font-size: 16px;
+}
+.group{
+    width: 50%;
+    float: left;
+    padding: 7px;
 }

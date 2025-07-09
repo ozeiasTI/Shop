@@ -29,14 +29,20 @@ $consultaUsuarios = mysqli_query($conexao, "SELECT * FROM usuarios");
     <?php include_once("../../components/menu.php") ?>
     <main>
         <?php
-            if(isset($_SESSION['mensagem'])){
-                echo "<h4 class='mensagem'>" . $_SESSION['mensagem'] . "</h4>";
-                unset($_SESSION['mensagem']);
-            }
+        if (isset($_SESSION['mensagem'])) {
+            echo "<h4 class='mensagem'>" . $_SESSION['mensagem'] . "</h4>";
+            unset($_SESSION['mensagem']);
+        }
         ?>
         <h2> <i class="fas fa-users"></i> Usuários</h2>
         <p>Esta é a página de usuários. Aqui você pode gerenciar os usuários do sistema.</p>
-        <button class="btnAdicionar" onclick="window.location.href='adicionar.php'"><i class="fas fa-plus"></i> Adicionar Usuário</button>
+        <?php
+        if ($_SESSION['login']['funcao'] === 'Administrador') {
+            echo ' <button class="btnAdicionar" onclick="window.location.href=\'adicionar.php\'"><i class="fas fa-plus"></i> Adicionar Usuário</button>';
+        }
+        ?>
+        <button class="btnPDF" onclick="window.location.href='relatorios/usuarios.php'"><i class="fas fa-file-pdf"></i> PDF</button>
+
         <table>
             <tr>
                 <th>Nome</th>
@@ -48,10 +54,10 @@ $consultaUsuarios = mysqli_query($conexao, "SELECT * FROM usuarios");
                 <th>Telefone</th>
                 <th>Ativo</th>
                 <?php
-                    if($_SESSION['login']['funcao'] === 'Administrador'){
-                        echo "<th colspan='2'>Ações</th>";
-                    }
-                 ?>
+                if ($_SESSION['login']['funcao'] === 'Administrador') {
+                    echo "<th colspan='2'>Ações</th>";
+                }
+                ?>
             </tr>
             <?php
             while ($usuarios = mysqli_fetch_assoc($consultaUsuarios)) {
@@ -64,7 +70,7 @@ $consultaUsuarios = mysqli_query($conexao, "SELECT * FROM usuarios");
                 echo "<td>" . $usuarios['data_cadastro'] . "</td>";
                 echo "<td>" . $usuarios['telefone'] . "</td>";
                 echo "<td>" . $usuarios['ativo'] . "</td>";
-                if($_SESSION['login']['funcao'] === 'Administrador'){
+                if ($_SESSION['login']['funcao'] === 'Administrador') {
                     echo "<td>
                             <button class='btnEditar' onclick='modalEditarUsuario(" . $usuarios['id'] . ")'><i class='fas fa-edit'></i> Editar</button>
                             <button class='btnExcluir' onclick='excluirUsuario(" . $usuarios['id'] . ")'><i class='fas fa-trash'></i> Excluir</button>
@@ -77,7 +83,8 @@ $consultaUsuarios = mysqli_query($conexao, "SELECT * FROM usuarios");
     </main>
     <script>
         function modalEditarUsuario(id) {
-            // Lógica para abrir o modal de edição
+            // Redireciona para a página de edição do usuário
+            window.location.href = "editar.php?id=" + id;
         }
 
         function excluirUsuario(id) {

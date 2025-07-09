@@ -11,7 +11,18 @@
                 </a>
             </li>
         </ul>
-
+        <?php
+            if($_SESSION['login']['funcao'] === 'Administrador'){
+                echo "<ul>
+                        <li>
+                            <a href='/Shop/admin/index.php'>
+                                <i class='fas fa-user-shield'></i>
+                                Administrador
+                            </a>
+                        </li>
+                    </ul>";
+            }
+        ?>
         <ul>
             <li>
                 <a href="/Shop/pages/usuarios/usuarios.php">
