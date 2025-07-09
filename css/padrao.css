@@ -1,9 +1,30 @@
+:root {
+    --cor-branco: #ffffff;
+    --cor-alert: #E53935;          /* Vermelho alerta elegante */
+    --cor-principal: #1E1E2F;      /* Fundo escuro profissional */
+    --cor-secundaria: #4E88FF;     /* Azul vibrante e confiável */
+    --cor-titulo: #D1D1E9;         /* Cinza claro suave */
+    --cor-input-hover: #2A2A3D;    /* Escuro para foco/hover */
+    --cor-borda: #3B3B4F;          /* Contornos ou divisores */
+}
+
 *{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
-.btnSalvar {
+main{
+    float: left;
+    width: 86%;
+    height: 92vh;
+    padding: 20px;
+    overflow-y: auto;
+}
+h2{
+    color: var(--cor-secundaria);
+    margin-bottom: 10px;
+}
+.btnSalvar, .btnEditar {
     background-color: #4CAF50; /* Verde */
     color: white;
     padding: 10px 30px;
@@ -12,7 +33,7 @@
     cursor: pointer;
     margin-left: 10px;
 }
-.btnCancelar {
+.btnCancelar, .btnExcluir {
     background-color: #f44336; /* Vermelho */
     color: white;
     padding: 10px 20px;
@@ -20,6 +41,54 @@
     border-radius: 5px;
     cursor: pointer;
 }
-.btnSalvar:hover, .btnCancelar:hover {
+.btnAdicionar{
+    background-color: #4ca8af; /* Verde */
+    color: white;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.btnSalvar:hover, .btnCancelar:hover, .btnAdicionar:hover{
     opacity: 0.8;
+}
+.mensagem{
+    color: green;
+    background-color: rgba(0, 128, 0,0.4);
+    padding: 5px;
+    text-align: center;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+table {
+    margin-top: 20px;
+    border-collapse: collapse;
+    width: 100%;
+    background-color: var(--cor-branco);
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    margin-bottom: 20px;
+}
+
+th, td {
+    padding: 12px 10px;
+    text-align: left;
+    border: 1px solid var(--cor-borda);
+}
+
+th {
+    background-color: var(--cor-principal);
+    color: var(--cor-branco);
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+tr:nth-child(even) {
+    background-color: #f6f8fa;
+}
+
+tr:hover {
+    background-color: #ddd;
+    transition: background 0.2s;
 }

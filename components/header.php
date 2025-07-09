@@ -5,7 +5,6 @@ if (isset($_POST['btnSalvar'])) {
     $nome = $_POST['nome'];
     $cpf = $_POST['cpf'];
     $email = $_POST['email'];
-    $funcao = $_POST['funcao'];
     $senha = $_POST['senha'];
     $telefone = $_POST['telefone'];
     $ativo = $_POST['ativo'];
@@ -32,7 +31,6 @@ if (isset($_POST['btnSalvar'])) {
             nome = '$nome', 
             cpf = '$cpf', 
             email = '$email', 
-            funcao = '$funcao', 
             senha = '$senha', 
             telefone = '$telefone', 
             ativo = '$ativo', 
@@ -45,7 +43,6 @@ if (isset($_POST['btnSalvar'])) {
             nome = '$nome', 
             cpf = '$cpf', 
             email = '$email', 
-            funcao = '$funcao', 
             senha = '$senha', 
             telefone = '$telefone', 
             ativo = '$ativo', 
@@ -58,7 +55,6 @@ if (isset($_POST['btnSalvar'])) {
         $_SESSION['login']['nome'] = $nome;
         $_SESSION['login']['cpf'] = $cpf;
         $_SESSION['login']['email'] = $email;
-        $_SESSION['login']['funcao'] = $funcao;
         $_SESSION['login']['senha'] = $senha;
         $_SESSION['login']['telefone'] = $telefone;
         $_SESSION['login']['ativo'] = $ativo;
@@ -67,6 +63,8 @@ if (isset($_POST['btnSalvar'])) {
         if (!empty($_FILES['foto']['name'])) {
             $_SESSION['login']['foto'] = $foto;
         }
+        $_SESSION['mensagem'] = "Perfil Editado com sucesso!";
+        
     }
 }
 
@@ -119,15 +117,6 @@ if (isset($_POST['btnSalvar'])) {
                         <input type="text" name="email" value="<?php echo $_SESSION['login']['email']; ?>" required>
                     </div>
                     <div class="blocoform">
-                        <label>Função</label>
-                        <select name="funcao">
-                            <option value="Administrador" <?php echo ($_SESSION['login']['funcao'] === 'Administrador') ? 'selected' : ''; ?>>Administrador</option>
-                            <option value="Gerente" <?php echo ($_SESSION['login']['funcao'] === 'Gerente') ? 'selected' : ''; ?>>Gerente</option>
-                            <option value="Vendedor" <?php echo ($_SESSION['login']['funcao'] === 'Vendedor') ? 'selected' : ''; ?>>Vendedor</option>
-                            <option value="Estoquista" <?php echo ($_SESSION['login']['funcao'] === 'Estoquista') ? 'selected' : ''; ?>>Estoquista</option>
-                        </select>
-                    </div>
-                    <div class="blocoform">
                         <label>Senha</label>
                         <input type="text" name="senha" value="<?php echo $_SESSION['login']['senha']; ?>" required>
                     </div>
@@ -169,8 +158,8 @@ if (isset($_POST['btnSalvar'])) {
                     </div>
                 </div>
                 <div class="botoes">
-                    <button type="submit" name="btnSalvar" class="btnSalvar">Salvar</button>
-                    <button type="button" class="btnCancelar" onclick="modalPerfil()">Cancelar</button>
+                    <button type="submit" name="btnSalvar" class="btnSalvar"><i class="fas fa-save"></i> Salvar</button>
+                    <button type="button" class="btnCancelar" onclick="modalPerfil()"><i class="fas fa-times"></i> Cancelar</button>
                 </div>
             </form>
         </div>

@@ -13,6 +13,15 @@
         </ul>
 
         <ul>
+            <li>
+                <a href="/Shop/pages/usuarios/usuarios.php">
+                    <i class="fa-solid fa-users"></i>
+                    Usuários
+                </a>
+            </li>
+        </ul>
+
+        <ul>
             <li class="submenu-toggle">
                 <a href="#">
                     <i class="fa-solid fa-users"></i>
