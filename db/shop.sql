@@ -6,6 +6,7 @@ CREATE TABLE `empresa` (
   `email` varchar(100) NOT NULL,
   `senhaapp` varchar(100) NOT NULL,
   `telefone` varchar(50) NOT NULL,
+  `cidade` varchar(50) NOT NULL,
   `endereco` varchar(255) NOT NULL,
   `cnpj` varchar(25) NOT NULL,
   `logo` varchar(255) DEFAULT NULL
@@ -15,8 +16,8 @@ CREATE TABLE `empresa` (
 -- Despejando dados para a tabela `empresa`
 --
 
-INSERT INTO `empresa` (`id`, `nome`, `email`, `senhaapp`, `telefone`, `endereco`, `cnpj`, `logo`) VALUES
-(1, 'Irmãos Souza ', 'ozeeiiaass@gmail.com', 'riex qacl krtb eqmu', '(69) 993654721', 'av das dores , 2589', '00000000000', 'ChatGPT Image 9 de jul. de 2025, 21_37_48.png');
+INSERT INTO `empresa` (`id`, `nome`, `email`, `senhaapp`, `telefone`, `cidade`, `endereco`, `cnpj`, `logo`) VALUES
+(1, 'Irmãos Souza ', 'ozeeiiaass@gmail.com', 'riex qacl krtb eqmu', '(69) 993654721', 'Vilhena', 'av das dores , 2589', '00000000000', 'ChatGPT Image 9 de jul. de 2025, 21_37_48.png');
 
 -- --------------------------------------------------------
 

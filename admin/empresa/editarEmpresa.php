@@ -18,6 +18,8 @@ if(isset($_POST['editar'])){
     $telefone = $_POST['telefone'];
     $endereco = $_POST['endereco'];
     $cnpj = $_POST['cnpj'];
+    $senhaapp = $_POST['senhaapp'];
+    $cidade = $_POST['cidade'];
 
     if(!empty($_FILES['logo']['name'])){
         $logo = $_FILES['logo']['name'];
@@ -40,6 +42,8 @@ if(isset($_POST['editar'])){
             email = '$email', 
             telefone = '$telefone', 
             endereco = '$endereco',
+            senhaapp = '$senhaapp',
+            cidade = '$cidade',
             logo = '$logo'
             WHERE id = $id_empresa";
     } else {
@@ -48,7 +52,9 @@ if(isset($_POST['editar'])){
             cnpj = '$cnpj', 
             email = '$email', 
             telefone = '$telefone', 
-            endereco = '$endereco'
+            endereco = '$endereco',
+             senhaapp = '$senhaapp',
+            cidade = '$cidade'
             WHERE id = $id_empresa";
     }
 
@@ -116,6 +122,14 @@ if(isset($_POST['editar'])){
                 <div class="group">
                     <label for="telefone">CNPJ:</label>
                     <input type="text" id="cnpj" name="cnpj" value="<?php echo $empresa['cnpj']; ?>">
+                </div>
+                <div class="group">
+                    <label>Senha de App</label>
+                    <input type="text" name="senhaapp" value="<?php echo $empresa['senhaapp']; ?>">
+                </div>
+                <div class="group">
+                    <label>Cidade</label>
+                    <input type="text" name="cidade" value="<?php echo $empresa['cidade']; ?>">
                 </div>
                 <div class="group">
                     <label for="telefone">LOGO:</label>
