@@ -8,7 +8,7 @@ if (!isset($_SESSION['login'])) {
     exit;
 }
 
-$consultaUsuarios = mysqli_query($conexao, "SELECT * FROM usuarios");
+$consultaUsuarios = mysqli_query($conexao, "SELECT * FROM usuarios ORDER BY ativo DESC,nome ASC");
 
 ?>
 <!DOCTYPE html>
@@ -21,6 +21,12 @@ $consultaUsuarios = mysqli_query($conexao, "SELECT * FROM usuarios");
     <link rel="stylesheet" href="/Shop/css/padrao.css">
     <link rel="shortcut icon" href="/Shop/img/login.svg" type="image/x-icon">
     <script src="https://kit.fontawesome.com/8ec7b849f5.js" crossorigin="anonymous"></script>
+    <style>
+        .desativado {
+            color: gray;
+            text-decoration: line-through;
+            text-decoration-color: red;
+        }
     </style>
 </head>
 
@@ -41,44 +47,62 @@ $consultaUsuarios = mysqli_query($conexao, "SELECT * FROM usuarios");
             echo ' <button class="btnAdicionar" onclick="window.location.href=\'adicionar.php\'"><i class="fas fa-plus"></i> Adicionar Usuário</button>';
         }
         ?>
-        <button class="btnPDF" onclick="window.open('relatorios/usuarios.php', '_blank')">
+        <button class="btnPDF" onclick="window.open('relatorios/pdf.php', '_blank')">
             <i class="fas fa-file-pdf"></i> PDF
         </button>
-
+        <button class="btnEXCEL" onclick="window.open('relatorios/planilha.php', '_blank')">
+            <i class="fas fa-file-excel"></i> EXCEL
+        </button>
 
         <table>
             <tr>
                 <th>Nome</th>
-                <th>Email</th>
                 <th>Função</th>
                 <th>CPF</th>
                 <th>Endereço</th>
-                <th>Data de Cadastro</th>
+                <th>Tempo de Serviço</th>
                 <th>Telefone</th>
-                <th>Ativo</th>
-                <?php
-                if ($_SESSION['login']['funcao'] === 'Administrador') {
-                    echo "<th colspan='2'>Ações</th>";
-                }
-                ?>
+                <th colspan='3'>Ações</th>
             </tr>
             <?php
+            function tempoDesde($data_cadastro)
+            {
+                $data = new DateTime($data_cadastro);
+                $agora = new DateTime();
+                $intervalo = $agora->diff($data);
+
+                $partes = [];
+
+                if ($intervalo->y > 0) $partes[] = $intervalo->y . ' ano' . ($intervalo->y > 1 ? 's' : '');
+                if ($intervalo->m > 0) $partes[] = $intervalo->m . ' mês' . ($intervalo->m > 1 ? 'es' : '');
+                if ($intervalo->d > 0 && $intervalo->y == 0) $partes[] = $intervalo->d . ' dia' . ($intervalo->d > 1 ? 's' : '');
+
+                if (empty($partes)) return 'Hoje';
+
+                return implode(', ', $partes) . ' atrás';
+            }
+
+
             while ($usuarios = mysqli_fetch_assoc($consultaUsuarios)) {
-                echo "<tr>";
+                if ($usuarios['ativo'] == 'NÃO') {
+                    echo "<tr class='desativado'>";
+                } else {
+                    echo "<tr>";
+                }
                 echo "<td>" . $usuarios['nome'] . "</td>";
-                echo "<td>" . $usuarios['email'] . "</td>";
                 echo "<td>" . $usuarios['funcao'] . "</td>";
                 echo "<td>" . $usuarios['cpf'] . "</td>";
                 echo "<td>" . $usuarios['endereco'] . "</td>";
-                echo "<td>" . $usuarios['data_cadastro'] . "</td>";
+                echo "<td>" . tempoDesde($usuarios['data_cadastro']) . "</td>";
                 echo "<td>" . $usuarios['telefone'] . "</td>";
-                echo "<td>" . $usuarios['ativo'] . "</td>";
+                echo "<td>";
                 if ($_SESSION['login']['funcao'] === 'Administrador') {
-                    echo "<td>
-                            <button class='btnEditar' onclick='modalEditarUsuario(" . $usuarios['id'] . ")'><i class='fas fa-edit'></i> Editar</button>
-                            <button class='btnExcluir' onclick='excluirUsuario(" . $usuarios['id'] . ")'><i class='fas fa-trash'></i> Excluir</button>
-                          </td>";
+                    echo "<button class='btnEditar' onclick='modalEditarUsuario(" . $usuarios['id'] . ")'><i class='fas fa-edit'></i> Editar</button>";
+                    echo  "<button class='btnExcluir' onclick='excluirUsuario(" . $usuarios['id'] . ")'><i class='fas fa-trash'></i> Excluir</button>";
                 }
+
+                echo "<button class='btnemail' onclick='mandaremailUsuario(\"" . htmlspecialchars($usuarios['email']) . "\")'><i class='fa-solid fa-envelopes-bulk'></i> E-mail</button>";
+                echo "</td>";
                 echo "</tr>";
             }
             ?>
@@ -94,6 +118,10 @@ $consultaUsuarios = mysqli_query($conexao, "SELECT * FROM usuarios");
             if (confirm("Tem certeza que deseja excluir este usuário?")) {
                 window.location.href = "excluir.php?id=" + id;
             }
+        }
+
+        function mandaremailUsuario(email) {
+            window.location.href = "mail/email.php?email=" + email;
         }
     </script>
 </body>

@@ -31,10 +31,21 @@ if (isset($_POST['entrar'])) {
                     "endereco" => $usuario['endereco'],                 
                 ];
 
+                if($_SESSION['login']['ativo'] == 'NÃO'){
+                    $_SESSION['mensagem-login'] = 'Você foi desativado, procure o Administrador!';
+                    header("Location: index.php");
+                    exit;
+                }
+
                 $consulta_empresa = mysqli_query($conexao, "SELECT * FROM empresa");
                 $dados_empresa = mysqli_fetch_assoc($consulta_empresa);
                 $_SESSION['empresa'] = [
                     "nome" => $dados_empresa['nome'],
+                    "endereco" => $dados_empresa['endereco'],
+                    "telefone" => $dados_empresa['telefone'],
+                    "email" => $dados_empresa['email'],
+                    "senhaapp" => $dados_empresa['senhaapp'],
+                    "cnpj" => $dados_empresa['cnpj'],
                     "logo" => $dados_empresa['logo']
                 ];
 

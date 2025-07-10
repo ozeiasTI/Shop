@@ -49,6 +49,7 @@ h2{
     border-radius: 5px;
     cursor: pointer;
     margin-left: 10px;
+    margin-right: 10px;
 }
 .btnExcluir {
     background-color: #f44336; /* Vermelho */
@@ -56,6 +57,16 @@ h2{
     padding: 5px 10px;
     border: none;
     border-radius: 5px;
+    cursor: pointer;
+     margin-right: 10px;
+}
+.btnemail{
+    background-color: #801eb9; /* Vermelho */
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+     margin-right: 10px;
     cursor: pointer;
 }
 .btnAdicionar{
@@ -69,6 +80,7 @@ h2{
     cursor: pointer;
 }
 .btnPDF {
+     margin-top: 10px;
     background-color: #ff6f61; /* Laranja */
     color: white;
     padding: 10px 20px;
@@ -77,7 +89,17 @@ h2{
     cursor: pointer;
     margin-left: 10px;
 }
-.btnSalvar:hover, .btnCancelar:hover, .btnAdicionar:hover, .btnPDF:hover, .btnEditar:hover, .btnExcluir:hover {
+.btnEXCEL{
+     margin-top: 10px;
+    background-color: #32b139; /* Laranja */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+.btnSalvar:hover, .btnCancelar:hover, .btnAdicionar:hover, .btnPDF:hover, .btnEditar:hover, .btnExcluir:hover, .btnEXCEL:hover, .btnemail:hover {
     opacity: 0.8;
 }
 .mensagem{

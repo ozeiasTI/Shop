@@ -119,8 +119,8 @@ if (isset($_POST['btnEditarUsuario'])) {
                     <div class="group">
                         <label for="ativo">Ativo:</label>
                         <select name="ativo" id="ativo">
-                            <option value="Sim" <?php echo ($usuario['ativo'] === 'Sim') ? 'selected' : ''; ?>>Sim</option>
-                            <option value="Não" <?php echo ($usuario['ativo'] === 'Não') ? 'selected' : ''; ?>>Não</option>
+                            <option value="SIM" <?php echo ($usuario['ativo'] === 'SIM') ? 'selected' : ''; ?>>SIM</option>
+                            <option value="NÃO" <?php echo ($usuario['ativo'] === 'NÃO') ? 'selected' : ''; ?>>NÃO</option>
                         </select>
                     </div>
                     <button type="submit" name="btnEditarUsuario" class="btnSalvar"><i class="fas fa-save"></i> Salvar</button>
