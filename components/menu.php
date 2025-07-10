@@ -4,9 +4,9 @@
 <nav class="menu" id="menu">
         <?php
             if (!empty($_SESSION['empresa']['logo'])) {
-                echo "<img style='height:100px;' src='/Shop/admin/empresa/imagens/" . $_SESSION['empresa']['logo'] . "' alt='Foto de perfil''>";
+                echo "<img style='height:100px;border-radius:50%;' src='/Shop/admin/empresa/imagens/" . $_SESSION['empresa']['logo'] . "' alt='Foto de perfil'>";
             } else {
-                echo "<img style='height:100px;' src='/Shop/img/login.svg' alt='Foto de perfil'>";
+                echo "<img style='height:100px;border-radius:50%;' src='/Shop/img/login.svg' alt='Foto de perfil'>";
             }
             ?>
     
@@ -54,10 +54,7 @@
     </div>
 
     <div class="menu-footer">
-    <label class="switch">
-        <input type="checkbox" id="dark-toggle">
-        <span class="slider"></span>
-    </label>
+    <p>Pensarei depois</p>
 </div>
 
 
