@@ -60,6 +60,15 @@ h2{
     cursor: pointer;
      margin-right: 10px;
 }
+.btnPesquisar{
+    background-color: #1E1E2F; /* Vermelho */
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+     margin-right: 10px;
+}
 .btnemail{
     background-color: #801eb9; /* Vermelho */
     color: white;
@@ -99,7 +108,7 @@ h2{
     cursor: pointer;
     margin-left: 10px;
 }
-.btnSalvar:hover, .btnCancelar:hover, .btnAdicionar:hover, .btnPDF:hover, .btnEditar:hover, .btnExcluir:hover, .btnEXCEL:hover, .btnemail:hover {
+.btnSalvar:hover, .btnCancelar:hover, .btnAdicionar:hover, .btnPDF:hover, .btnEditar:hover, .btnExcluir:hover, .btnEXCEL:hover, .btnemail:hover, .btnPesquisar:hover {
     opacity: 0.8;
 }
 .mensagem{

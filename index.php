@@ -3,6 +3,18 @@
 require_once("db/conexao.php");
 session_start();
 
+$consulta_empresa = mysqli_query($conexao, "SELECT * FROM empresa");
+$dados_empresa = mysqli_fetch_assoc($consulta_empresa);
+$_SESSION['empresa'] = [
+    "nome" => $dados_empresa['nome'],
+    "endereco" => $dados_empresa['endereco'],
+    "telefone" => $dados_empresa['telefone'],
+    "email" => $dados_empresa['email'],
+    "senhaapp" => $dados_empresa['senhaapp'],
+    "cnpj" => $dados_empresa['cnpj'],
+    "logo" => $dados_empresa['logo']
+];
+
 if (isset($_POST['entrar'])) {
     $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
     $senha = $_POST['senha'];
@@ -28,26 +40,14 @@ if (isset($_POST['entrar'])) {
                     "senha" => $usuario['senha'],
                     "funcao" => $usuario['funcao'],
                     "telefone" => $usuario['telefone'],
-                    "endereco" => $usuario['endereco'],                 
+                    "endereco" => $usuario['endereco'],
                 ];
 
-                if($_SESSION['login']['ativo'] == 'NÃO'){
+                if ($_SESSION['login']['ativo'] == 'NÃO') {
                     $_SESSION['mensagem-login'] = 'Você foi desativado, procure o Administrador!';
                     header("Location: index.php");
                     exit;
                 }
-
-                $consulta_empresa = mysqli_query($conexao, "SELECT * FROM empresa");
-                $dados_empresa = mysqli_fetch_assoc($consulta_empresa);
-                $_SESSION['empresa'] = [
-                    "nome" => $dados_empresa['nome'],
-                    "endereco" => $dados_empresa['endereco'],
-                    "telefone" => $dados_empresa['telefone'],
-                    "email" => $dados_empresa['email'],
-                    "senhaapp" => $dados_empresa['senhaapp'],
-                    "cnpj" => $dados_empresa['cnpj'],
-                    "logo" => $dados_empresa['logo']
-                ];
 
                 if ($_SESSION['login']['funcao'] === 'Administrador') {
                     header("Location: admin/index.php");
@@ -77,6 +77,11 @@ if (isset($_POST['entrar'])) {
     <link rel="stylesheet" href="css/login.css">
     <script src="https://kit.fontawesome.com/8ec7b849f5.js" crossorigin="anonymous"></script>
     <link rel="shortcut icon" href="img/login.svg" type="image/x-icon">
+    <style>
+        a {
+            color: white;
+        }
+    </style>
 </head>
 
 <body>
@@ -106,7 +111,8 @@ if (isset($_POST['entrar'])) {
                     <input type="password" name="senha" placeholder="Digite a senha..." required>
                 </div>
 
-                <input type="submit" value="ENTRAR" name="entrar">
+                <input type="submit" value="ENTRAR" name="entrar"><br><br>
+                <a href="pages/usuarios/recuperacao/recuperacao.php">Esqueci minha senha</a>
             </form>
         </div>
     </div>

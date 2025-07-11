@@ -8,7 +8,13 @@ if (!isset($_SESSION['login'])) {
     exit;
 }
 
-$consultaUsuarios = mysqli_query($conexao, "SELECT * FROM usuarios ORDER BY ativo DESC,nome ASC");
+if(isset($_POST['pesquisar'])){
+    $chave = $_POST['chave'];
+    $consultaUsuarios = mysqli_query($conexao, "SELECT * FROM usuarios WHERE nome LIKE '%$chave%' ORDER BY ativo DESC,nome ASC ");
+}else{
+    $consultaUsuarios = mysqli_query($conexao, "SELECT * FROM usuarios ORDER BY ativo DESC,nome ASC");
+}
+
 
 ?>
 <!DOCTYPE html>
@@ -54,6 +60,12 @@ $consultaUsuarios = mysqli_query($conexao, "SELECT * FROM usuarios ORDER BY ativ
             <i class="fas fa-file-excel"></i> EXCEL
         </button>
 
+        <form action="" method="post" class="formulario" style="width: 100%;">
+            <label>Pesquisar Usuário</label>
+            <input type="text" name="chave" placeholder="Pesquise usuarios pelo nome aqui...">
+            <button class="btnPesquisar" name="pesquisar">Pesquisar</button>
+        </form>
+
         <table>
             <tr>
                 <th>Nome</th>
@@ -82,7 +94,9 @@ $consultaUsuarios = mysqli_query($conexao, "SELECT * FROM usuarios ORDER BY ativ
                 return implode(', ', $partes) . ' atrás';
             }
 
-
+            if(mysqli_num_rows($consultaUsuarios) == 0) {
+                echo "<tr><td colspan='7'>Nenhum usuário encontrado.</td></tr>";
+            }
             while ($usuarios = mysqli_fetch_assoc($consultaUsuarios)) {
                 if ($usuarios['ativo'] == 'NÃO') {
                     echo "<tr class='desativado'>";

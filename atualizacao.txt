@@ -1,8 +1,4 @@
-Redefinir senha
-Filtro
-Caixa de alertas, mensagens 
-Historico de login - Data, hora
+Redefinir senha ✅
+Filtro ✅
 
-
-
-Gráficos de usuários ativos x inativos.
+Caixa de alertas, mensagens
