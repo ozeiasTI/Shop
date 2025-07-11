@@ -8,10 +8,10 @@ if (!isset($_SESSION['login'])) {
     exit;
 }
 
-if(isset($_POST['pesquisar'])){
+if (isset($_POST['pesquisar'])) {
     $chave = $_POST['chave'];
     $consultaUsuarios = mysqli_query($conexao, "SELECT * FROM usuarios WHERE nome LIKE '%$chave%' ORDER BY ativo DESC,nome ASC ");
-}else{
+} else {
     $consultaUsuarios = mysqli_query($conexao, "SELECT * FROM usuarios ORDER BY ativo DESC,nome ASC");
 }
 
@@ -59,12 +59,17 @@ if(isset($_POST['pesquisar'])){
         <button class="btnEXCEL" onclick="window.open('relatorios/planilha.php', '_blank')">
             <i class="fas fa-file-excel"></i> EXCEL
         </button>
-
+        <button class="btnNotificar" onclick="window.location.href='notificacao/notificacao.php'">
+            <i class="fa-solid fa-bell"></i> NOTIFICAR
+        </button>
+        <h3><i class="fa-solid fa-feather"></i> Pesquisar Usuário</h3>
         <form action="" method="post" class="formulario" style="width: 100%;">
             <label>Pesquisar Usuário</label>
             <input type="text" name="chave" placeholder="Pesquise usuarios pelo nome aqui...">
             <button class="btnPesquisar" name="pesquisar">Pesquisar</button>
         </form>
+
+        <h3><i class="fa-solid fa-feather"></i> Usuários Cadastrados</h3>
 
         <table>
             <tr>
@@ -94,7 +99,7 @@ if(isset($_POST['pesquisar'])){
                 return implode(', ', $partes) . ' atrás';
             }
 
-            if(mysqli_num_rows($consultaUsuarios) == 0) {
+            if (mysqli_num_rows($consultaUsuarios) == 0) {
                 echo "<tr><td colspan='7'>Nenhum usuário encontrado.</td></tr>";
             }
             while ($usuarios = mysqli_fetch_assoc($consultaUsuarios)) {

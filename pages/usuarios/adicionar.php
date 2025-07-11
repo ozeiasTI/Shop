@@ -55,6 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         ?>
         <h2><i class="fas fa-user-plus"></i> Adicionar Usuário</h2>
         <p>Preencha o formulário abaixo para adicionar um novo usuário.</p>
+        <h3><i class="fa-solid fa-feather"></i> Adicionar Usuário</h3>
         <form action="" method="post" class="formulario">
             <div class="group">
                 <label for="nome">Nome:</label>

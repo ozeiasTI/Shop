@@ -67,6 +67,7 @@ if (isset($_POST['btnEditarUsuario'])) {
         ?>
         <h2><i class="fas fa-user-edit"></i> Editar Usuário</h2>
         <p>Altere o formulário abaixo para editar o usuário.</p>
+        <h3><i class="fa-solid fa-feather"></i> Editar Usuário</h3>
         <form action="" method="post">
             <div class="formulario">
                 <?php

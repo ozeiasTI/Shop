@@ -73,14 +73,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="/Shop/css/padrao.css">
     <link rel="shortcut icon" href="/Shop/img/login.svg" type="image/x-icon">
     <script src="https://kit.fontawesome.com/8ec7b849f5.js" crossorigin="anonymous"></script>
-    <style>
-        textarea{
-            width: 100%;
-            font-size: 18px;
-            padding: 5px 10px;
-            border-radius: 5px;
-        }
-    </style>
 </head>
 
 <body>
@@ -90,6 +82,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <h2>Enviar E-mail</h2>
         <p>Você enviará e-mail para <span style="color: red;"><?php echo $email; ?><span></p><br>
 
+        <h3><i class="fa-solid fa-feather"></i> Enviar E-mail</h3>
+
         <?php
             if (!empty($_SESSION['mensagem'])) {
                 echo "<h4 class='mensagem'>" . $_SESSION['mensagem'] . "</h4>";
@@ -97,7 +91,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         ?>
 
-        <form method="post" enctype="multipart/form-data" accept-charset="UTF-8" class="formulario">
+        <form method="post" enctype="multipart/form-data" accept-charset="UTF-8" class="formulario" style="width: 100%;">
             <label>Assunto:</label><br>
             <input type="text" name="assunto" required><br><br>
 
