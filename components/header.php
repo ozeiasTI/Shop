@@ -82,6 +82,15 @@ if (isset($_POST['btnSalvar'])) {
     </div>
 
     <div class="direita">
+        <div class="notificacao" onclick="abrirNotificacoes()">
+            <i class="fa-solid fa-bell"></i>
+            <?php 
+                $meuid = $_SESSION['login']['id'];
+                $consultaNotificacao = mysqli_query($conexao,"SELECT * FROM notificacoes WHERE usuario_id = $meuid ");
+                $contador = mysqli_num_rows($consultaNotificacao);
+            ?>
+            <p><?php echo $contador ?></p>
+        </div>
         <div class="user-info" onclick="modalPerfil()">
             <span><?php echo $_SESSION['login']['nome']; ?></span>
             <?php
@@ -171,6 +180,12 @@ if (isset($_POST['btnSalvar'])) {
                 </div>
             </form>
         </div>
+    </div>
+</div>
+
+<div class="modalNotificacao">
+    <div class="conteudoNotificacao">
+        
     </div>
 </div>
 
