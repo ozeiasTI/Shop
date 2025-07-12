@@ -39,6 +39,7 @@ if (isset($_POST['entrar'])) {
                     "email" => $usuario['email'],
                     "senha" => $usuario['senha'],
                     "funcao" => $usuario['funcao'],
+                    "setor" => $usuario['setor'],
                     "telefone" => $usuario['telefone'],
                     "endereco" => $usuario['endereco'],
                 ];
@@ -49,7 +50,7 @@ if (isset($_POST['entrar'])) {
                     exit;
                 }
 
-                if ($_SESSION['login']['funcao'] === 'Administrador') {
+                if ($_SESSION['login']['setor'] === 'Gerência') {
                     header("Location: admin/index.php");
                 } else {
                     header("Location: pages/inicio.php");

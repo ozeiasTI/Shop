@@ -37,7 +37,7 @@ $sheet = $spreadsheet->getActiveSheet();
 $sheet->setTitle('Usuários Ativos');
 
 // Cabeçalhos
-$cabecalhos = ['Nome', 'E-mail', 'Função', 'CPF', 'Telefone', 'Idade', 'Atividade', 'Endereço', 'ativo'];
+$cabecalhos = ['Nome', 'E-mail', 'Função', 'CPF', 'Telefone', 'Idade', 'Atividade', 'Endereço', 'ativo','Função'];
 $coluna = 'A';
 foreach ($cabecalhos as $cabecalho) {
     $sheet->setCellValue($coluna . '1', $cabecalho);
@@ -56,15 +56,16 @@ while ($q = mysqli_fetch_assoc($resultado)) {
     $sheet->setCellValue('G' . $linha, tempoDesde($q['data_cadastro']));
     $sheet->setCellValue('H' . $linha, $q['endereco']);
     $sheet->setCellValue('I' . $linha, $q['ativo']);
+    $sheet->setCellValue('J' . $linha, $q['setor']);
     $linha++;
 }
 
 // Estilização básica (opcional)
-$sheet->getStyle('A1:I1')->getFont()->setBold(true);
-$sheet->getStyle('A1:I1')->getFill()
+$sheet->getStyle('A1:J1')->getFont()->setBold(true);
+$sheet->getStyle('A1:J1')->getFill()
     ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
     ->getStartColor()->setARGB('FF010440');
-$sheet->getStyle('A1:I1')->getFont()->getColor()->setARGB(\PhpOffice\PhpSpreadsheet\Style\Color::COLOR_WHITE);
+$sheet->getStyle('A1:J1')->getFont()->getColor()->setARGB(\PhpOffice\PhpSpreadsheet\Style\Color::COLOR_WHITE);
 $sheet->getColumnDimension('A')->setAutoSize(true);
 $sheet->getColumnDimension('B')->setAutoSize(true);
 $sheet->getColumnDimension('C')->setAutoSize(true);
@@ -74,6 +75,7 @@ $sheet->getColumnDimension('F')->setAutoSize(true);
 $sheet->getColumnDimension('G')->setAutoSize(true);
 $sheet->getColumnDimension('H')->setAutoSize(true);
 $sheet->getColumnDimension('I')->setAutoSize(true);
+$sheet->getColumnDimension('J')->setAutoSize(true);
 
 // Cabeçalhos de download
 header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');

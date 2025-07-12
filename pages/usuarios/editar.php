@@ -22,6 +22,8 @@ if (isset($_POST['btnEditarUsuario'])) {
     $endereco = $_POST['endereco'];
     $telefone = $_POST['telefone'];
     $ativo = $_POST['ativo'];
+    $setor = $_POST['setor'];
+    $data_nascimento = $_POST['data_nascimento'];
 
     $sqlUpdate = "UPDATE usuarios SET 
                         nome = '$nome', 
@@ -31,7 +33,9 @@ if (isset($_POST['btnEditarUsuario'])) {
                         cpf = '$cpf', 
                         endereco = '$endereco', 
                         telefone = '$telefone', 
-                        ativo = '$ativo' 
+                        ativo = '$ativo',
+                        setor = '$setor',
+                        data_nascimento = '$data_nascimento'
                       WHERE id = $id";
 
     if ($conexao->query($sqlUpdate) === TRUE) {
@@ -123,6 +127,31 @@ if (isset($_POST['btnEditarUsuario'])) {
                             <option value="SIM" <?php echo ($usuario['ativo'] === 'SIM') ? 'selected' : ''; ?>>SIM</option>
                             <option value="NÃO" <?php echo ($usuario['ativo'] === 'NÃO') ? 'selected' : ''; ?>>NÃO</option>
                         </select>
+                    </div>
+                    <div class="group">
+                        <label for="setor">Setor:</label>
+                        <select name="setor" id="setor">
+                            <option value="Gerência" <?php echo ($usuario['setor'] === 'Gerência') ? 'selected' : ''; ?>>Gerência</option>
+                            <option value="Administrativo" <?php echo ($usuario['setor'] === 'Administrativo') ? 'selected' : ''; ?>>Administrativo</option>
+                            <option value="Vendas" <?php echo ($usuario['setor'] === 'Vendas') ? 'selected' : ''; ?>>Vendas</option>
+                            <option value="Atendimento" <?php echo ($usuario['setor'] === 'Atendimento') ? 'selected' : ''; ?>>Atendimento</option>
+                            <option value="Financeiro" <?php echo ($usuario['setor'] === 'Financeiro') ? 'selected' : ''; ?>>Financeiro</option>
+                            <option value="Estoque" <?php echo ($usuario['setor'] === 'Estoque') ? 'selected' : ''; ?>>Estoque</option>
+                            <option value="Logística" <?php echo ($usuario['setor'] === 'Logística') ? 'selected' : ''; ?>>Logística</option>
+                            <option value="Corte e Montagem" <?php echo ($usuario['setor'] === 'Corte e Montagem') ? 'selected' : ''; ?>>Corte e Montagem</option>
+                            <option value="Elétrica" <?php echo ($usuario['setor'] === 'Elétrica') ? 'selected' : ''; ?>>Elétrica</option>
+                            <option value="Hidráulica" <?php echo ($usuario['setor'] === 'Hidráulica') ? 'selected' : ''; ?>>Hidráulica</option>
+                            <option value="Acabamentos" <?php echo ($usuario['setor'] === 'Acabamentos') ? 'selected' : ''; ?>>Acabamentos</option>
+                            <option value="Ferramentas" <?php echo ($usuario['setor'] === 'Ferramentas') ? 'selected' : ''; ?>>Ferramentas</option>
+                            <option value="TI" <?php echo ($usuario['setor'] === 'TI') ? 'selected' : ''; ?>>TI</option>
+                            <option value="Marketing" <?php echo ($usuario['setor'] === 'Marketing') ? 'selected' : ''; ?>>Marketing</option>
+                            <option value="Projetos" <?php echo ($usuario['setor'] === 'Projetos') ? 'selected' : ''; ?>>Projetos</option>
+                            <option value="Outros" <?php echo ($usuario['setor'] === 'Outros') ? 'selected' : ''; ?>>Outros</option>
+                        </select>
+                    </div>
+                    <div class="group">
+                        <label for="">Data de Nascimento</label>
+                        <input type="date" name="data_nascimento" value="<?php echo $usuario['data_nascimento'] ?>">
                     </div>
                     <button type="submit" name="btnEditarUsuario" class="btnSalvar"><i class="fas fa-save"></i> Salvar</button>
                     <button type="button" class="btnCancelar" onclick="window.location.href='usuarios.php'"><i class="fas fa-times"></i> Cancelar</button>

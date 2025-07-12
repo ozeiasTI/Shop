@@ -89,7 +89,7 @@ if (isset($_POST['btnSalvar'])) {
                 $consultaNotificacao = mysqli_query($conexao,"SELECT * FROM notificacoes WHERE usuario_id = $meuid ");
                 $contador = mysqli_num_rows($consultaNotificacao);
             ?>
-            <p><?php echo $contador ?></p>
+            <p><?php if($contador > 0) {echo $contador;} ?></p>
         </div>
         <div class="user-info" onclick="modalPerfil()">
             <span><?php echo $_SESSION['login']['nome']; ?></span>
@@ -185,7 +185,27 @@ if (isset($_POST['btnSalvar'])) {
 
 <div class="modalNotificacao">
     <div class="conteudoNotificacao">
-        
+        <div class="cabecalho">
+            <h4>Notificações</h4>
+            <i onclick="abrirNotificacoes()">X</i>
+        </div>
+        <hr>
+        <?php
+            while($notificacoesusuarios = mysqli_fetch_assoc($consultaNotificacao)){
+
+                echo "<div class='notificacao_sino'>";
+                echo "<img src='/Shop/img/notificacao.png' style='width: 50px;margin-top:10px;'>";
+                echo "</div>";
+
+                echo "<div class='notificacao_corpo'>";
+                echo "<span style='color:black;font-weight:bold;'>".$notificacoesusuarios['titulo']."</span><br>";
+                echo "<span style='color:gray;font-weight:bold;'>".$notificacoesusuarios['mensagem']."</span><br>";
+                echo "<span style='color:red;font-weight:bold;'>". date('d/m/Y', strtotime($notificacoesusuarios['data_conclusao'])) ."</span><br>";
+                echo "<span style='color:gray;font-weight:bold;'>"."setor"."</span><br>";
+                echo "</div>";
+                
+            }
+        ?>
     </div>
 </div>
 

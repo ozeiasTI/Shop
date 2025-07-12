@@ -95,6 +95,7 @@
     height: 250px;
     border-radius: 8px;
     margin-top: 9vh;
+    padding: 10px;
 }
 .modalconteudo {
     position: absolute;
@@ -164,4 +165,36 @@
     padding: 2px;
     border-radius: 50%;
     font-size: 15px;
+}
+.cabecalho{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 5px;
+    align-items: center;
+}
+.cabecalho i{
+    padding: 5px;
+    background-color: red;
+    color: white;
+    display: flex;
+    border-radius: 20%;
+    cursor: pointer;
+}
+.cabecalho h4{
+    color: var(--cor-secundaria);
+}
+.notificacao_sino{
+    width: 15%;
+    height: 50px;
+    float: left;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+}
+.notificacao_corpo{
+    width: 70%;
+    float: left;
 }

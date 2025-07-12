@@ -26,6 +26,7 @@ h2{
 }
 h3{
     margin-top: 20px;
+    color: var(--cor-secundaria);
 }
 .btnSalvar {
     background-color: #4CAF50; /* Verde */

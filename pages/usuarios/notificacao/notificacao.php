@@ -14,7 +14,7 @@ if (!isset($_SESSION['login'])) {
     exit;
 }
 
-$consultaUsuarios = mysqli_query($conexao, "SELECT * FROM usuarios WHERE ativo != 'NÃO' ORDER BY nome ASC");
+$consultaUsuarios = mysqli_query($conexao, "SELECT * FROM usuarios WHERE ativo != 'NÃO' ORDER BY nome,setor ASC");
 
 if (isset($_POST['Cadastrar'])) {
     $usuario_id = $_POST['usuario'];
@@ -23,11 +23,12 @@ if (isset($_POST['Cadastrar'])) {
     $dados_email = mysqli_fetch_assoc($pegar_email);
     $email = $dados_email['email'];
 
+    $titulo = $_POST['titulo'];
     $mensagem = $_POST['mensagem'];
     $data_conclusao = $_POST['data_conclusao'];
 
 
-    $injecao = mysqli_query($conexao, "INSERT INTO notificacoes(usuario_id,mensagem,data_conclusao) VALUES($usuario_id,'$mensagem','$data_conclusao')");
+    $injecao = mysqli_query($conexao, "INSERT INTO notificacoes(titulo,usuario_id,mensagem,data_conclusao) VALUES('$titulo', $usuario_id,'$mensagem','$data_conclusao')");
 
     if (!empty($email)) {
 
@@ -108,12 +109,15 @@ if (isset($_POST['Cadastrar'])) {
         <h3><i class="fa-solid fa-feather"></i> Cadastro de Notificação</h3>
         <form action="" method="post" class="formulario">
 
+            <label>Título</label>
+            <input type="text" name="titulo" placeholder="Digite um Título...">
+
             <label>Usuário</label>
             <select name="usuario">
                 <option value="">Selecione um usuario</option>
                 <?php
                 while ($dadosUsuarios = mysqli_fetch_assoc($consultaUsuarios)) {
-                    echo "<option value='" . $dadosUsuarios['id'] . "'>" . $dadosUsuarios['nome'] . "</option>";
+                    echo "<option value='" . $dadosUsuarios['id'] . "'>" . $dadosUsuarios['setor']. " - " .$dadosUsuarios['nome'] . "</option>";
                 }
                 ?>
             </select>

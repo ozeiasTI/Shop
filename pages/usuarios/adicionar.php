@@ -13,13 +13,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = $_POST['email'];
     $senha = $_POST['senha'];
     $funcao = $_POST['funcao'];
+    $setor = $_POST['setor'];
     $cpf = $_POST['cpf'];
     $data_nascimento = $_POST['data_nascimento'];
     $endereco = $_POST['endereco'];
     $telefone = $_POST['telefone'];
+    $ativo = $_POST['ativo'];
 
-    $query = "INSERT INTO usuarios (nome, email, senha, funcao, cpf, data_nascimento, endereco, telefone) 
-              VALUES ('$nome', '$email', '$senha', '$funcao', '$cpf', '$data_nascimento', '$endereco', '$telefone')";
+    $query = "INSERT INTO usuarios (nome, email, senha, funcao, setor, cpf, data_nascimento, endereco, telefone) 
+              VALUES ('$nome', '$email', '$senha', '$funcao', '$setor' , '$cpf', '$data_nascimento', '$endereco', '$telefone','$ativo')";
 
     if (mysqli_query($conexao, $query)) {
         $_SESSION['mensagem'] = "Usuário adicionado com sucesso!";
@@ -70,38 +72,67 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <input type="password" id="senha" name="senha" required placeholder="Digite a senha do usuário">
             </div>
             <div class="group">
-            <label for="funcao">Função:</label>
-            <select id="funcao" name="funcao">
-                <option value="Administrador">Administrador</option>
-                <option value="Gerente">Gerente</option>
-                <option value="Vendedor">Vendedor</option>
-                <option value="Usuário">Usuário</option>
-                <option value="Cliente">Cliente</option>
-                <option value="Fornecedor">Fornecedor</option>
-                <option value="Entregador">Entregador</option>
-                <option value="Financeiro">Financeiro</option>
-                <option value="Suporte">Suporte</option>
-                <option value="Marketing">Marketing</option>
-                <option value="Desenvolvedor">Desenvolvedor</option>
-                <option value="Analista">Analista</option>
-                <option value="Outros">Outros</option>
-            </select>
+                <label for="funcao">Função:</label>
+                <select id="funcao" name="funcao">
+                    <option value="Administrador">Administrador</option>
+                    <option value="Gerente">Gerente</option>
+                    <option value="Vendedor">Vendedor</option>
+                    <option value="Atendente">Atendente</option>
+                    <option value="Cliente">Cliente</option>
+                    <option value="Fornecedor">Fornecedor</option>
+                    <option value="Entregador">Entregador</option>
+                    <option value="Financeiro">Financeiro</option>
+                    <option value="Estoquista">Estoquista</option>
+                    <option value="Marketing">Marketing</option>
+                    <option value="Projetista">Projetista</option>
+                    <option value="Técnico">Técnico</option>
+                    <option value="Outros">Outros</option>
+                </select>
+            </div>
+            
+            <div class="group">
+                <label for="cpf">CPF:</label>
+                <input type="text" id="cpf" name="cpf" required placeholder="Digite o CPF do usuário">
             </div>
             <div class="group">
-            <label for="cpf">CPF:</label>
-            <input type="text" id="cpf" name="cpf" required placeholder="Digite o CPF do usuário">
+                <label for="data_nascimento">Data de Nascimento:</label>
+                <input type="date" id="data_nascimento" name="data_nascimento">
             </div>
             <div class="group">
-            <label for="data_nascimento">Data de Nascimento:</label>
-            <input type="date" id="data_nascimento" name="data_nascimento">
+                <label for="endereco">Endereço:</label>
+                <input type="text" id="endereco" name="endereco" placeholder="Digite o endereço do usuário">
             </div>
             <div class="group">
-            <label for="endereco">Endereço:</label>
-            <input type="text" id="endereco" name="endereco" placeholder="Digite o endereço do usuário">
+                <label for="telefone">Telefone:</label>
+                <input type="text" id="telefone" name="telefone" required placeholder="Digite o telefone do usuário">
             </div>
             <div class="group">
-            <label for="telefone">Telefone:</label>
-            <input type="text" id="telefone" name="telefone" required placeholder="Digite o telefone do usuário">
+                <label for="setor">Setor:</label>
+                <select id="setor" name="setor">
+                    <option value="Gerência">Gerência</option>
+                    <option value="Administrativo">Administrativo</option>
+                    <option value="Vendas">Vendas</option>
+                    <option value="Atendimento">Atendimento</option>
+                    <option value="Financeiro">Financeiro</option>
+                    <option value="Estoque">Estoque</option>
+                    <option value="Logística">Logística</option>
+                    <option value="Corte e Montagem">Corte e Montagem</option>
+                    <option value="Elétrica">Elétrica</option>
+                    <option value="Hidráulica">Hidráulica</option>
+                    <option value="Acabamentos">Acabamentos</option>
+                    <option value="Ferramentas">Ferramentas</option>
+                    <option value="TI">TI</option>
+                    <option value="Marketing">Marketing</option>
+                    <option value="Projetos">Projetos</option>
+                    <option value="Outros">Outros</option>
+                </select>
+            </div>
+            <div class="group">
+                <label for="Ativo">Ativo</label>
+                <select name="ativo">
+                    <option value="SIM">SIM</option>
+                    <option value="NÃO">NÃO</option>
+                </select>
             </div>
             <button type="submit" class="btnSalvar"><i class="fas fa-plus"></i> Adicionar Usuário</button>
             <button type="button" class="btnCancelar" onclick="window.location.href='usuarios.php'"><i class="fas fa-times"></i> Cancelar</button>

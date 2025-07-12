@@ -49,7 +49,7 @@ if (isset($_POST['pesquisar'])) {
         <h2> <i class="fas fa-users"></i> Usuários</h2>
         <p>Esta é a página de usuários. Aqui você pode gerenciar os usuários do sistema.</p>
         <?php
-        if ($_SESSION['login']['funcao'] === 'Administrador') {
+        if ($_SESSION['login']['setor'] === 'Gerência') {
             echo ' <button class="btnAdicionar" onclick="window.location.href=\'adicionar.php\'"><i class="fas fa-plus"></i> Adicionar Usuário</button>';
         }
         ?>
@@ -75,7 +75,7 @@ if (isset($_POST['pesquisar'])) {
             <tr>
                 <th>Nome</th>
                 <th>Função</th>
-                <th>CPF</th>
+                <th>Setor</th>
                 <th>Endereço</th>
                 <th>Tempo de Serviço</th>
                 <th>Telefone</th>
@@ -110,12 +110,12 @@ if (isset($_POST['pesquisar'])) {
                 }
                 echo "<td>" . $usuarios['nome'] . "</td>";
                 echo "<td>" . $usuarios['funcao'] . "</td>";
-                echo "<td>" . $usuarios['cpf'] . "</td>";
+                echo "<td>" . $usuarios['setor'] . "</td>";
                 echo "<td>" . $usuarios['endereco'] . "</td>";
                 echo "<td>" . tempoDesde($usuarios['data_cadastro']) . "</td>";
                 echo "<td>" . $usuarios['telefone'] . "</td>";
                 echo "<td>";
-                if ($_SESSION['login']['funcao'] === 'Administrador') {
+                if ($_SESSION['login']['setor'] === 'Gerência') {
                     echo "<button class='btnEditar' onclick='modalEditarUsuario(" . $usuarios['id'] . ")'><i class='fas fa-edit'></i> Editar</button>";
                     echo  "<button class='btnExcluir' onclick='excluirUsuario(" . $usuarios['id'] . ")'><i class='fas fa-trash'></i> Excluir</button>";
                 }
