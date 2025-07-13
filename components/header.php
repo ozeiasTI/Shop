@@ -84,7 +84,6 @@ if (isset($_POST['btnSalvar'])) {
 
 <div class="header">
     <div class="esquerda">
-        <i class="fa-solid fa-bars" id="btnMenuToggle"></i>
         <h1><a href="/Shop/pages/inicio.php"><?php echo $_SESSION['empresa']['nome']; ?></a></h1>
     </div>
 

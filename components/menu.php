@@ -54,7 +54,7 @@
     </div>
 
     <div class="menu-footer">
-    <p>Pensarei depois</p>
+    <p style="color: white;">© Todos os Direitos Reservados</p>
 </div>
 
 

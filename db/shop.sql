@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 11/07/2025 às 18:55
+-- Tempo de geração: 14/07/2025 às 01:33
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -44,7 +44,7 @@ CREATE TABLE `empresa` (
 --
 
 INSERT INTO `empresa` (`id`, `nome`, `email`, `senhaapp`, `telefone`, `cidade`, `endereco`, `cnpj`, `logo`) VALUES
-(1, 'Irmãos Souza ', 'ozeeiiaass@gmail.com', 'riex qacl krtb eqmu', '(69) 993654721', 'Vilhena', 'av das dores , 2589', '00000000000', 'ChatGPT Image 9 de jul. de 2025, 21_37_48.png');
+(1, 'Hardware Store', 'ozeeiiaass@gmail.com', 'riex qacl krtb eqmu', '(69) 993654721', 'Vilhena', 'av das dores , 2589', '00000000000', 'logo.jpg');
 
 -- --------------------------------------------------------
 
@@ -54,6 +54,7 @@ INSERT INTO `empresa` (`id`, `nome`, `email`, `senhaapp`, `telefone`, `cidade`, 
 
 CREATE TABLE `notificacoes` (
   `id` int(11) NOT NULL,
+  `titulo` varchar(50) NOT NULL,
   `usuario_id` int(10) UNSIGNED DEFAULT NULL,
   `mensagem` text DEFAULT NULL,
   `data_cadastro` timestamp NOT NULL DEFAULT current_timestamp(),
@@ -65,9 +66,9 @@ CREATE TABLE `notificacoes` (
 -- Despejando dados para a tabela `notificacoes`
 --
 
-INSERT INTO `notificacoes` (`id`, `usuario_id`, `mensagem`, `data_cadastro`, `data_conclusao`, `status`) VALUES
-(3, 1, 'Teste de Notificação', '2025-07-11 16:51:06', '2025-07-17', 'Aberta'),
-(4, 1, 'Teste de Notificação', '2025-07-11 16:52:50', '2025-07-17', 'Aberta');
+INSERT INTO `notificacoes` (`id`, `titulo`, `usuario_id`, `mensagem`, `data_cadastro`, `data_conclusao`, `status`) VALUES
+(3, 'Conferência de estoque de areia e brita', 1, 'Verificar se os volumes de areia média e brita 1 estão corretos no sistema e no pátio externo', '2025-07-11 16:51:06', '2025-07-17', 'Aberta'),
+(5, 'comprar capacete', 1, 'comkfdsjkfbsdjsfkhsd fhdfhkjds jdfhdsjb jhfjdbv jfhgfjv jhjnvkjfd ', '2025-07-12 23:24:55', '2025-07-13', 'Aberta');
 
 -- --------------------------------------------------------
 
@@ -80,6 +81,7 @@ CREATE TABLE `usuarios` (
   `nome` varchar(100) NOT NULL,
   `email` varchar(255) NOT NULL,
   `senha` varchar(100) NOT NULL,
+  `setor` varchar(100) NOT NULL,
   `funcao` varchar(50) NOT NULL,
   `cpf` varchar(14) DEFAULT NULL,
   `data_nascimento` varchar(12) DEFAULT NULL,
@@ -94,9 +96,9 @@ CREATE TABLE `usuarios` (
 -- Despejando dados para a tabela `usuarios`
 --
 
-INSERT INTO `usuarios` (`id`, `nome`, `email`, `senha`, `funcao`, `cpf`, `data_nascimento`, `endereco`, `foto`, `data_cadastro`, `telefone`, `ativo`) VALUES
-(1, 'Ozeias Meira Santos de Souza', 'ozeias.souza@ifro.edu.br', '123', 'Administrador', '033.662.282-10', '1998-08-12', 'Av guaporé, n° 3230', '1669471212336.jpg', '2025-07-08 21:39:39', '(69) 92726386', 'SIM'),
-(4, 'Kelly ', 'kelly@gmail.com', 'entre@rios#kelly', 'Vendedor', '033.662.282-11', '1997-07-10', 'SESI', 'sansa-e-uma-gata-que-foi-abandonada-mas-conseguiu-ser-adotada-e-hoje-bomba-no-instagram-1601056796152_v2_450x600.jpg', '2025-07-09 20:10:13', '698587458', 'SIM');
+INSERT INTO `usuarios` (`id`, `nome`, `email`, `senha`, `setor`, `funcao`, `cpf`, `data_nascimento`, `endereco`, `foto`, `data_cadastro`, `telefone`, `ativo`) VALUES
+(1, 'Ozeias Meira Santos de Souza', 'ozeias.souza@ifro.edu.br', '123', 'Gerência', 'Administrador', '033.662.282-10', '1998-08-12', 'Av guaporé, n° 3230', '1669471212336.jpg', '2025-07-08 21:39:39', '6992726386', 'SIM'),
+(4, 'Kelly ', 'kelly@gmail.com', 'entre@rios#kelly', 'Atendimento', 'Entregador', '033.662.282-11', '1997-07-10', 'SESI', 'sansa-e-uma-gata-que-foi-abandonada-mas-conseguiu-ser-adotada-e-hoje-bomba-no-instagram-1601056796152_v2_450x600.jpg', '2025-07-09 20:10:13', '698587458', 'NÃO');
 
 --
 -- Índices para tabelas despejadas
@@ -137,7 +139,7 @@ ALTER TABLE `empresa`
 -- AUTO_INCREMENT de tabela `notificacoes`
 --
 ALTER TABLE `notificacoes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de tabela `usuarios`

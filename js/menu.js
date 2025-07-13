@@ -11,7 +11,4 @@ document.querySelectorAll('.submenu-toggle').forEach(toggle => {
     });
 });
 
-document.getElementById('btnMenuToggle')?.addEventListener('click', () => {
-    const menu = document.getElementById('menu');
-    menu.classList.toggle('colapsado');
-});
+
