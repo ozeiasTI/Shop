@@ -14,7 +14,8 @@ if (!isset($_SESSION['login'])) {
     exit;
 }
 
-$consultaUsuarios = mysqli_query($conexao, "SELECT * FROM usuarios WHERE ativo != 'NÃO' ORDER BY nome,setor ASC");
+$meuID = $_SESSION['login']['id'];
+$consultaUsuarios = mysqli_query($conexao, "SELECT * FROM usuarios WHERE ativo != 'NÃO' AND id != $meuID ORDER BY nome,setor ASC");
 
 if (isset($_POST['Cadastrar'])) {
     $usuario_id = $_POST['usuario'];
@@ -117,7 +118,7 @@ if (isset($_POST['Cadastrar'])) {
                 <option value="">Selecione um usuario</option>
                 <?php
                 while ($dadosUsuarios = mysqli_fetch_assoc($consultaUsuarios)) {
-                    echo "<option value='" . $dadosUsuarios['id'] . "'>" . $dadosUsuarios['setor']. " - " .$dadosUsuarios['nome'] . "</option>";
+                    echo "<option value='" . $dadosUsuarios['id'] . "'>" .$dadosUsuarios['setor']. " - " .$dadosUsuarios['nome'] . "</option>";
                 }
                 ?>
             </select>

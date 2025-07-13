@@ -1,5 +1,13 @@
 <?php
 
+if (isset($_POST['concluir'])) {
+    $id_notificacao = $_POST['id_notificacao'];
+    $injecao = mysqli_query($conexao, "UPDATE notificacoes SET status = 'Lida' WHERE id = $id_notificacao");
+    $_SESSION['mensagem'] = "Notificação marcada como lida!";
+    header("Location: " . $_SERVER['REQUEST_URI']);
+    exit;
+}
+
 if (isset($_POST['btnSalvar'])) {
 
     $nome = $_POST['nome'];
@@ -15,12 +23,12 @@ if (isset($_POST['btnSalvar'])) {
     if (!empty($_FILES['foto']['name'])) {
         $foto = $_FILES['foto']['name'];
 
-        $diretorio = $_SERVER['DOCUMENT_ROOT'] .'/Shop/pages/usuarios/imagens/';
+        $diretorio = $_SERVER['DOCUMENT_ROOT'] . '/Shop/pages/usuarios/imagens/';
         $caminhoCompleto = $diretorio . $foto;
 
         move_uploaded_file($_FILES['foto']['tmp_name'], $caminhoCompleto);
 
-        if(isset($_SESSION['login']['foto']) && $_SESSION['login']['foto'] != 'user.png') {
+        if (isset($_SESSION['login']['foto']) && $_SESSION['login']['foto'] != 'user.png') {
             $fotoAntiga = $_SERVER['DOCUMENT_ROOT'] . '/Shop/pages/usuarios/imagens/' . $_SESSION['login']['foto'];
             if (is_file($fotoAntiga) && file_exists($fotoAntiga)) {
                 unlink($fotoAntiga);
@@ -66,7 +74,6 @@ if (isset($_POST['btnSalvar'])) {
         $_SESSION['mensagem'] = "Perfil Editado com sucesso!";
         header("Location: " . $_SERVER['REQUEST_URI']);
         exit;
-        
     }
 }
 
@@ -84,12 +91,19 @@ if (isset($_POST['btnSalvar'])) {
     <div class="direita">
         <div class="notificacao" onclick="abrirNotificacoes()">
             <i class="fa-solid fa-bell"></i>
-            <?php 
-                $meuid = $_SESSION['login']['id'];
-                $consultaNotificacao = mysqli_query($conexao,"SELECT * FROM notificacoes WHERE usuario_id = $meuid ");
-                $contador = mysqli_num_rows($consultaNotificacao);
+            <?php
+            $meuid = $_SESSION['login']['id'];
+
+            $consultaSetor = mysqli_query($conexao, "SELECT setor FROM usuarios WHERE id = $meuid");
+            $linhaSetor = mysqli_fetch_assoc($consultaSetor);
+            $meuSetor = $linhaSetor['setor'];
+
+            $consultaNotificacao = mysqli_query($conexao, "SELECT notificacoes.*,usuarios.setor FROM notificacoes INNER JOIN usuarios ON notificacoes.usuario_id = usuarios.id WHERE usuarios.setor = '$meuSetor' AND notificacoes.status = 'Aberta'");
+            $contador = mysqli_num_rows($consultaNotificacao);
             ?>
-            <p><?php if($contador > 0) {echo $contador;} ?></p>
+            <p><?php if ($contador > 0) {
+                    echo $contador;
+                } ?></p>
         </div>
         <div class="user-info" onclick="modalPerfil()">
             <span><?php echo $_SESSION['login']['nome']; ?></span>
@@ -120,6 +134,7 @@ if (isset($_POST['btnSalvar'])) {
         </div>
         <div class="dados">
             <form action="" method="post" enctype="multipart/form-data">
+                <?php echo "<span class='setor'>" . $meuSetor . "</span> " ?>
                 <div class="blocos-container">
                     <div class="blocoform">
                         <label>Nome</label>
@@ -186,25 +201,39 @@ if (isset($_POST['btnSalvar'])) {
 <div class="modalNotificacao">
     <div class="conteudoNotificacao">
         <div class="cabecalho">
-            <h4>Notificações</h4>
+            <h4>Notificações</h4><?php echo "<span class='setor'>" . $meuSetor . "</span> " ?>
             <i onclick="abrirNotificacoes()">X</i>
         </div>
-        <hr>
+        <hr><br>
         <?php
-            while($notificacoesusuarios = mysqli_fetch_assoc($consultaNotificacao)){
+        while ($notificacoesusuarios = mysqli_fetch_assoc($consultaNotificacao)) {
 
-                echo "<div class='notificacao_sino'>";
-                echo "<img src='/Shop/img/notificacao.png' style='width: 50px;margin-top:10px;'>";
-                echo "</div>";
+            echo "<div class='geral_notificacoo'>";
+            echo "<div class='notificacao_sino'>";
+            echo "<img src='/Shop/img/notificacao.png' style='width: 50px;margin-top:10px;'>";
+            echo "</div>";
 
-                echo "<div class='notificacao_corpo'>";
-                echo "<span style='color:black;font-weight:bold;'>".$notificacoesusuarios['titulo']."</span><br>";
-                echo "<span style='color:gray;font-weight:bold;'>".$notificacoesusuarios['mensagem']."</span><br>";
-                echo "<span style='color:red;font-weight:bold;'>". date('d/m/Y', strtotime($notificacoesusuarios['data_conclusao'])) ."</span><br>";
-                echo "<span style='color:gray;font-weight:bold;'>"."setor"."</span><br>";
-                echo "</div>";
-                
+            echo "<div class='notificacao_corpo'>";
+            echo "<span style='color:black;font-weight:bold;'>" . $notificacoesusuarios['titulo'] . "</span><br>";
+            echo "<span style='color:gray;font-weight:bold;'>" . $notificacoesusuarios['mensagem'] . "</span><br>";
+            if ($notificacoesusuarios['data_conclusao'] < date('Y-m-d')) {
+                echo "<span style='color:red;font-weight:bold;'>" . date('d/m/Y', strtotime($notificacoesusuarios['data_conclusao'])) . "</span><br>";
+            }else if($notificacoesusuarios['data_conclusao'] == date('Y-m-d')){
+                echo "<span style='color:blue;font-weight:bold;'>" . date('d/m/Y', strtotime($notificacoesusuarios['data_conclusao'])) . "</span><br>";
+            }else{
+                 echo "<span style='color:green;font-weight:bold;'>" . date('d/m/Y', strtotime($notificacoesusuarios['data_conclusao'])) . "</span><br>";
             }
+
+            echo "</div>";
+
+            echo "<div class='concluir_notificacao'>";
+            echo "<form method='post'>";
+            echo "<input type='hidden' name='id_notificacao' value='" . $notificacoesusuarios['id'] . "'>";
+            echo "<input style='font-size:20px;border:none;cursor: pointer;' type='submit' name='concluir' value='✅'>";
+            echo "</form>";
+            echo "</div>";
+            echo "</div>";
+        }
         ?>
     </div>
 </div>
