@@ -41,10 +41,19 @@
         </ul>
 
         <ul>
+            <li>
+                <a href="/Shop/pages/anotacoes/index.php">
+                    <i class="fa-solid fa-clipboard"></i>
+                    Anotações
+                </a>
+            </li>
+        </ul>
+
+        <ul>
             <li class="submenu-toggle">
                 <a href="#">
-                    <i class="fa-solid fa-users"></i>
-                    Usuários
+                    <i class="fa-solid fa-clipboard"></i>
+                     Anotações
                     <i class="fa-solid fa-angle-down seta"></i>
                 </a>
             </li>

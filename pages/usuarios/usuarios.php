@@ -113,7 +113,7 @@ if (isset($_POST['pesquisar'])) {
                 echo "<td>" . $usuarios['setor'] . "</td>";
                 echo "<td>" . $usuarios['endereco'] . "</td>";
                 echo "<td>" . tempoDesde($usuarios['data_cadastro']) . "</td>";
-                echo "<td><a style='text-decoration:none;' href='https://api.whatsapp.com/send/?phone=55".$usuarios['telefone']."'>". $usuarios['telefone'] . "</a></td>";
+                echo "<td> <i class='fa fa-whatsapp' aria-hidden='true'></i> <a style='text-decoration:none;color:black;' href='https://api.whatsapp.com/send/?phone=55".$usuarios['telefone']."'>". $usuarios['telefone'] . "</a></td>";
                 echo "<td>";
                 if ($_SESSION['login']['setor'] === 'Gerência') {
                     echo "<button class='btnEditar' onclick='modalEditarUsuario(" . $usuarios['id'] . ")'><i class='fas fa-edit'></i> Editar</button>";
