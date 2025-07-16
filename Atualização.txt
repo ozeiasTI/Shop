@@ -1,1 +1,1 @@
-Criar EDITAR e EXCLUIR para Anotações
+Criar DUPLICAR => EDITAR, ATRIBUIR USUARIO, PUNP => CAMINHO STATUS,  e EXCLUIR para Anotações
