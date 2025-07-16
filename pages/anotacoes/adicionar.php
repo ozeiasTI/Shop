@@ -90,13 +90,13 @@ if(isset($_POST['salvar'])){
                 <label>Status</label>
                 <select name="status" id="status">
                     <option value="">-- Selecione o status --</option>
-                    <option value="pendente">Pendente</option>
-                    <option value="em_andamento">Em andamento</option>
-                    <option value="concluida">Concluída</option>
-                    <option value="cancelada">Cancelada</option>
-                    <option value="postergada">Postergada</option>
-                    <option value="prioritaria">Prioritária</option>
-                    <option value="arquivada">Arquivada</option>
+                    <option value="Pendente">Pendente</option>
+                    <option value="Em andamento">Em andamento</option>
+                    <option value="Concluída">Concluída</option>
+                    <option value="Cancelada">Cancelada</option>
+                    <option value="Postergada">Postergada</option>
+                    <option value="Prioritária">Prioritária</option>
+                    <option value="Arquivada">Arquivada</option>
                 </select>
             </div>
             <button type="submit" class="btnSalvar" name="salvar"><i class="fas fa-plus"></i> Adicionar Anotação</button>

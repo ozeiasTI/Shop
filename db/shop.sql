@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 14/07/2025 às 01:33
+-- Tempo de geração: 16/07/2025 às 19:09
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -20,6 +20,22 @@ SET time_zone = "+00:00";
 --
 -- Banco de dados: `shop`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `anotacoes`
+--
+
+CREATE TABLE `anotacoes` (
+  `id_anotacoes` int(11) NOT NULL,
+  `usuario_id` int(10) UNSIGNED DEFAULT NULL,
+  `titulo` varchar(30) DEFAULT NULL,
+  `mensagem` text DEFAULT NULL,
+  `categoria_anotacoes` varchar(30) DEFAULT NULL,
+  `data_execucao` date DEFAULT NULL,
+  `status_anotacoes` varchar(30) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -62,14 +78,6 @@ CREATE TABLE `notificacoes` (
   `status` varchar(50) DEFAULT 'Aberta'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Despejando dados para a tabela `notificacoes`
---
-
-INSERT INTO `notificacoes` (`id`, `titulo`, `usuario_id`, `mensagem`, `data_cadastro`, `data_conclusao`, `status`) VALUES
-(3, 'Conferência de estoque de areia e brita', 1, 'Verificar se os volumes de areia média e brita 1 estão corretos no sistema e no pátio externo', '2025-07-11 16:51:06', '2025-07-17', 'Aberta'),
-(5, 'comprar capacete', 1, 'comkfdsjkfbsdjsfkhsd fhdfhkjds jdfhdsjb jhfjdbv jfhgfjv jhjnvkjfd ', '2025-07-12 23:24:55', '2025-07-13', 'Aberta');
-
 -- --------------------------------------------------------
 
 --
@@ -97,12 +105,18 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id`, `nome`, `email`, `senha`, `setor`, `funcao`, `cpf`, `data_nascimento`, `endereco`, `foto`, `data_cadastro`, `telefone`, `ativo`) VALUES
-(1, 'Ozeias Meira Santos de Souza', 'ozeias.souza@ifro.edu.br', '123', 'Gerência', 'Administrador', '033.662.282-10', '1998-08-12', 'Av guaporé, n° 3230', '1669471212336.jpg', '2025-07-08 21:39:39', '6992726386', 'SIM'),
-(4, 'Kelly ', 'kelly@gmail.com', 'entre@rios#kelly', 'Atendimento', 'Entregador', '033.662.282-11', '1997-07-10', 'SESI', 'sansa-e-uma-gata-que-foi-abandonada-mas-conseguiu-ser-adotada-e-hoje-bomba-no-instagram-1601056796152_v2_450x600.jpg', '2025-07-09 20:10:13', '698587458', 'NÃO');
+(1, 'Ozeias Meira Santos de Souza', 'ozeias.souza@ifro.edu.br', '123', 'Gerência', 'Administrador', '033.662.282-10', '1998-08-12', 'Av guaporé, n° 3230', '1669471212336.jpg', '2025-07-08 21:39:39', '6992726386', 'SIM');
 
 --
 -- Índices para tabelas despejadas
 --
+
+--
+-- Índices de tabela `anotacoes`
+--
+ALTER TABLE `anotacoes`
+  ADD PRIMARY KEY (`id_anotacoes`),
+  ADD KEY `usuario_id` (`usuario_id`);
 
 --
 -- Índices de tabela `empresa`
@@ -130,6 +144,12 @@ ALTER TABLE `usuarios`
 --
 
 --
+-- AUTO_INCREMENT de tabela `anotacoes`
+--
+ALTER TABLE `anotacoes`
+  MODIFY `id_anotacoes` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+
+--
 -- AUTO_INCREMENT de tabela `empresa`
 --
 ALTER TABLE `empresa`
@@ -139,7 +159,7 @@ ALTER TABLE `empresa`
 -- AUTO_INCREMENT de tabela `notificacoes`
 --
 ALTER TABLE `notificacoes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de tabela `usuarios`
@@ -150,6 +170,12 @@ ALTER TABLE `usuarios`
 --
 -- Restrições para tabelas despejadas
 --
+
+--
+-- Restrições para tabelas `anotacoes`
+--
+ALTER TABLE `anotacoes`
+  ADD CONSTRAINT `anotacoes_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`);
 
 --
 -- Restrições para tabelas `notificacoes`

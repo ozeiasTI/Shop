@@ -1,1 +1,3 @@
-Criar DUPLICAR => EDITAR, ATRIBUIR USUARIO, PUNP => CAMINHO STATUS,  e EXCLUIR para Anotações
+Gerar PDF E Excel para anotações
+
+Colocar Titulo nos Botoes

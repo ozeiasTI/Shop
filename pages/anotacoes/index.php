@@ -78,21 +78,73 @@ $meuID = $_SESSION['login']['id'];
         <button class="btnAdicionar" onclick="window.location.href='adicionar.php'"> + Adcionar Anotações</button>
 
         <h3><i class="fa-solid fa-feather"></i> Minhas Anotações</h3>
+
+        <div style="margin: 10px 0 20px; display: flex; flex-wrap: wrap; gap: 10px;">
+            <div style="display: flex; align-items: center;">
+                <span style="width: 15px; height: 15px; background-color: #e74c3c; display: inline-block; margin-right: 5px;"></span> Pendente
+            </div>
+            <div style="display: flex; align-items: center;">
+                <span style="width: 15px; height: 15px; background-color: #f39c12; display: inline-block; margin-right: 5px;"></span> Em andamento
+            </div>
+            <div style="display: flex; align-items: center;">
+                <span style="width: 15px; height: 15px; background-color: #2ecc71; display: inline-block; margin-right: 5px;"></span> Concluída
+            </div>
+            <div style="display: flex; align-items: center;">
+                <span style="width: 15px; height: 15px; background-color: #95a5a6; display: inline-block; margin-right: 5px;"></span> Cancelada
+            </div>
+            <div style="display: flex; align-items: center;">
+                <span style="width: 15px; height: 15px; background-color: #9b59b6; display: inline-block; margin-right: 5px;"></span> Postergada
+            </div>
+            <div style="display: flex; align-items: center;">
+                <span style="width: 15px; height: 15px; background-color: #c0392b; display: inline-block; margin-right: 5px;"></span> Prioritária
+            </div>
+            <div style="display: flex; align-items: center;">
+                <span style="width: 15px; height: 15px; background-color: #34495e; display: inline-block; margin-right: 5px;"></span> Arquivada
+            </div>
+        </div>
+
+
         <?php
         $consultaAnotações = mysqli_query($conexao, "SELECT * FROM anotacoes WHERE usuario_id = $meuID");
 
         while ($linha = mysqli_fetch_assoc($consultaAnotações)) {
-            echo "<div class='quadroAnotacoes'>";
+            $status = $linha['status_anotacoes'];
+
+            if ($status === 'Pendente') {
+                echo "<div class='quadroAnotacoes' style='border-left: 8px solid #e74c3c;'>"; // Vermelho
+            } elseif ($status === 'Em andamento') {
+                echo "<div class='quadroAnotacoes' style='border-left: 8px solid #f39c12;'>"; // Laranja
+            } elseif ($status === 'Concluída') {
+                echo "<div class='quadroAnotacoes' style='border-left: 8px solid #2ecc71;'>"; // Verde
+            } elseif ($status === 'Cancelada') {
+                echo "<div class='quadroAnotacoes' style='border-left: 8px solid #95a5a6;'>"; // Cinza
+            } elseif ($status === 'Postergada') {
+                echo "<div class='quadroAnotacoes' style='border-left: 8px solid #9b59b6;'>"; // Roxo
+            } elseif ($status === 'Prioritária') {
+                echo "<div class='quadroAnotacoes' style='border-left: 8px solid #c0392b;'>"; // Vermelho escuro
+            } elseif ($status === 'Arquivada') {
+                echo "<div class='quadroAnotacoes' style='border-left: 8px solid #34495e;'>"; // Azul escuro
+            } else {
+                echo "<div class='quadroAnotacoes'>"; // Sem cor de status
+            }
 
             // Botões de ação
             echo "<div class='acoes' style='text-align: right; margin-bottom: 10px;'>";
+            echo "<a href='atribuir.php?id=" . $linha['id_anotacoes'] . "' title='Atribuir' style='margin-right:10px; color: #9729b9ff;'><i class='fa-solid fa-user-shield'></i></a>";
+            echo "<a href='duplicar.php?id=" . $linha['id_anotacoes'] . "' title='Duplicar' style='margin-right:10px; color: #29b965ff;'><i class='fa-solid fa-copy'></i></a>";
             echo "<a href='editar.php?id=" . $linha['id_anotacoes'] . "' title='Editar' style='margin-right:10px; color: #2980b9;'><i class='fa-solid fa-pen-to-square'></i></a>";
             echo "<a href='excluir.php?id=" . $linha['id_anotacoes'] . "' title='Excluir' style='color: #c0392b;' onclick='return confirm(\"Tem certeza que deseja excluir esta anotação?\")'><i class='fa-solid fa-trash'></i></a>";
             echo "</div>";
 
             // Conteúdo da anotação
             echo "<h4><i class='fa-solid fa-note-sticky'></i> " . htmlspecialchars($linha['titulo']) . "</h4>";
-            echo "<span><strong>📅 Data:</strong> " . date("d/m/Y", strtotime($linha['data_execucao'])) . "</span>";
+            if ($linha['data_execucao'] < date('Y-m-d')) {
+                echo "<span style='color:red;'><strong>📅 Data:</strong> " . date("d/m/Y", strtotime($linha['data_execucao'])) . "</span>";
+            } elseif($linha['data_execucao'] == date('Y-m-d')) {
+                echo "<span style='color:blue;'><strong>📅 Data:</strong> " . date("d/m/Y", strtotime($linha['data_execucao'])) . "</span>";
+            }else{
+                echo "<span style='color:green;'><strong>📅 Data:</strong> " . date("d/m/Y", strtotime($linha['data_execucao'])) . "</span>";
+            }
             echo "<span><strong>📂 Categoria:</strong> " . htmlspecialchars($linha['categoria_anotacoes']) . "</span>";
             echo "<span><strong>📌 Status:</strong> " . htmlspecialchars($linha['status_anotacoes']) . "</span>";
             echo "<p>“" . nl2br(htmlspecialchars($linha['mensagem'])) . "”</p>";
