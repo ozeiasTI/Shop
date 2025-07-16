@@ -45,7 +45,7 @@ class MYPDF extends TCPDF {
 $pdf = new MYPDF('L', PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 $pdf->SetCreator(PDF_CREATOR);
 $pdf->SetAuthor($_SESSION['empresa']['nome']);
-$pdf->SetTitle('Relatório de Usuarios');
+$pdf->SetTitle('Relatório de Anotações');
 $pdf->SetMargins(15, 50, 15);
 $pdf->SetAutoPageBreak(TRUE, 25);
 $pdf->setPrintHeader(true);
@@ -75,69 +75,40 @@ $html = '
         font-weight: bold;
     }
 </style>
-<h1>Relatório de Usuários</h1>';
+<h1>Relatório de Anotações</h1>';
 
 // Tabela
 $html .= '<br><table border="1" cellpadding="5">
 <tr>
-    <th>Nome</th>
-    <th>E-mail</th>
-    <th>Função</th>
-    <th>CPF</th>
-    <th>Telefone</th>
-    <th>Idade</th>
-    <th>Atividade</th>
-    <th>Endereço</th>
+    <th>Título</th>
+    <th>Mensagem</th>
+    <th>Categoria</th>
+    <th>Data</th>
+    <th>Status</th>
 </tr>';
 
-$sql = "SELECT * FROM usuarios WHERE ativo = 'SIM'";
+$sql = "SELECT * FROM anotacoes";
 
 $res = $conexao->query($sql);
-$totalUsuarios = 0;
-
-function calcularIdade($data_nascimento) {
-    $data_nasc = new DateTime($data_nascimento);
-    $hoje = new DateTime();
-    $idade = $hoje->diff($data_nasc)->y;
-    return $idade;
-}
-function tempoDesde($data_cadastro) {
-    $data = new DateTime($data_cadastro);
-    $agora = new DateTime();
-    $intervalo = $agora->diff($data);
-
-    $partes = [];
-
-    if ($intervalo->y > 0) $partes[] = $intervalo->y . ' ano' . ($intervalo->y > 1 ? 's' : '');
-    if ($intervalo->m > 0) $partes[] = $intervalo->m . ' mês' . ($intervalo->m > 1 ? 'es' : '');
-    if ($intervalo->d > 0 && $intervalo->y == 0) $partes[] = $intervalo->d . ' dia' . ($intervalo->d > 1 ? 's' : '');
-
-    if (empty($partes)) return 'Hoje';
-    
-    return implode(', ', $partes) . ' atrás';
-}
-
+$totalanotacoes = 0;
 
 while ($q = $res->fetch_assoc()) {
-    $totalUsuarios++;
+    $totalanotacoes++;
     $html .= '<tr>
-        <td>' . htmlspecialchars($q['nome']) . '</td>
-        <td>' . htmlspecialchars($q['email']) . '</td>
-        <td>' . htmlspecialchars($q['funcao']) . '</td>
-        <td>' . htmlspecialchars($q['cpf']) . '</td>
-        <td>' . htmlspecialchars($q['telefone']) . '</td>
-        <td>' . calcularIdade($q['data_nascimento']) . ' anos</td>
-        <td>' . tempoDesde($q['data_cadastro']) . '</td>
-        <td>' . htmlspecialchars($q['endereco']) . '</td>
+        <td>' . htmlspecialchars($q['titulo']) . '</td>
+        <td>' . htmlspecialchars($q['mensagem']) . '</td>
+        <td>' . htmlspecialchars($q['categoria_anotacoes']) . '</td>
+        <td>' . htmlspecialchars($q['data_execucao']) . '</td>
+        <td>' . htmlspecialchars($q['status_anotacoes']) . '</td>
     </tr>';
 }
 
-$html .= "<tr class='total'><td colspan='7'>Total de Usuários</td><td>" . $totalUsuarios . "</td></tr>";
+$html .= "<tr class='total'><td colspan='7'>Total de Anotacoes</td><td>" . $totalanotacoes . "</td></tr>";
 $html .= "</table>";
 
 // Saída do PDF
 $pdf->writeHTML($html, true, false, true, false, '');
-$nome_arquivo = 'relatorio_usuarios_' . date('Ymd_His') . '.pdf';
+$nome_arquivo = 'relatorio_anotacoes_' . date('Ymd_His') . '.pdf';
 $pdf->Output($nome_arquivo, 'I');
 
 

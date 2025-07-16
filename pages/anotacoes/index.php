@@ -76,7 +76,12 @@ $meuID = $_SESSION['login']['id'];
         <h2><i class="fa-solid fa-clipboard"></i> Anotações</h2>
         <p>Bem-vindo ao painel de anotações. Aqui você pode gerenciar todas as suas anotações.</p>
         <button class="btnAdicionar" onclick="window.location.href='adicionar.php'"> + Adcionar Anotações</button>
-
+        <button class="btnPDF" onclick="window.open('relatorios/pdf.php', '_blank')">
+            <i class="fas fa-file-pdf"></i> PDF
+        </button>
+        <button class="btnEXCEL" onclick="window.open('relatorios/planilha.php', '_blank')">
+            <i class="fas fa-file-excel"></i> EXCEL
+        </button>
         <h3><i class="fa-solid fa-feather"></i> Minhas Anotações</h3>
 
         <div style="margin: 10px 0 20px; display: flex; flex-wrap: wrap; gap: 10px;">
@@ -140,9 +145,9 @@ $meuID = $_SESSION['login']['id'];
             echo "<h4><i class='fa-solid fa-note-sticky'></i> " . htmlspecialchars($linha['titulo']) . "</h4>";
             if ($linha['data_execucao'] < date('Y-m-d')) {
                 echo "<span style='color:red;'><strong>📅 Data:</strong> " . date("d/m/Y", strtotime($linha['data_execucao'])) . "</span>";
-            } elseif($linha['data_execucao'] == date('Y-m-d')) {
+            } elseif ($linha['data_execucao'] == date('Y-m-d')) {
                 echo "<span style='color:blue;'><strong>📅 Data:</strong> " . date("d/m/Y", strtotime($linha['data_execucao'])) . "</span>";
-            }else{
+            } else {
                 echo "<span style='color:green;'><strong>📅 Data:</strong> " . date("d/m/Y", strtotime($linha['data_execucao'])) . "</span>";
             }
             echo "<span><strong>📂 Categoria:</strong> " . htmlspecialchars($linha['categoria_anotacoes']) . "</span>";
