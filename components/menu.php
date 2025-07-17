@@ -42,6 +42,15 @@
 
         <ul>
             <li>
+                <a href="/Shop/pages/contas/index.php">
+                    <i class="fa-solid fa-sack-dollar"></i>
+                    Contas
+                </a>
+            </li>
+        </ul>
+
+        <ul>
+            <li>
                 <a href="/Shop/pages/anotacoes/index.php">
                     <i class="fa-solid fa-clipboard"></i>
                     Anotações

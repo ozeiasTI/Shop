@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $telefone = $_POST['telefone'];
     $ativo = $_POST['ativo'];
 
-    $query = "INSERT INTO usuarios (nome, email, senha, funcao, setor, cpf, data_nascimento, endereco, telefone) 
+    $query = "INSERT INTO usuarios (nome, email, senha, funcao, setor, cpf, data_nascimento, endereco, telefone,ativo) 
               VALUES ('$nome', '$email', '$senha', '$funcao', '$setor' , '$cpf', '$data_nascimento', '$endereco', '$telefone','$ativo')";
 
     if (mysqli_query($conexao, $query)) {

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 16/07/2025 às 19:09
+-- Tempo de geração: 17/07/2025 às 18:43
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -29,12 +29,30 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `anotacoes` (
   `id_anotacoes` int(11) NOT NULL,
-  `usuario_id` int(10) UNSIGNED DEFAULT NULL,
-  `titulo` varchar(30) DEFAULT NULL,
+  `usuario_id` int(10) UNSIGNED NOT NULL,
+  `titulo` varchar(200) DEFAULT NULL,
   `mensagem` text DEFAULT NULL,
-  `categoria_anotacoes` varchar(30) DEFAULT NULL,
+  `categoria_anotacoes` varchar(50) DEFAULT NULL,
   `data_execucao` date DEFAULT NULL,
-  `status_anotacoes` varchar(30) DEFAULT NULL
+  `status_anotacoes` varchar(50) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `contas`
+--
+
+CREATE TABLE `contas` (
+  `id_conta` int(11) NOT NULL,
+  `descricao_conta` varchar(50) DEFAULT NULL,
+  `valor` decimal(10,2) DEFAULT NULL,
+  `tipo` varchar(20) DEFAULT NULL,
+  `status_conta` varchar(20) DEFAULT NULL,
+  `data_lancamento` timestamp NOT NULL DEFAULT current_timestamp(),
+  `data_acerto` date DEFAULT NULL,
+  `forma_acerto` varchar(20) DEFAULT NULL,
+  `parcelas` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -119,6 +137,12 @@ ALTER TABLE `anotacoes`
   ADD KEY `usuario_id` (`usuario_id`);
 
 --
+-- Índices de tabela `contas`
+--
+ALTER TABLE `contas`
+  ADD PRIMARY KEY (`id_conta`);
+
+--
 -- Índices de tabela `empresa`
 --
 ALTER TABLE `empresa`
@@ -147,7 +171,13 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de tabela `anotacoes`
 --
 ALTER TABLE `anotacoes`
-  MODIFY `id_anotacoes` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id_anotacoes` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT de tabela `contas`
+--
+ALTER TABLE `contas`
+  MODIFY `id_conta` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de tabela `empresa`
@@ -165,7 +195,7 @@ ALTER TABLE `notificacoes`
 -- AUTO_INCREMENT de tabela `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Restrições para tabelas despejadas
@@ -175,7 +205,7 @@ ALTER TABLE `usuarios`
 -- Restrições para tabelas `anotacoes`
 --
 ALTER TABLE `anotacoes`
-  ADD CONSTRAINT `anotacoes_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`);
+  ADD CONSTRAINT `anotacoes_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE;
 
 --
 -- Restrições para tabelas `notificacoes`
