@@ -18,7 +18,13 @@ if(isset($_POST['btnSalvar'])){
     $parcelas = $_POST['parcelas'];
 
     if($parcelas > 1){
+        $dataInicial = new DateTime('$data_acerto');
         for($i = 0; $i < $parcelas; $i++){
+
+            $dataParcela = clone $dataInicial;
+
+            $dataParcela->modify("+{$i} month");
+            
             $conexao = mysqli_query($conexao,"INSERT INTO()VALUES()");
         }
     }else{

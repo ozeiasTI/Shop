@@ -1,1 +1,23 @@
 Iniciar Contas
+
+
+-----------------------data
+
+
+
+<?php
+$dataInicial = new DateTime('2025-10-15'); // Data base (ex: 15 de outubro)
+$quantidadeParcelas = 5;
+
+for ($i = 0; $i < $quantidadeParcelas; $i++) {
+    // Clona a data original para não alterar a base
+    $dataParcela = clone $dataInicial;
+
+    // Soma $i meses
+    $dataParcela->modify("+{$i} month");
+
+    // Formata como quiser (ex: para salvar no banco ou exibir)
+    echo "Parcela " . ($i + 1) . ": " . $dataParcela->format('Y-m-d') . "<br>";
+}
+?>
+
