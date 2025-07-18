@@ -8,30 +8,40 @@ if (!isset($_SESSION['login'])) {
     exit;
 }
 
-if(isset($_POST['btnSalvar'])){
+if (isset($_POST['salvar'])) {
+    // Dados do formulário
     $descricao_conta = $_POST['descricao'];
-    $valor = $_POST['valor'];
+    $valor = floatval($_POST['valor']);
     $tipo = $_POST['tipo'];
     $status_conta = "Aberta";
     $data_acerto = $_POST['data'];
     $forma_acerto = $_POST['forma_acerto'];
-    $parcelas = $_POST['parcelas'];
+    $parcelas = intval($_POST['parcelas']);
 
-    if($parcelas > 1){
-        $dataInicial = new DateTime('$data_acerto');
-        for($i = 0; $i < $parcelas; $i++){
-
-            $dataParcela = clone $dataInicial;
-
-            $dataParcela->modify("+{$i} month");
-            
-            $conexao = mysqli_query($conexao,"INSERT INTO()VALUES()");
-        }
-    }else{
-        $conexao = mysqli_query($conexao,"INSERT INTO()VALUES()");
+    // Ajuste valor se for saída
+    if ($tipo != 'Entrada') {
+        $valor = -$valor;
     }
-    
+
+    if ($parcelas > 1) {
+        $dataInicial = new DateTime($data_acerto);
+
+        for ($i = 0; $i < $parcelas; $i++) {
+            $dataParcela = clone $dataInicial;
+            $dataParcela->modify("+{$i} month");
+            $dataFormatada = $dataParcela->format("Y-m-d");
+
+            // Aqui usamos a conexão corretamente, sem sobrescrevê-la
+            mysqli_query($conexao, "INSERT INTO contas (descricao_conta, valor, tipo, status_conta, data_acerto, forma_acerto, parcelas)
+                                    VALUES ('$descricao_conta', $valor, '$tipo', '$status_conta', '$dataFormatada', '$forma_acerto', $parcelas)");
+        }
+
+    } else {
+        mysqli_query($conexao, "INSERT INTO contas (descricao_conta, valor, tipo, status_conta, data_acerto, forma_acerto, parcelas)
+                                VALUES ('$descricao_conta', $valor, '$tipo', '$status_conta', '$data_acerto', '$forma_acerto', $parcelas)");
+    }
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -66,7 +76,7 @@ if(isset($_POST['btnSalvar'])){
             </div>
             <div class="group">
                 <label>Valor:</label>
-                <input type="number" name="valor" required placeholder="Digite o valor">
+                <input type="text" name="valor" required placeholder="Digite o valor">
             </div>
             <div class="group">
                 <label>Tipo:</label>
@@ -94,7 +104,7 @@ if(isset($_POST['btnSalvar'])){
                 <input type="number" name="parcelas" min="1" value="1">
             </div>
 
-            <button type="submit" class="btnSalvar"><i class="fas fa-plus"></i> Adicionar Conta</button>
+            <button type="submit" class="btnSalvar" name="salvar"><i class="fas fa-plus"></i> Adicionar Conta</button>
             <button type="button" class="btnCancelar" onclick="window.location.href='index.php'"><i class="fas fa-times"></i> Cancelar</button>
         </form>
     </main>
