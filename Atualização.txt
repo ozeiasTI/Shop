@@ -1,4 +1,2 @@
-Iniciar Contas
 
-- Parcelas servem só para cadastro no banco não usa na tabela 
-
+gerar PDF EXECEL de contas, 

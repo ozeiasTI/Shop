@@ -32,14 +32,17 @@ if (isset($_POST['salvar'])) {
             $dataFormatada = $dataParcela->format("Y-m-d");
 
             // Aqui usamos a conexão corretamente, sem sobrescrevê-la
-            mysqli_query($conexao, "INSERT INTO contas (descricao_conta, valor, tipo, status_conta, data_acerto, forma_acerto, parcelas)
-                                    VALUES ('$descricao_conta', $valor, '$tipo', '$status_conta', '$dataFormatada', '$forma_acerto', $parcelas)");
+            mysqli_query($conexao, "INSERT INTO contas (descricao_conta, valor, tipo, status_conta, data_acerto, forma_acerto)
+                                    VALUES ('$descricao_conta', $valor, '$tipo', '$status_conta', '$dataFormatada', '$forma_acerto')");
         }
 
     } else {
-        mysqli_query($conexao, "INSERT INTO contas (descricao_conta, valor, tipo, status_conta, data_acerto, forma_acerto, parcelas)
-                                VALUES ('$descricao_conta', $valor, '$tipo', '$status_conta', '$data_acerto', '$forma_acerto', $parcelas)");
+        mysqli_query($conexao, "INSERT INTO contas (descricao_conta, valor, tipo, status_conta, data_acerto, forma_acerto)
+                                VALUES ('$descricao_conta', $valor, '$tipo', '$status_conta', '$data_acerto', '$forma_acerto')");
     }
+    $_SESSION['mensagem'] = "Conta adcionada com sucesso!";
+    header("Location: adicionar.php");
+    exit;
 }
 
 ?>

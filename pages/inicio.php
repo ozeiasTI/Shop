@@ -57,11 +57,11 @@ if (!isset($_SESSION['login'])) {
         <p>Bem-vindo ao painel de controle. Aqui você pode gerenciar o sistema.</p>
         <div class="dashboard-cards">
             <div class="card">
-                <h3>Total de Usuários</h3>
+                 <h3>Total de Usuários</h3>
                 <?php
                     $consultaUsuarios = mysqli_query($conexao, "SELECT COUNT(*) AS total FROM usuarios");
                     $resultado = mysqli_fetch_assoc($consultaUsuarios);
-                    echo "<p>" . $resultado['total'] . "</p>";
+                    echo "<p>" . $resultado['valor'] . "</p>";
                 ?>
             </div>
         </div>
