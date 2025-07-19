@@ -26,21 +26,27 @@ if (!isset($_SESSION['login'])) {
             flex-wrap: wrap;
             justify-content: center;
         }
+
         .card {
-            background-color: #f0f0f0;
             padding: 20px;
-            border-radius: 8px;
+            border-radius: 40px 8px 40px 8px;
             flex: 1;
             text-align: center;
-             box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+            box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
         }
-        .card h3 {
+
+        .card h4 {
             margin-bottom: 10px;
+            font-size: 20px;
+            color: white;
         }
+
         .card p {
             font-size: 24px;
             font-weight: bold;
+            color: white;
         }
+
     </style>
 </head>
 <body>
@@ -56,12 +62,36 @@ if (!isset($_SESSION['login'])) {
         <h2><i class="fas fa-signal"></i> Dashboard</h2>
         <p>Bem-vindo ao painel de controle. Aqui você pode gerenciar o sistema.</p>
         <div class="dashboard-cards">
-            <div class="card">
-                 <h3>Total de Usuários</h3>
+            <div class="card" style="background-color: #d064d4ff;">
+                 <h4>Valor em Caixa(fazendo)</h4>
+                <?php
+                    $consultacaixa = mysqli_query($conexao, "SELECT SUM(valor) AS total FROM caixa");
+                    $resultadocaixa = mysqli_fetch_assoc($consultacaixa);
+                    echo "<p>" . $resultadocaixa['total'] . "</p>";
+                ?>
+            </div>
+            <div class="card" style="background-color: #6475d4ff;">
+                 <h4>Total de Usuários</h4>
                 <?php
                     $consultaUsuarios = mysqli_query($conexao, "SELECT COUNT(*) AS total FROM usuarios");
                     $resultado = mysqli_fetch_assoc($consultaUsuarios);
-                    echo "<p>" . $resultado['valor'] . "</p>";
+                    echo "<p>" . $resultado['total'] . "</p>";
+                ?>
+            </div>
+            <div class="card" style="background-color: #be6060ff;">
+                 <h4>Total de Contas a Pagar</h4>
+                <?php
+                    $consultacontaspagar = mysqli_query($conexao, "SELECT SUM(valor) AS total FROM contas WHERE status_conta = 'Aberta' AND tipo = 'Saída'");
+                    $resultadocontaspagar = mysqli_fetch_assoc($consultacontaspagar);
+                    echo "<p>R$ " . $resultadocontaspagar['total'] . "</p>";
+                ?>
+            </div>
+            <div class="card" style="background-color: #51aa5dff;">
+                 <h4>Total de Contas a Receber</h4>
+                <?php
+                    $consultacontasreceber = mysqli_query($conexao, "SELECT SUM(valor) AS total FROM contas WHERE status_conta = 'Aberta' AND tipo = 'Entrada'");
+                    $resultadocontasreceber = mysqli_fetch_assoc($consultacontasreceber);
+                    echo "<p>R$ " . $resultadocontasreceber['total'] . "</p>";
                 ?>
             </div>
         </div>

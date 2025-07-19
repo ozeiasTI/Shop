@@ -52,7 +52,7 @@ if (isset($_POST['salvar'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Adicionar Usuário</title>
+    <title>Adicionar Conta</title>
     <link rel="stylesheet" href="/Shop/css/padrao.css">
     <link rel="shortcut icon" href="/Shop/img/login.svg" type="image/x-icon">
     <script src="https://kit.fontawesome.com/8ec7b849f5.js" crossorigin="anonymous"></script>

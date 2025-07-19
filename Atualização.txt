@@ -1,2 +1,6 @@
+-- contas
 
-gerar PDF EXECEL de contas, 
+- Registar pagamento : 
+
+-> (SET pago) em contas.
+-> (INSERT) em caixa mensal.

@@ -52,22 +52,23 @@ if (isset($_POST['pesquisar'])) {
         }
 
         .card {
-            background-color: #f0f0f0;
             padding: 20px;
-            border-radius: 8px;
+            border-radius: 40px 8px 40px 8px;
             flex: 1;
             text-align: center;
             box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
         }
 
-        .card h3 {
+        .card h4 {
             margin-bottom: 10px;
+            font-size: 20px;
         }
 
         .card p {
             font-size: 24px;
             font-weight: bold;
         }
+
     </style>
 </head>
 
@@ -87,45 +88,53 @@ if (isset($_POST['pesquisar'])) {
         <button class="btnPDF" onclick="window.open('relatorios/pdf.php', '_blank')">
             <i class="fas fa-file-pdf"></i> PDF
         </button>
-        <button class="btnEXCEL" onclick="window.open('relatorios/planilha.php', '_blank')">
+        <button class="btnEXCEL" onclick="window.open('relatorios/excel.php', '_blank')">
             <i class="fas fa-file-excel"></i> EXCEL
         </button>
-        <h3><i class="fa-solid fa-sack-dollar"></i> Relatório Minhas Contas Mensais</h3>
+        <h3><i class="fa-solid fa-sack-dollar"></i> Contas no mês de { <?php echo date("M") ?> }</h3>
 
         <div class="dashboard-cards">
-            <div class="card">
-                <h3>Contas a Receber</h3>
+            <div class="card" style="background-color: #8cf0daff;">
+                <h4>Contas a Receber</h4>
                 <?php
                 $consultacontasentrada = mysqli_query($conexao, "SELECT SUM(valor) AS entradas FROM contas WHERE tipo = 'Entrada' AND status_conta = 'Aberta' AND MONTH(data_acerto) = MONTH(CURDATE()) AND YEAR(data_acerto) = YEAR(CURDATE())");
                 $resultadoentrada = mysqli_fetch_assoc($consultacontasentrada);
                 echo "<p style='color:green;'>R$ " . $resultadoentrada['entradas'] . "</p>";
                 ?>
             </div>
-            <div class="card">
-                <h3>Contas já recebidas</h3>
+            <div class="card" style="background-color: #8cf0daff;">
+                <h4>Contas já recebidas</h4>
                 <?php
                 $consultacontasentradarecebidas = mysqli_query($conexao, "SELECT SUM(valor) AS entradas FROM contas WHERE tipo = 'Entrada' AND status_conta = 'Pago' AND MONTH(data_acerto) = MONTH(CURDATE()) AND YEAR(data_acerto) = YEAR(CURDATE())");
                 $resultadoentradarecebida = mysqli_fetch_assoc($consultacontasentradarecebidas);
                 echo "<p style='color:green;'>R$ " . $resultadoentradarecebida['entradas'] . "</p>";
                 ?>
             </div>
-            <div class="card">
-                <h3>Contas a Pagar</h3>
+            <div class="card" style="background-color: #8cf0daff;">
+                <h4>Contas a Pagar</h4>
                 <?php
                 $consultacontassaida = mysqli_query($conexao, "SELECT SUM(valor) AS saidas FROM contas WHERE tipo = 'Saída' AND status_conta = 'Aberta' AND MONTH(data_acerto) = MONTH(CURDATE()) AND YEAR(data_acerto) = YEAR(CURDATE())");
                 $resultadosaida = mysqli_fetch_assoc($consultacontassaida);
                 echo "<p style='color:red;'>R$ " . $resultadosaida['saidas'] . "</p>";
                 ?>
             </div>
-            <div class="card">
-                <h3>Contas já pagas</h3>
+            <div class="card" style="background-color: #8cf0daff;">
+                <h4>Contas já pagas</h4>
                 <?php
                 $consultacontassaidapagas = mysqli_query($conexao, "SELECT SUM(valor) AS saidas FROM contas WHERE tipo = 'Saída' AND status_conta = 'Pago' AND MONTH(data_acerto) = MONTH(CURDATE()) AND YEAR(data_acerto) = YEAR(CURDATE())");
                 $resultadosaidapagas = mysqli_fetch_assoc($consultacontassaidapagas);
                 echo "<p style='color:red;'>R$ " . $resultadosaidapagas['saidas'] . "</p>";
                 ?>
             </div>
+            <div class="card" style="background-color: #8cf0daff;">
+                <h4>Expectativa de Lucro</h4>
+                <?php
+                $valorTotalMensal = ($resultadoentrada['entradas'] + $resultadoentradarecebida['entradas']) - (-($resultadosaida['saidas'] + $resultadosaidapagas['saidas']));
+                echo "<p style='color:blue;'>R$ " . $valorTotalMensal . "</p>";
+                ?>
+            </div>
         </div>
+
         <h3><i class="fa-solid fa-sack-dollar"></i> Todos os Registros</h3>
 
         <form action="" method="post" class="formulario" style="width: 100%;">
@@ -144,13 +153,24 @@ if (isset($_POST['pesquisar'])) {
             <button class="btnPesquisar" name="pesquisar">Pesquisar</button>
         </form>
 
-
+        <div style="margin: 10px 0 20px; display: flex; flex-wrap: wrap; gap: 10px;">
+            <div style="display: flex; align-items: center;">
+                <span style="width: 15px; height: 15px; background-color: #e74c3c; display: inline-block; margin-right: 5px;"></span> Vencida
+            </div>
+            <div style="display: flex; align-items: center;">
+                <span style="width: 15px; height: 15px; background-color: #0f0a01ff; display: inline-block; margin-right: 5px;"></span> Em andamento
+            </div>
+            <div style="display: flex; align-items: center;">
+                <span style="width: 15px; height: 15px; background-color: #2ecc71; display: inline-block; margin-right: 5px;"></span> Paga
+            </div>
+        </div>
         <?php
         if ($consultaContas->num_rows > 0) {
             $valorTotal = 0;
             echo "<table>";
-            echo "<tr><th>Descrição</th><th>Tipo</th><th>Valor</th><th>Status</th><th>Data Acerto</th><th>Forma de Acerto</th></tr>";
+            echo "<tr><th>Descrição</th><th>Tipo</th><th>Valor</th><th>Status</th><th>Data Acerto</th><th>Forma de Acerto</th><th>Ações</th></tr>";
             while ($contas = mysqli_fetch_assoc($consultaContas)) {
+
                 if ($contas['data_acerto'] < date('Y-m-d') &&  $contas['status_conta'] == 'Aberta') {
                     echo "<tr style='color:red'>";
                 } elseif ($contas['data_acerto'] >= date('Y-m-d') &&  $contas['status_conta'] == 'Aberta') {
@@ -158,18 +178,25 @@ if (isset($_POST['pesquisar'])) {
                 } elseif ($contas['status_conta'] == 'Pago') {
                     echo "<tr style='color:green'>";
                 }
+
                 echo "<td>" . $contas['descricao_conta'] . "</td>";
                 echo "<td>" . $contas['tipo'] . "</td>";
                 echo "<td>R$ " . $contas['valor'] . "</td>";
                 echo "<td>" . $contas['status_conta'] . "</td>";
                 echo "<td>" . date('d-m-Y', strtotime($contas['data_acerto'])) . "</td>";
                 echo "<td>" . $contas['forma_acerto'] . "</td>";
+                echo "<td>";
+                echo "<a href='editar.php?id=" . $contas['id_conta'] . "' title='Editar' style='margin-right:10px; color: #2980b9;'><i class='fa-solid fa-pencil'></i></a>";
+                echo "<a href='excluir.php?id=" . $contas['id_conta'] . "' title='Excluir' style='margin-right:10px; color: #c0392b;'><i class='fa-solid fa-trash'></i></a>";
+                echo "<a href='duplicar.php?id=" . $contas['id_conta'] . "' title='Duplicar' style='margin-right:10px; color: #29b965ff;'><i class='fa-solid fa-copy'></i></a>";
+                echo "</td>";
                 echo "</tr>";
+
                 if ($contas['status_conta'] == 'Aberta') {
                     $valorTotal += $contas['valor'];
                 }
             }
-            echo "<tr><td colspan='5' style='font-weight:bold;'>Valor total da soma dos Registros de Contas a Pagar e a Receber em Aberto</td><td>R$ $valorTotal</td></tr>";
+            echo "<tr><td colspan='6' style='font-weight:bold;'>Valor total da soma dos Registros de Contas a Pagar e a Receber em Aberto</td><td>R$ $valorTotal</td></tr>";
             echo "</table>";
         } else {
             echo "Não há contas Cadastradas";

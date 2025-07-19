@@ -25,7 +25,7 @@ h2{
     margin-bottom: 10px;
 }
 h3{
-    margin-top: 20px;
+    margin-top: 40px;
     color: var(--cor-secundaria);
 }
 .btnSalvar {
@@ -146,6 +146,7 @@ th, td {
     padding: 12px 10px;
     text-align: left;
     border: 1px solid var(--cor-borda);
+    text-align: center;
 }
 
 th {
