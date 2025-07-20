@@ -90,7 +90,7 @@ $html .= '<br><table border="1" cellpadding="5">
     <th>Forma de Acerto</th>
 </tr>';
 
-$sql = "SELECT * FROM contas";
+$sql = "SELECT * FROM contas ORDER BY data_acerto";
 
 
 $res = $conexao->query($sql);

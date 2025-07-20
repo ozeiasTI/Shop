@@ -41,6 +41,19 @@
         </ul>
 
         <ul>
+            <li class="submenu-toggle">
+                <a href="#">
+                    <i class="fa-solid fa-dolly"></i>
+                     Produtos
+                    <i class="fa-solid fa-angle-down seta"></i>
+                </a>
+            </li>
+            <li class="submenu-item"><a href="#"><i class="fa-solid fa-truck-moving"></i>Fornecedor</a></li>
+            <li class="submenu-item"><a href="#"><i class="fa-solid fa-table-list"></i>Categoria</a></li>
+            <li class="submenu-item"><a href="#"><i class="fa-solid fa-cart-plus"></i>Produtos</a></li>
+        </ul>
+
+        <ul>
             <li>
                 <a href="/Shop/pages/contas/index.php">
                     <i class="fa-solid fa-sack-dollar"></i>
@@ -56,18 +69,6 @@
                     Anotações
                 </a>
             </li>
-        </ul>
-
-        <ul>
-            <li class="submenu-toggle">
-                <a href="#">
-                    <i class="fa-solid fa-clipboard"></i>
-                     Anotações
-                    <i class="fa-solid fa-angle-down seta"></i>
-                </a>
-            </li>
-            <li class="submenu-item"><a href="#"><i class="fa-solid fa-plus"></i>Cadastro</a></li>
-            <li class="submenu-item"><a href="#"><i class="fa-solid fa-trash"></i>Excluir</a></li>
         </ul>
     </div>
 

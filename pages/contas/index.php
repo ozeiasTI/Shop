@@ -68,7 +68,6 @@ if (isset($_POST['pesquisar'])) {
             font-size: 24px;
             font-weight: bold;
         }
-
     </style>
 </head>
 
@@ -129,7 +128,7 @@ if (isset($_POST['pesquisar'])) {
             <div class="card" style="background-color: #8cf0daff;">
                 <h4>Expectativa de Lucro</h4>
                 <?php
-                $valorTotalMensal = ($resultadoentrada['entradas'] + $resultadoentradarecebida['entradas']) - (-($resultadosaida['saidas'] + $resultadosaidapagas['saidas']));
+                $valorTotalMensal = ($resultadoentrada['entradas'] + $resultadoentradarecebida['entradas']) - (- ($resultadosaida['saidas'] + $resultadosaidapagas['saidas']));
                 echo "<p style='color:blue;'>R$ " . $valorTotalMensal . "</p>";
                 ?>
             </div>
@@ -186,9 +185,14 @@ if (isset($_POST['pesquisar'])) {
                 echo "<td>" . date('d-m-Y', strtotime($contas['data_acerto'])) . "</td>";
                 echo "<td>" . $contas['forma_acerto'] . "</td>";
                 echo "<td>";
-                echo "<a href='editar.php?id=" . $contas['id_conta'] . "' title='Editar' style='margin-right:10px; color: #2980b9;'><i class='fa-solid fa-pencil'></i></a>";
-                echo "<a href='excluir.php?id=" . $contas['id_conta'] . "' title='Excluir' style='margin-right:10px; color: #c0392b;'><i class='fa-solid fa-trash'></i></a>";
-                echo "<a href='duplicar.php?id=" . $contas['id_conta'] . "' title='Duplicar' style='margin-right:10px; color: #29b965ff;'><i class='fa-solid fa-copy'></i></a>";
+                if ($contas['status_conta'] == 'Pago') {
+                    echo "<span>✅ PAGO</span>";
+                } else {
+                    echo "<a href='editar.php?id=" . $contas['id_conta'] . "' title='Editar' style='margin-right:10px; color: #2980b9;'><i class='fa-solid fa-pencil'></i></a>";
+                    echo "<a href='excluir.php?id=" . $contas['id_conta'] . "' title='Excluir' style='margin-right:10px; color: #c0392b;'><i class='fa-solid fa-trash'></i></a>";
+                    echo "<a href='duplicar.php?id=" . $contas['id_conta'] . "' title='Duplicar' style='margin-right:10px; color: #29b965ff;'><i class='fa-solid fa-copy'></i></a>";
+                    echo "<a href='lancar.php?id=" . $contas['id_conta'] . "' title='Pagar / Receber' style='margin-right:10px; color: #9029b9ff;'><i class='fa-solid fa-file-invoice-dollar'></i></a>";
+                }
                 echo "</td>";
                 echo "</tr>";
 

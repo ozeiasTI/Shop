@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 17/07/2025 às 18:43
+-- Tempo de geração: 20/07/2025 às 17:23
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -40,6 +40,32 @@ CREATE TABLE `anotacoes` (
 -- --------------------------------------------------------
 
 --
+-- Estrutura para tabela `caixa`
+--
+
+CREATE TABLE `caixa` (
+  `id_caixa` int(10) UNSIGNED NOT NULL,
+  `valor` decimal(10,2) DEFAULT NULL,
+  `tipo` varchar(30) DEFAULT NULL,
+  `descricao` varchar(255) DEFAULT NULL,
+  `data_movimentacao` timestamp NOT NULL DEFAULT current_timestamp(),
+  `referencia` varchar(30) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `categoria`
+--
+
+CREATE TABLE `categoria` (
+  `id_categoria` int(10) UNSIGNED NOT NULL,
+  `descricao` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura para tabela `contas`
 --
 
@@ -51,8 +77,7 @@ CREATE TABLE `contas` (
   `status_conta` varchar(20) DEFAULT NULL,
   `data_lancamento` timestamp NOT NULL DEFAULT current_timestamp(),
   `data_acerto` date DEFAULT NULL,
-  `forma_acerto` varchar(20) DEFAULT NULL,
-  `parcelas` int(11) DEFAULT NULL
+  `forma_acerto` varchar(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -79,6 +104,20 @@ CREATE TABLE `empresa` (
 
 INSERT INTO `empresa` (`id`, `nome`, `email`, `senhaapp`, `telefone`, `cidade`, `endereco`, `cnpj`, `logo`) VALUES
 (1, 'Hardware Store', 'ozeeiiaass@gmail.com', 'riex qacl krtb eqmu', '(69) 993654721', 'Vilhena', 'av das dores , 2589', '00000000000', 'logo.jpg');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `fornecedor`
+--
+
+CREATE TABLE `fornecedor` (
+  `id_fornecedor` int(10) UNSIGNED NOT NULL,
+  `nome` varchar(150) DEFAULT NULL,
+  `cnpj` varchar(30) DEFAULT NULL,
+  `endereco` varchar(100) DEFAULT NULL,
+  `ramo` varchar(100) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -137,6 +176,18 @@ ALTER TABLE `anotacoes`
   ADD KEY `usuario_id` (`usuario_id`);
 
 --
+-- Índices de tabela `caixa`
+--
+ALTER TABLE `caixa`
+  ADD PRIMARY KEY (`id_caixa`);
+
+--
+-- Índices de tabela `categoria`
+--
+ALTER TABLE `categoria`
+  ADD PRIMARY KEY (`id_categoria`);
+
+--
 -- Índices de tabela `contas`
 --
 ALTER TABLE `contas`
@@ -147,6 +198,12 @@ ALTER TABLE `contas`
 --
 ALTER TABLE `empresa`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Índices de tabela `fornecedor`
+--
+ALTER TABLE `fornecedor`
+  ADD PRIMARY KEY (`id_fornecedor`);
 
 --
 -- Índices de tabela `notificacoes`
@@ -171,19 +228,37 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de tabela `anotacoes`
 --
 ALTER TABLE `anotacoes`
-  MODIFY `id_anotacoes` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_anotacoes` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT de tabela `caixa`
+--
+ALTER TABLE `caixa`
+  MODIFY `id_caixa` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT de tabela `categoria`
+--
+ALTER TABLE `categoria`
+  MODIFY `id_categoria` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de tabela `contas`
 --
 ALTER TABLE `contas`
-  MODIFY `id_conta` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_conta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
 
 --
 -- AUTO_INCREMENT de tabela `empresa`
 --
 ALTER TABLE `empresa`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT de tabela `fornecedor`
+--
+ALTER TABLE `fornecedor`
+  MODIFY `id_fornecedor` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de tabela `notificacoes`

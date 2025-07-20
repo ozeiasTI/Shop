@@ -1,6 +1,14 @@
--- contas
+CRIAR PÁGINAS GESTÃO: 
 
-- Registar pagamento : 
+- > Fornecedor
+- > Categoria
 
--> (SET pago) em contas.
--> (INSERT) em caixa mensal.
+CRIAT TABELA Produtos, Serviços
+
+CRIAR PÁGINAS GESTÃO:
+
+- > Produtos
+- > Serviços
+- > caixa
+
+CRIAR DASHBOARD
