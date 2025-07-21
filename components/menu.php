@@ -48,7 +48,7 @@
                     <i class="fa-solid fa-angle-down seta"></i>
                 </a>
             </li>
-            <li class="submenu-item"><a href="#"><i class="fa-solid fa-truck-moving"></i>Fornecedor</a></li>
+            <li class="submenu-item"><a href="/Shop/pages/fornecedor/index.php"><i class="fa-solid fa-truck-moving"></i>Fornecedor</a></li>
             <li class="submenu-item"><a href="#"><i class="fa-solid fa-table-list"></i>Categoria</a></li>
             <li class="submenu-item"><a href="#"><i class="fa-solid fa-cart-plus"></i>Produtos</a></li>
         </ul>
