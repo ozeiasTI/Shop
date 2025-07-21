@@ -1,7 +1,7 @@
 CRIAR PÁGINAS GESTÃO: 
 
-- > Fornecedor (CRUD + relatorios) - C/R/D ( ❌ Falta Editar + Relatorios)
-- > Categoria
+- > Fornecedor (CRUD + relatorios + Pesquisa + email) ✅ 
+- > Categoria (CRUD + Pesquisa + Relatorios)
 
 CRIAT TABELA Produtos, Serviços
 

@@ -8,6 +8,10 @@ if (!isset($_SESSION['login'])) {
     exit;
 }
 
+$idFornecedor = $_GET['id'];
+$consultaFornecedor = mysqli_query($conexao,"SELECT * FROM fornecedor WHERE id_fornecedor = $idFornecedor");
+$fornecedor = mysqli_fetch_assoc($consultaFornecedor);
+
 if(isset($_POST['salvar'])){
     $nome = $_POST['nome'];
     $cnpj = $_POST['cnpj'];
@@ -15,10 +19,10 @@ if(isset($_POST['salvar'])){
     $ramo = $_POST['ramo'];
     $email = $_POST['email'];
 
-    $injecao = mysqli_query($conexao,"INSERT INTO fornecedor(nome,cnpj,endereco,ramo,email)VALUES('$nome','$cnpj','$endereco','$ramo','$email')");
+    $injecao = mysqli_query($conexao,"UPDATE fornecedor SET nome = '$nome', cnpj = '$cnpj', endereco = '$endereco', ramo = '$ramo', email = '$email' WHERE id_fornecedor = $idFornecedor");
 
     if($injecao){
-        $_SESSION['mensagem'] = "Cadastro Efetivado com Sucesso!";
+        $_SESSION['mensagem'] = "Cadastro Editado com Sucesso!";
         header("Location: index.php");
         exit;
     }
@@ -46,31 +50,31 @@ if(isset($_POST['salvar'])){
                 unset($_SESSION['mensagem']);
             }
         ?>
-        <h2><i class="fa-solid fa-plus"></i> Adcionar Fornecedor</h2>
-        <p>Bem-vindo ao painel de Adcionar Fornecedor. Aqui você pode gerenciar os fornecedores.</p>
+        <h2><i class="fa-solid fa-plus"></i> Editar Fornecedor</h2>
+        <p>Bem-vindo ao painel de editar Fornecedor. Aqui você pode editar os fornecedores.</p>
         <form action="" method="post" class="formulario">
-            
+           
             <label>Nome</label>
-            <input type="text" name="nome" placeholder="Digite o nome do Fornecedor">
-            
+            <input type="text" name="nome" value="<?php echo $fornecedor['nome']; ?>">
+           
             <div class="group">
                 <label>CNPJ</label>
-                <input type="text" name="cnpj" placeholder="Digite o CNPJ">
+                <input type="text" name="cnpj" value="<?php echo $fornecedor['cnpj']; ?>">
             </div>
             <div class="group">
                 <label>Endereço</label>
-                <input type="text" name="endereco" placeholder="Digite o Endereço do Fornecedor">
+                <input type="text" name="endereco" value="<?php echo $fornecedor['endereco']; ?>">
             </div>
             <div class="group">
                 <label>Ramo</label>
-                <input type="text" name="ramo" placeholder="Digite o ramo do Fornecedor">
+                <input type="text" name="ramo" value="<?php echo $fornecedor['ramo']; ?>">
             </div>
             <div class="group">
                 <label>E-mail</label>
-                <input type="text" name="email" placeholder="Digite o email do Fornecedor">
+                <input type="text" name="email" value="<?php echo $fornecedor['email']; ?>">
             </div>
 
-            <button type="submit" class="btnSalvar" name="salvar"><i class="fas fa-plus"></i> Adicionar Fornecedor</button>
+            <button type="submit" class="btnSalvar" name="salvar"><i class="fas fa-plus"></i> Editar Fornecedor</button>
             <button type="button" class="btnCancelar" onclick="window.location.href='index.php'"><i class="fas fa-times"></i> Cancelar</button>
         </form>
     </main>
