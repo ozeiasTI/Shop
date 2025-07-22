@@ -1,11 +1,9 @@
-CRIAR PÁGINAS GESTÃO: 
+Gestão de Produtos
 
-- > Fornecedor (CRUD + relatorios + Pesquisa + email) ✅ 
-- > Categoria (CRUD + Pesquisa + Relatorios) ✅
-
-CRIAT TABELA Produtos, Serviços
+CRIAT TABELA, Serviços
 
 CRIAR PÁGINAS GESTÃO:
+
 
 - > Produtos
 - > Serviços
