@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 20/07/2025 às 17:23
+-- Tempo de geração: 22/07/2025 às 20:45
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -63,6 +63,14 @@ CREATE TABLE `categoria` (
   `descricao` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Despejando dados para a tabela `categoria`
+--
+
+INSERT INTO `categoria` (`id_categoria`, `descricao`) VALUES
+(2, 'Bebidas'),
+(3, 'Limpeza');
+
 -- --------------------------------------------------------
 
 --
@@ -116,8 +124,17 @@ CREATE TABLE `fornecedor` (
   `nome` varchar(150) DEFAULT NULL,
   `cnpj` varchar(30) DEFAULT NULL,
   `endereco` varchar(100) DEFAULT NULL,
-  `ramo` varchar(100) DEFAULT NULL
+  `ramo` varchar(100) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `fornecedor`
+--
+
+INSERT INTO `fornecedor` (`id_fornecedor`, `nome`, `cnpj`, `endereco`, `ramo`, `email`) VALUES
+(4, 'Brazil', '5454.8784545.', 'av guaporé', 'Agrário', 'ozeeiiaass@gmail.com'),
+(5, 'xsxasx', '5445646', 'sxsxsxs', 'sxsxasx', 'ozeias.souza@ifro.edu.br');
 
 -- --------------------------------------------------------
 
@@ -138,6 +155,30 @@ CREATE TABLE `notificacoes` (
 -- --------------------------------------------------------
 
 --
+-- Estrutura para tabela `produto`
+--
+
+CREATE TABLE `produto` (
+  `id_produto` int(10) UNSIGNED NOT NULL,
+  `nome` varchar(255) DEFAULT NULL,
+  `categoria_id` int(10) UNSIGNED DEFAULT NULL,
+  `preco_custo` decimal(10,2) DEFAULT NULL,
+  `preco_venda` decimal(10,2) DEFAULT NULL,
+  `estoque_total` int(11) DEFAULT NULL,
+  `fornecedor_id` int(10) UNSIGNED DEFAULT NULL,
+  `estoque_minimo` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `produto`
+--
+
+INSERT INTO `produto` (`id_produto`, `nome`, `categoria_id`, `preco_custo`, `preco_venda`, `estoque_total`, `fornecedor_id`, `estoque_minimo`) VALUES
+(3, 'ddddd', 2, 32.00, 50.00, 50, 4, 3);
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura para tabela `usuarios`
 --
 
@@ -154,15 +195,16 @@ CREATE TABLE `usuarios` (
   `foto` varchar(255) DEFAULT NULL,
   `data_cadastro` timestamp NOT NULL DEFAULT current_timestamp(),
   `telefone` varchar(255) DEFAULT NULL,
-  `ativo` varchar(5) DEFAULT 'SIM'
+  `ativo` varchar(5) DEFAULT 'SIM',
+  `codigo_recuperacao` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Despejando dados para a tabela `usuarios`
 --
 
-INSERT INTO `usuarios` (`id`, `nome`, `email`, `senha`, `setor`, `funcao`, `cpf`, `data_nascimento`, `endereco`, `foto`, `data_cadastro`, `telefone`, `ativo`) VALUES
-(1, 'Ozeias Meira Santos de Souza', 'ozeias.souza@ifro.edu.br', '123', 'Gerência', 'Administrador', '033.662.282-10', '1998-08-12', 'Av guaporé, n° 3230', '1669471212336.jpg', '2025-07-08 21:39:39', '6992726386', 'SIM');
+INSERT INTO `usuarios` (`id`, `nome`, `email`, `senha`, `setor`, `funcao`, `cpf`, `data_nascimento`, `endereco`, `foto`, `data_cadastro`, `telefone`, `ativo`, `codigo_recuperacao`) VALUES
+(1, 'Ozeias Meira Santos de Souza', 'ozeias.souza@ifro.edu.br', '123', 'Gerência', 'Administrador', '033.662.282-10', '1998-08-12', 'Av guaporé, n° 3230', '1669471212336.jpg', '2025-07-08 21:39:39', '6992726386', 'SIM', 'i957q333');
 
 --
 -- Índices para tabelas despejadas
@@ -213,6 +255,14 @@ ALTER TABLE `notificacoes`
   ADD KEY `usuario_id` (`usuario_id`);
 
 --
+-- Índices de tabela `produto`
+--
+ALTER TABLE `produto`
+  ADD PRIMARY KEY (`id_produto`),
+  ADD KEY `fornecedor_id` (`fornecedor_id`),
+  ADD KEY `categoria_id` (`categoria_id`);
+
+--
 -- Índices de tabela `usuarios`
 --
 ALTER TABLE `usuarios`
@@ -240,7 +290,7 @@ ALTER TABLE `caixa`
 -- AUTO_INCREMENT de tabela `categoria`
 --
 ALTER TABLE `categoria`
-  MODIFY `id_categoria` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id_categoria` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de tabela `contas`
@@ -258,13 +308,19 @@ ALTER TABLE `empresa`
 -- AUTO_INCREMENT de tabela `fornecedor`
 --
 ALTER TABLE `fornecedor`
-  MODIFY `id_fornecedor` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id_fornecedor` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de tabela `notificacoes`
 --
 ALTER TABLE `notificacoes`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT de tabela `produto`
+--
+ALTER TABLE `produto`
+  MODIFY `id_produto` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de tabela `usuarios`
@@ -287,6 +343,13 @@ ALTER TABLE `anotacoes`
 --
 ALTER TABLE `notificacoes`
   ADD CONSTRAINT `notificacoes_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`);
+
+--
+-- Restrições para tabelas `produto`
+--
+ALTER TABLE `produto`
+  ADD CONSTRAINT `produto_ibfk_1` FOREIGN KEY (`fornecedor_id`) REFERENCES `fornecedor` (`id_fornecedor`),
+  ADD CONSTRAINT `produto_ibfk_2` FOREIGN KEY (`categoria_id`) REFERENCES `categoria` (`id_categoria`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

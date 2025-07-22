@@ -49,8 +49,8 @@
                 </a>
             </li>
             <li class="submenu-item"><a href="/Shop/pages/fornecedor/index.php"><i class="fa-solid fa-truck-moving"></i>Fornecedor</a></li>
-            <li class="submenu-item"><a href="#"><i class="fa-solid fa-table-list"></i>Categoria</a></li>
-            <li class="submenu-item"><a href="#"><i class="fa-solid fa-cart-plus"></i>Produtos</a></li>
+            <li class="submenu-item"><a href="/Shop/pages/categoria/index.php"><i class="fa-solid fa-table-list"></i>Categoria</a></li>
+            <li class="submenu-item"><a href="/Shop/pages/produtos/index.php"><i class="fa-solid fa-cart-plus"></i>Produtos</a></li>
         </ul>
 
         <ul>
