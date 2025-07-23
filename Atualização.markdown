@@ -1,10 +1,13 @@
-# Produtos 📌
+# Movimentação de Estoque
 
-_Cadastro_ ✅
-_Editar_
-_Excluir_ ✅
+📌 Venda
 
-### Relatórios
+**Relacionamentos de tabelas [tabela - caixa]**
 
-📗 **Construir** Excel
-📕 **Construir** PDF ✅
+## Shop
+
+_Saida_
+_Entrada_
+_Estorno_
+_Doação_
+_Relatorios [Notas,PDF,EXCEL]_

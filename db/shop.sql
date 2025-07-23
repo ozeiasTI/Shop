@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 22/07/2025 às 20:45
+-- Tempo de geração: 23/07/2025 às 18:55
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -63,14 +63,6 @@ CREATE TABLE `categoria` (
   `descricao` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Despejando dados para a tabela `categoria`
---
-
-INSERT INTO `categoria` (`id_categoria`, `descricao`) VALUES
-(2, 'Bebidas'),
-(3, 'Limpeza');
-
 -- --------------------------------------------------------
 
 --
@@ -128,13 +120,21 @@ CREATE TABLE `fornecedor` (
   `email` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- --------------------------------------------------------
+
 --
--- Despejando dados para a tabela `fornecedor`
+-- Estrutura para tabela `movimentacao_estoque`
 --
 
-INSERT INTO `fornecedor` (`id_fornecedor`, `nome`, `cnpj`, `endereco`, `ramo`, `email`) VALUES
-(4, 'Brazil', '5454.8784545.', 'av guaporé', 'Agrário', 'ozeeiiaass@gmail.com'),
-(5, 'xsxasx', '5445646', 'sxsxsxs', 'sxsxasx', 'ozeias.souza@ifro.edu.br');
+CREATE TABLE `movimentacao_estoque` (
+  `id_movimentacao` int(10) UNSIGNED NOT NULL,
+  `tipo` varchar(10) NOT NULL,
+  `produto_id` int(10) UNSIGNED DEFAULT NULL,
+  `quantidade` int(11) DEFAULT NULL,
+  `data_movimentacao` timestamp NOT NULL DEFAULT current_timestamp(),
+  `valor` decimal(10,2) DEFAULT NULL,
+  `observacao` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -166,15 +166,10 @@ CREATE TABLE `produto` (
   `preco_venda` decimal(10,2) DEFAULT NULL,
   `estoque_total` int(11) DEFAULT NULL,
   `fornecedor_id` int(10) UNSIGNED DEFAULT NULL,
-  `estoque_minimo` int(11) DEFAULT NULL
+  `estoque_minimo` int(11) DEFAULT NULL,
+  `ativo` varchar(10) DEFAULT 'Sim',
+  `foto` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Despejando dados para a tabela `produto`
---
-
-INSERT INTO `produto` (`id_produto`, `nome`, `categoria_id`, `preco_custo`, `preco_venda`, `estoque_total`, `fornecedor_id`, `estoque_minimo`) VALUES
-(3, 'ddddd', 2, 32.00, 50.00, 50, 4, 3);
 
 -- --------------------------------------------------------
 
@@ -248,6 +243,13 @@ ALTER TABLE `fornecedor`
   ADD PRIMARY KEY (`id_fornecedor`);
 
 --
+-- Índices de tabela `movimentacao_estoque`
+--
+ALTER TABLE `movimentacao_estoque`
+  ADD PRIMARY KEY (`id_movimentacao`),
+  ADD KEY `produto_id` (`produto_id`);
+
+--
 -- Índices de tabela `notificacoes`
 --
 ALTER TABLE `notificacoes`
@@ -278,7 +280,7 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de tabela `anotacoes`
 --
 ALTER TABLE `anotacoes`
-  MODIFY `id_anotacoes` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_anotacoes` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de tabela `caixa`
@@ -290,7 +292,7 @@ ALTER TABLE `caixa`
 -- AUTO_INCREMENT de tabela `categoria`
 --
 ALTER TABLE `categoria`
-  MODIFY `id_categoria` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_categoria` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de tabela `contas`
@@ -311,16 +313,22 @@ ALTER TABLE `fornecedor`
   MODIFY `id_fornecedor` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
+-- AUTO_INCREMENT de tabela `movimentacao_estoque`
+--
+ALTER TABLE `movimentacao_estoque`
+  MODIFY `id_movimentacao` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de tabela `notificacoes`
 --
 ALTER TABLE `notificacoes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de tabela `produto`
 --
 ALTER TABLE `produto`
-  MODIFY `id_produto` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_produto` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de tabela `usuarios`
@@ -337,6 +345,12 @@ ALTER TABLE `usuarios`
 --
 ALTER TABLE `anotacoes`
   ADD CONSTRAINT `anotacoes_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE;
+
+--
+-- Restrições para tabelas `movimentacao_estoque`
+--
+ALTER TABLE `movimentacao_estoque`
+  ADD CONSTRAINT `movimentacao_estoque_ibfk_1` FOREIGN KEY (`produto_id`) REFERENCES `produto` (`id_produto`);
 
 --
 -- Restrições para tabelas `notificacoes`

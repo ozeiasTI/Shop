@@ -44,6 +44,13 @@ if(isset($_POST['pesquisar'])){
     <link rel="stylesheet" href="/Shop/css/padrao.css">
     <link rel="shortcut icon" href="/Shop/img/login.svg" type="image/x-icon">
     <script src="https://kit.fontawesome.com/8ec7b849f5.js" crossorigin="anonymous"></script>
+    <style>
+        .desativado {
+            color: gray;
+            text-decoration: line-through;
+            text-decoration-color: red;
+        }
+    </style>
 </head>
 
 <body>
@@ -77,13 +84,18 @@ if(isset($_POST['pesquisar'])){
         <?php
         if ($consultaproduto->num_rows > 0) {
             echo "<table>";
-            echo "<tr><th>Nome</th><th>Categoria</th><th>P. Custo</th><th>P . Venda</th><th>Estoque Total</th><th>Estoque Mínimo</th><th>Fornecedor</th><th>Ações</th></tr>";
+            echo "<tr><th>Foto</th><th>Nome</th><th>Categoria</th><th>P. Custo</th><th>P . Venda</th><th>Estoque Total</th><th>Estoque Mínimo</th><th>Fornecedor</th><th>Ações</th></tr>";
             while ($produto = mysqli_fetch_assoc($consultaproduto)) {
-                echo "<tr>";
+                if ($produto['ativo'] == 'Não') {
+                    echo "<tr class='desativado'>";
+                } else {
+                    echo "<tr>";
+                }
+                echo "<td><img style='width: 50px;' src='imagens/".$produto['foto']."'></td>";
                 echo "<td>" . $produto['nome'] . "</td>";
                 echo "<td>" . $produto['descricao_categoria'] . "</td>";
-                echo "<td>" . $produto['preco_custo'] . "</td>";
-                echo "<td>" . $produto['preco_venda'] . "</td>";
+                echo "<td>R$ " . $produto['preco_custo'] . "</td>";
+                echo "<td>R$ " . $produto['preco_venda'] . "</td>";
                 echo "<td>" . $produto['estoque_total'] . "</td>";
                 echo "<td>" . $produto['estoque_minimo'] . "</td>";
                 echo "<td>" . $produto['nome_fornecedor'] . "</td>";

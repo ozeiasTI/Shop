@@ -72,7 +72,7 @@ $html = '
     }
 </style>
 
-<h1>Relatório de Produtos</h1>';
+<h1>Relatório de Produtos Ativos</h1>';
 
 // Tabela
 $html .= '<br><table border="1" cellpadding="5">
@@ -95,6 +95,8 @@ $sql ="SELECT
             produto
         INNER JOIN categoria ON categoria.id_categoria = produto.categoria_id
         INNER JOIN fornecedor ON fornecedor.id_fornecedor = produto.fornecedor_id
+        WHERE
+            produto.ativo = 'Sim'
         ORDER BY produto.nome ASC";
 
 $res = $conexao->query($sql);
@@ -106,10 +108,56 @@ while ($q = $res->fetch_assoc()) {
         <td>' . htmlspecialchars($q['nome']) . '</td>
         <td>' . htmlspecialchars($q['descricao_categoria']) . '</td>
         <td>' . htmlspecialchars($q['nome_fornecedor']) . '</td>
-        <td>' . htmlspecialchars($q['preco_custo']) . '</td>
-        <td>' . htmlspecialchars($q['preco_venda']) . '</td>
+        <td>R$ ' . htmlspecialchars($q['preco_custo']) . '</td>
+        <td>R$ ' . htmlspecialchars($q['preco_venda']) . '</td>
         <td>' . htmlspecialchars($q['estoque_minimo']) . '</td>
         <td>' . htmlspecialchars($q['estoque_total']) . '</td>
+    </tr>';
+}
+
+$html .= "<tr ><td colspan='2'>Total de Produtos</td><td>" . $totalfornecedor . "</td></tr>";
+$html .= "</table>";
+
+$html .= "<br>";
+$html .= "<h1>Relatório de Produtos Inativos</h1>";
+
+$html .= '<br><table border="1" cellpadding="5">
+<tr>
+    <th>Nome</th>
+    <th>Categoria</th>
+    <th>Fornecedor</th>
+    <th>Preço de Custo</th>
+    <th>Preço de Venda</th>
+    <th>Estoque Mínimo</th>
+    <th>Estoque Total</th>
+    
+</tr>';
+
+$produtosInativos ="SELECT 
+            produto.*,
+            categoria.descricao AS descricao_categoria,
+            fornecedor.nome AS nome_fornecedor
+        FROM
+            produto
+        INNER JOIN categoria ON categoria.id_categoria = produto.categoria_id
+        INNER JOIN fornecedor ON fornecedor.id_fornecedor = produto.fornecedor_id
+        WHERE
+            produto.ativo = 'Não'
+        ORDER BY produto.nome ASC";
+
+$inativos = $conexao->query($produtosInativos);
+$totalfornecedor = 0;
+
+while ($a = $inativos->fetch_assoc()) {
+    $totalfornecedor++;
+    $html .= '<tr>
+        <td>' . htmlspecialchars($a['nome']) . '</td>
+        <td>' . htmlspecialchars($a['descricao_categoria']) . '</td>
+        <td>' . htmlspecialchars($a['nome_fornecedor']) . '</td>
+        <td>R$ ' . htmlspecialchars($a['preco_custo']) . '</td>
+        <td>R$ ' . htmlspecialchars($a['preco_venda']) . '</td>
+        <td>' . htmlspecialchars($a['estoque_minimo']) . '</td>
+        <td>' . htmlspecialchars($a['estoque_total']) . '</td>
     </tr>';
 }
 

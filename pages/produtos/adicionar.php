@@ -20,8 +20,20 @@ if (isset($_POST['salvar'])) {
     $estoque_minimo = $_POST['estoque_minimo'];
     $categoria = $_POST['categoria'];
     $fornecedor = $_POST['fornecedor'];
+    
+    if(!empty($_FILES['foto']['name'])){
+        $foto = $_FILES['foto']['name'];
 
-    $injecao = mysqli_query($conexao, "INSERT INTO produto(nome,categoria_id,preco_custo,preco_venda,estoque_total,fornecedor_id,estoque_minimo)VALUES('$nome','$categoria','$preco_custo','$preco_venda',$estoque_total,'$fornecedor',$estoque_minimo)");
+        $diretoriofoto = 'imagens/';
+        $caminhofoto = $diretoriofoto . $foto;
+
+        move_uploaded_file($_FILES['foto']['tmp_name'], $caminhofoto);
+
+        $injecao = mysqli_query($conexao, "INSERT INTO produto(nome,categoria_id,preco_custo,preco_venda,estoque_total,fornecedor_id,estoque_minimo,foto)VALUES('$nome','$categoria','$preco_custo','$preco_venda',$estoque_total,'$fornecedor',$estoque_minimo,'$foto')");
+
+    }else{
+        $injecao = mysqli_query($conexao, "INSERT INTO produto(nome,categoria_id,preco_custo,preco_venda,estoque_total,fornecedor_id,estoque_minimo)VALUES('$nome','$categoria','$preco_custo','$preco_venda',$estoque_total,'$fornecedor',$estoque_minimo)");
+    }
 
     if ($injecao) {
         $_SESSION['mensagem'] = "Cadastro Efetivado com Sucesso!";
@@ -55,10 +67,11 @@ if (isset($_POST['salvar'])) {
         ?>
         <h2><i class="fa-solid fa-plus"></i> Adicionar produto</h2>
         <p>Bem-vindo ao painel de Adicionar produto. Aqui você pode gerenciar os produtoes.</p>
-        <form action="" method="post" class="formulario">
-            <label>Nome</label>
-            <input type="text" name="nome" placeholder="Digite o nome da produto" required>
-
+        <form action="" method="post" class="formulario" enctype="multipart/form-data">
+            <div class="group">
+                <label>Nome</label>
+                <input type="text" name="nome" placeholder="Digite o nome da produto" required>
+            </div>
             <div class="group">
                 <label>Preço de Custo</label>
                 <input type="text" name="preco_custo" placeholder="Digite o preço de custo" required>
@@ -83,9 +96,14 @@ if (isset($_POST['salvar'])) {
                 </select>
             </div>
             <div class="group">
+                <label>Foto</label>
+                <input type="file" name="foto">
+            </div>
+            <div class="group">
                 <label>Estoque Mínimo</label>
                 <input type="text" name="estoque_minimo" placeholder="Digite o Estoque mínimo" required>
             </div>
+
             <div class="group">
                 <label>Categoria</label>
                 <select name="categoria" required>
