@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 23/07/2025 às 18:55
+-- Tempo de geração: 23/07/2025 às 22:20
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -63,6 +63,20 @@ CREATE TABLE `categoria` (
   `descricao` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Despejando dados para a tabela `categoria`
+--
+
+INSERT INTO `categoria` (`id_categoria`, `descricao`) VALUES
+(7, 'PADARIA'),
+(9, 'BEBIDAS'),
+(10, 'LIMPEZA'),
+(11, 'HIGIENE'),
+(12, 'GRÃOS'),
+(13, 'HORTIFRUTI'),
+(14, 'FRIOS'),
+(15, 'CEREAIS');
+
 -- --------------------------------------------------------
 
 --
@@ -103,7 +117,7 @@ CREATE TABLE `empresa` (
 --
 
 INSERT INTO `empresa` (`id`, `nome`, `email`, `senhaapp`, `telefone`, `cidade`, `endereco`, `cnpj`, `logo`) VALUES
-(1, 'Hardware Store', 'ozeeiiaass@gmail.com', 'riex qacl krtb eqmu', '(69) 993654721', 'Vilhena', 'av das dores , 2589', '00000000000', 'logo.jpg');
+(1, 'Super Maket', 'ozeeiiaass@gmail.com', 'riex qacl krtb eqmu', '(69) 993654721', 'Vilhena', 'av das dores , 2589', '00000000000', '5766127-supermercado-loja-logo-vetor.jpg');
 
 -- --------------------------------------------------------
 
@@ -119,6 +133,14 @@ CREATE TABLE `fornecedor` (
   `ramo` varchar(100) DEFAULT NULL,
   `email` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `fornecedor`
+--
+
+INSERT INTO `fornecedor` (`id_fornecedor`, `nome`, `cnpj`, `endereco`, `ramo`, `email`) VALUES
+(6, 'MARFRIG', '038.583.896/0001-78', 'Avenida Queiroz Filho SP', 'Varegista', 'mafrig@gmail.com'),
+(7, 'CARREFOOUR COMERCIO', '45.534.915/0001-81', 'Avenida Antunes, 125 SP', 'Varegista', 'carrefoour@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -170,6 +192,26 @@ CREATE TABLE `produto` (
   `ativo` varchar(10) DEFAULT 'Sim',
   `foto` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `produto`
+--
+
+INSERT INTO `produto` (`id_produto`, `nome`, `categoria_id`, `preco_custo`, `preco_venda`, `estoque_total`, `fornecedor_id`, `estoque_minimo`, `ativo`, `foto`) VALUES
+(8, 'Arroz 5kg', 15, 15.00, 22.00, 10, 7, 11, 'Sim', NULL),
+(9, 'Feijão Carioca 1kg	', 15, 5.00, 7.00, 15, 6, 20, 'Sim', NULL),
+(10, 'Açúcar Cristal 1kg	', 15, 2.00, 3.00, 30, 7, 15, 'Sim', NULL),
+(11, 'Sal Refinado 1kg', 15, 1.00, 2.00, 50, 6, 50, 'Sim', NULL),
+(12, 'Queijo Mussarela 100g', 14, 3.00, 4.00, 100, 6, 50, 'Sim', NULL),
+(13, 'Banana Prata kg', 13, 3.00, 4.00, 100, 7, 50, 'Não', NULL),
+(14, 'Laranja kg', 13, 3.00, 3.00, 200, 6, 100, 'Sim', NULL),
+(15, 'Tomate kg', 13, 6.00, 6.00, 250, 7, 100, 'Sim', NULL),
+(16, 'Pão Francês kg	', 7, 10.00, 13.00, 60, 6, 30, 'Sim', NULL),
+(17, 'Rosquinha caseira', 7, 5.00, 6.00, 60, 6, 15, 'Sim', NULL),
+(18, 'Refrigerante 2L Sabor Uva', 9, 7.00, 8.00, 100, 7, 50, 'Sim', NULL),
+(19, 'Sabão em Pó 1kg', 10, 9.00, 9.00, 600, 7, 300, 'Sim', NULL),
+(20, 'Sabonete (unidade)', 11, 1.00, 2.00, 300, 6, 75, 'Sim', NULL),
+(21, 'Milho em grãos 5kg', 12, 17.00, 18.00, 600, 7, 325, 'Sim', NULL);
 
 -- --------------------------------------------------------
 
@@ -292,7 +334,7 @@ ALTER TABLE `caixa`
 -- AUTO_INCREMENT de tabela `categoria`
 --
 ALTER TABLE `categoria`
-  MODIFY `id_categoria` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_categoria` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT de tabela `contas`
@@ -310,7 +352,7 @@ ALTER TABLE `empresa`
 -- AUTO_INCREMENT de tabela `fornecedor`
 --
 ALTER TABLE `fornecedor`
-  MODIFY `id_fornecedor` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_fornecedor` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de tabela `movimentacao_estoque`
@@ -328,7 +370,7 @@ ALTER TABLE `notificacoes`
 -- AUTO_INCREMENT de tabela `produto`
 --
 ALTER TABLE `produto`
-  MODIFY `id_produto` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_produto` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT de tabela `usuarios`

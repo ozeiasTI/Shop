@@ -30,7 +30,7 @@ if(isset($_POST['pesquisar'])){
                                                     produto
                                                 INNER JOIN categoria ON categoria.id_categoria = produto.categoria_id
                                                 INNER JOIN fornecedor ON fornecedor.id_fornecedor = produto.fornecedor_id
-                                                ORDER BY produto.nome ASC");
+                                                ORDER BY produto.ativo DESC,produto.nome ASC");
 }
 
 ?>
@@ -81,6 +81,18 @@ if(isset($_POST['pesquisar'])){
             <button class="btnPesquisar" name="pesquisar">Pesquisar</button>
         </form>
 
+        <div style="margin: 10px 0 20px; display: flex; flex-wrap: wrap; gap: 10px;">
+            <div style="display: flex; align-items: center;">
+                <span style="width: 15px; height: 15px; background-color: #e74c3c; display: inline-block; margin-right: 5px;"></span> Estoque Crítico
+            </div>
+            <div style="display: flex; align-items: center;">
+                <span style="width: 15px; height: 15px; background-color: gray; display: inline-block; margin-right: 5px;"></span> Inativo
+            </div>
+            <div style="display: flex; align-items: center;">
+                <span style="width: 15px; height: 15px; background-color: #000000ff; display: inline-block; margin-right: 5px;"></span> Ativo
+            </div>
+        </div>
+
         <?php
         if ($consultaproduto->num_rows > 0) {
             echo "<table>";
@@ -89,7 +101,11 @@ if(isset($_POST['pesquisar'])){
                 if ($produto['ativo'] == 'Não') {
                     echo "<tr class='desativado'>";
                 } else {
-                    echo "<tr>";
+                    if($produto['estoque_minimo'] >= $produto['estoque_total']){
+                        echo "<tr style='color:red;'>";
+                    }else{
+                        echo "<tr style='color:black;'>";
+                    }
                 }
                 echo "<td><img style='width: 50px;' src='imagens/".$produto['foto']."'></td>";
                 echo "<td>" . $produto['nome'] . "</td>";

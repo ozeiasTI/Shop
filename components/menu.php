@@ -55,6 +55,15 @@
 
         <ul>
             <li>
+                <a href="/Shop/pages/caixa/index.php">
+                    <i class="fa-solid fa-cash-register"></i>
+                    Caixa
+                </a>
+            </li>
+        </ul>
+
+        <ul>
+            <li>
                 <a href="/Shop/pages/contas/index.php">
                     <i class="fa-solid fa-sack-dollar"></i>
                     Contas
