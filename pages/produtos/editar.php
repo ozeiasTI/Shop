@@ -1,0 +1,113 @@
+<?php
+
+require_once("../../db/conexao.php");
+session_start();
+
+if (!isset($_SESSION['login'])) {
+    header("Location: /Shop/index.php");
+    exit;
+}
+
+$idProduto = $_GET['id'];
+
+$consultaCategoria = mysqli_query($conexao, "SELECT * FROM categoria");
+$consultaFornecedor = mysqli_query($conexao, "SELECT * FROM fornecedor");
+
+$consultaProduto = mysqli_query($conexao,"SELECT * FROM produto WHERE id_produto = $idProduto");
+$produto = mysqli_fetch_assoc($consultaProduto);
+
+
+if (isset($_POST['salvar'])) {
+    $nome = $_POST['nome'];
+    $preco_custo = $_POST['preco_custo'];
+    $preco_venda = $_POST['preco_venda'];
+    $estoque_total = $_POST['estoque_total'];
+    $estoque_minimo = $_POST['estoque_minimo'];
+    $categoria = $_POST['categoria'];
+    $fornecedor = $_POST['fornecedor'];
+
+    $injecao = mysqli_query($conexao, "INSERT INTO produto(nome,categoria_id,preco_custo,preco_venda,estoque_total,fornecedor_id,estoque_minimo)VALUES('$nome','$categoria','$preco_custo','$preco_venda',$estoque_total,'$fornecedor',$estoque_minimo)");
+
+    if ($injecao) {
+        $_SESSION['mensagem'] = "Cadastro Efetivado com Sucesso!";
+        header("Location: index.php");
+        exit;
+    }
+}
+
+?>
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar produto</title>
+    <link rel="stylesheet" href="/Shop/css/padrao.css">
+    <link rel="shortcut icon" href="/Shop/img/login.svg" type="image/x-icon">
+    <script src="https://kit.fontawesome.com/8ec7b849f5.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <?php include_once("../../components/header.php") ?>
+    <?php include_once("../../components/menu.php") ?>
+    <main>
+        <?php
+        if (isset($_SESSION['mensagem'])) {
+            echo "<h4 class='mensagem'>" . $_SESSION['mensagem'] . "</h4>";
+            unset($_SESSION['mensagem']);
+        }
+        ?>
+        <h2><i class="fa-solid fa-plus"></i> Editar produto</h2>
+        <p>Bem-vindo ao painel de Editar produto. Aqui você pode gerenciar os produtoes.</p>
+        <form action="" method="post" class="formulario">
+            <label>Nome</label>
+            <input type="text" name="nome" value="<?php echo $produto['nome'];?>" required>
+
+            <div class="group">
+                <label>Preço de Custo</label>
+                <input type="text" name="preco_custo" value="<?php echo $produto['preco_custo'];?>" required>
+            </div>
+            <div class="group">
+                <label>Preço de Venda</label>
+                <input type="text" name="preco_venda" value="<?php echo $produto['preco_venda'];?>" required>
+            </div>
+            <div class="group">
+                <label>Estoque total</label>
+                <input type="number" name="estoque_total" value="<?php echo $produto['estoque_total'];?>" required>
+            </div>
+            <div class="group">
+                <label>Fornecedor</label>
+                <select name="fornecedor" required>
+                    <option>?</option>
+                    <?php
+                    while ($fornecedor = mysqli_fetch_assoc($consultaFornecedor)) {
+                        echo "<option value='" . $fornecedor['id_fornecedor'] . "'>" . $fornecedor['nome'] . "</option>";
+                    }
+                    ?>
+                </select>
+            </div>
+            <div class="group">
+                <label>Estoque Mínimo</label>
+                <input type="text" name="estoque_minimo" value="<?php echo $produto['estoque_minimo'];?>" required>
+            </div>
+            <div class="group">
+                <label>Categoria</label>
+                <select name="categoria" required>
+                    <option>?</option>
+                    <?php
+                    while ($categorias = mysqli_fetch_assoc($consultaCategoria)) {
+                        echo "<option value='" . $categorias['id_categoria'] . "'>" . $categorias['descricao'] . "</option>";
+                    }
+                    ?>
+                </select>
+            </div>
+
+            <button type="submit" class="btnSalvar" name="salvar"><i class="fas fa-plus"></i> Editar produto</button>
+            <button type="button" class="btnCancelar" onclick="window.location.href='index.php'"><i class="fas fa-times"></i> Cancelar</button>
+        </form>
+    </main>
+
+</body>
+
+</html>

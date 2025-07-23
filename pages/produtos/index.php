@@ -10,11 +10,28 @@ if (!isset($_SESSION['login'])) {
 
 if(isset($_POST['pesquisar'])){
     $nome = $_POST['descricao'];
-    $consultaproduto = mysqli_query($conexao, "SELECT * FROM produto WHERE nome LIKE '%$nome%' ORDER BY nome ASC");
+    $consultaproduto = mysqli_query($conexao, "SELECT
+                                                    produto.*,
+                                                    categoria.descricao AS descricao_categoria,
+                                                    fornecedor.nome AS nome_fornecedor
+                                                FROM
+                                                    produto
+                                                INNER JOIN categoria ON categoria.id_categoria = produto.categoria_id
+                                                INNER JOIN fornecedor ON fornecedor.id_fornecedor = produto.fornecedor_id
+                                                WHERE
+                                                    produto.nome LIKE '%$nome%'
+                                                ORDER BY produto.nome ASC");
 }else{
-     $consultaproduto = mysqli_query($conexao, "SELECT * FROM produto ORDER BY nome ASC");
+     $consultaproduto = mysqli_query($conexao,"SELECT 
+                                                    produto.*,
+                                                    categoria.descricao AS descricao_categoria,
+                                                    fornecedor.nome AS nome_fornecedor
+                                                FROM
+                                                    produto
+                                                INNER JOIN categoria ON categoria.id_categoria = produto.categoria_id
+                                                INNER JOIN fornecedor ON fornecedor.id_fornecedor = produto.fornecedor_id
+                                                ORDER BY produto.nome ASC");
 }
-
 
 ?>
 <!DOCTYPE html>
@@ -64,12 +81,12 @@ if(isset($_POST['pesquisar'])){
             while ($produto = mysqli_fetch_assoc($consultaproduto)) {
                 echo "<tr>";
                 echo "<td>" . $produto['nome'] . "</td>";
-                echo "<td>" . $produto['categoria_id'] . "</td>";
+                echo "<td>" . $produto['descricao_categoria'] . "</td>";
                 echo "<td>" . $produto['preco_custo'] . "</td>";
                 echo "<td>" . $produto['preco_venda'] . "</td>";
                 echo "<td>" . $produto['estoque_total'] . "</td>";
                 echo "<td>" . $produto['estoque_minimo'] . "</td>";
-                echo "<td>" . $produto['fornecedor_id'] . "</td>";
+                echo "<td>" . $produto['nome_fornecedor'] . "</td>";
                 echo "<td>";
                 echo "<a href='editar.php?id=" . $produto['id_produto'] . "' title='Editar' style='margin-right:10px; color: #2980b9;'><i class='fa-solid fa-pencil'></i></a>";
                 echo "<a href='excluir.php?id=" . $produto['id_produto'] . "' title='Excluir' style='margin-right:10px; color: #c0392b;'><i class='fa-solid fa-trash'></i></a>";
