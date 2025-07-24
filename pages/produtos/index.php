@@ -89,7 +89,7 @@ if(isset($_POST['pesquisar'])){
                 <span style="width: 15px; height: 15px; background-color: gray; display: inline-block; margin-right: 5px;"></span> Inativo
             </div>
             <div style="display: flex; align-items: center;">
-                <span style="width: 15px; height: 15px; background-color: #000000ff; display: inline-block; margin-right: 5px;"></span> Ativo
+                <span style="width: 15px; height: 15px; background-color: green; display: inline-block; margin-right: 5px;"></span> Ativo
             </div>
         </div>
 
@@ -104,10 +104,14 @@ if(isset($_POST['pesquisar'])){
                     if($produto['estoque_minimo'] >= $produto['estoque_total']){
                         echo "<tr style='color:red;'>";
                     }else{
-                        echo "<tr style='color:black;'>";
+                        echo "<tr style='color:green;'>";
                     }
                 }
+                if(!empty($produto['foto'])){
                 echo "<td><img style='width: 50px;' src='imagens/".$produto['foto']."'></td>";
+                }else{
+                    echo "<td><img style='width: 50px;' src='/Shop/img/sem-foto.png'></td>";
+                }
                 echo "<td>" . $produto['nome'] . "</td>";
                 echo "<td>" . $produto['descricao_categoria'] . "</td>";
                 echo "<td>R$ " . $produto['preco_custo'] . "</td>";

@@ -10,7 +10,12 @@ if (!isset($_SESSION['login'])) {
 
 $consultaCategorias = mysqli_query($conexao, "SELECT * FROM categoria");
 
-$consultaPrdoutos = mysqli_query($conexao, "SELECT * FROM produto");
+if(isset($_POST['pesquisar'])){
+    $categoria = $_POST['categoria'];
+    $consultaPrdoutos = mysqli_query($conexao, "SELECT * FROM produto WHERE categoria_id LIKE '%$categoria%'");
+}else{
+     $consultaPrdoutos = mysqli_query($conexao, "SELECT * FROM produto");
+}
 
 ?>
 <!DOCTYPE html>
@@ -30,10 +35,11 @@ $consultaPrdoutos = mysqli_query($conexao, "SELECT * FROM produto");
 
         .caixa_header {
             display: flex;
-            height: 6vh;
+            height: 6.5vh;
             justify-content: space-between;
             align-items: center;
             background-color: #1e1e2ff6;
+            padding: 10px;
             padding-left: 20px;
             padding-right: 20px;
             font-size: 20px;
@@ -42,34 +48,34 @@ $consultaPrdoutos = mysqli_query($conexao, "SELECT * FROM produto");
 
         .caixa_header a {
             color: white;
-            font-size: 25px;
+            font-size: 22px;
             text-decoration: none;
             font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
             border: 1px solid white;
-            padding: 10px;
+            padding: 8px;
         }
 
         .caixa_header a:hover {
             background-color: #2b788694;
-
         }
 
         #produtos {
             width: 75%;
-            height: 86vh;
+            height: 85.5vh;
             float: left;
+            background-color: #1e1e2ff6;
+            overflow-y: auto;
         }
 
         #financeiro {
             width: 25%;
-            height: 86vh;
+            height: 85.5vh;
             float: left;
         }
 
         #categorias {
             padding: 8px;
             display: flex;
-            gap: 8px;
             flex-wrap: wrap;
             justify-content: center;
             background-color: #1e1e2ff6;
@@ -94,6 +100,33 @@ $consultaPrdoutos = mysqli_query($conexao, "SELECT * FROM produto");
             background-color: #1e7180cb;
             color: white;
         }
+        .listaPrdutos{
+            border-top: 1px solid white;
+        }
+        .produto{
+           background-color: white;
+            width: 18%;
+            margin: 1%;
+            height: 95px;
+            float: left;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .produto:hover{
+            box-shadow: rgba(28, 133, 253, 0.63) 0px 0px 0px 3px;
+        }
+        .produto_foto{
+            width: 50%;
+            height: 95px;
+            float: left;
+            border-radius: 5px;
+            padding: 2px;
+        }
+        .produto_info{
+            text-align: center;
+            margin-top: 10px;
+            padding: 2px;
+        }
     </style>
 </head>
 
@@ -111,10 +144,16 @@ $consultaPrdoutos = mysqli_query($conexao, "SELECT * FROM produto");
         <div id="produtos">
             <div id="categorias">
                 <?php
+                echo "<form action='' method='post' class='categorias-form'>";
+
+                echo "<input type='hidden' name='categoria' value=''>";
+                echo "<input type='submit' value='TODAS' name='pesquisar'>";
+
+                echo "</form>";
                 while ($categorias = mysqli_fetch_assoc($consultaCategorias)) {
                     echo "<form action='' method='post' class='categorias-form'>";
 
-                    echo "<input type='hidden' name='categoria' value='" . $categorias['descricao'] . "'>";
+                    echo "<input type='hidden' name='categoria' value='" . $categorias['id_categoria'] . "'>";
                     echo "<input type='submit' value='" . $categorias['descricao'] . "' name='pesquisar'>";
 
                     echo "</form>";
@@ -124,12 +163,19 @@ $consultaPrdoutos = mysqli_query($conexao, "SELECT * FROM produto");
             <div class="listaPrdutos">
                 <?php
                 while ($produtos = mysqli_fetch_assoc($consultaPrdoutos)) {
-                    echo "<div class='produto'>";
+                    echo "<div class='produto' onclick='adicionar({$produtos['id_produto']})'>";
 
                     echo "<div class ='produto_foto'>";
+                    if(!empty($produtos['foto'])){
+                        echo "<img style='max-height:80px;' src='../produtos/imagens/".$produtos['foto']."'>";
+                    }else{
+                        echo "<img style='max-height:80px;' src='/Shop/img/sem-foto.png'>";
+                    }
                     echo "</div>";
 
                     echo "<div class ='produto_info'>";
+                    echo "<p>".$produtos['nome']."</p>";
+                    echo "<p>R$ ".$produtos['preco_venda']."</p>";
                     echo "</div>";
                     
                     echo "</div>";
@@ -140,7 +186,11 @@ $consultaPrdoutos = mysqli_query($conexao, "SELECT * FROM produto");
         <div id="financeiro">
 
         </div>
-
+        <script>
+            function adicionar(id){
+                alert("Você clicou no id: " + id);
+            }
+        </script>        
     </main>
 
 </body>
