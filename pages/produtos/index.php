@@ -8,8 +8,10 @@ if (!isset($_SESSION['login'])) {
     exit;
 }
 
-if(isset($_POST['pesquisar'])){
+if (isset($_POST['pesquisar'])) {
     $nome = $_POST['descricao'];
+    $categoria = $_POST['categoria'];
+    $fornecedor = $_POST['fornecedor'];
     $consultaproduto = mysqli_query($conexao, "SELECT
                                                     produto.*,
                                                     categoria.descricao AS descricao_categoria,
@@ -19,10 +21,10 @@ if(isset($_POST['pesquisar'])){
                                                 INNER JOIN categoria ON categoria.id_categoria = produto.categoria_id
                                                 INNER JOIN fornecedor ON fornecedor.id_fornecedor = produto.fornecedor_id
                                                 WHERE
-                                                    produto.nome LIKE '%$nome%'
-                                                ORDER BY produto.nome ASC");
-}else{
-     $consultaproduto = mysqli_query($conexao,"SELECT 
+                                                    produto.nome LIKE '%$nome%' AND produto.categoria_id LIKE '%$categoria%' AND produto.fornecedor_id LIKE '%$fornecedor%'
+                                                ORDER BY produto.ativo DESC,produto.nome ASC");
+} else {
+    $consultaproduto = mysqli_query($conexao, "SELECT 
                                                     produto.*,
                                                     categoria.descricao AS descricao_categoria,
                                                     fornecedor.nome AS nome_fornecedor
@@ -32,6 +34,9 @@ if(isset($_POST['pesquisar'])){
                                                 INNER JOIN fornecedor ON fornecedor.id_fornecedor = produto.fornecedor_id
                                                 ORDER BY produto.ativo DESC,produto.nome ASC");
 }
+
+$consultaCategorias = mysqli_query($conexao, "SELECT * FROM categoria ORDER BY descricao ASC");
+$consultaFornecedor = mysqli_query($conexao, "SELECT * FROM fornecedor ORDER BY nome ASC")
 
 ?>
 <!DOCTYPE html>
@@ -74,9 +79,35 @@ if(isset($_POST['pesquisar'])){
         </button>
 
         <h3><i class="fa-solid fa-cart-plus"></i> produtos</h3>
+
         <form action="" method="post" class="formulario" style="width: 100%;">
+
             <label>Pesquisar Descrição</label>
             <input type="text" name="descricao" placeholder="Pesquise a Descrição aqui...">
+
+            <div class="group">
+                <label>Selecione a Categoria</label>
+                <select name="categoria">
+                    <option value="">TODAS</option>
+                    <?php
+                    while ($categoria = mysqli_fetch_assoc($consultaCategorias)) {
+                        echo "<option value='" . $categoria['id_categoria'] . "'>" . $categoria['descricao'] . "</option>";
+                    }
+                    ?>
+                </select>
+            </div>
+            <div class="group">
+                <label>Fornecedor</label>
+                <select name="fornecedor">
+                    <option value="">TODAS</option>
+                    <?php
+                    while ($fornecedor = mysqli_fetch_assoc($consultaFornecedor)) {
+                        echo "<option value='" . $fornecedor['id_fornecedor'] . "'>" . $fornecedor['nome'] . "</option>";
+                    }
+                    ?>
+                </select>
+            </div>
+
 
             <button class="btnPesquisar" name="pesquisar">Pesquisar</button>
         </form>
@@ -96,20 +127,20 @@ if(isset($_POST['pesquisar'])){
         <?php
         if ($consultaproduto->num_rows > 0) {
             echo "<table>";
-            echo "<tr><th>Foto</th><th>Nome</th><th>Categoria</th><th>P. Custo</th><th>P . Venda</th><th>Estoque Total</th><th>Estoque Mínimo</th><th>Fornecedor</th><th>Ações</th></tr>";
+            echo "<tr><th>Foto</th><th>Nome</th><th>Categoria</th><th>P. Custo</th><th>P . Venda</th><th>Estoque Total</th><th>Estoque Mínimo</th><th>Fornecedor</th><th colspan='2'>Ações</th></tr>";
             while ($produto = mysqli_fetch_assoc($consultaproduto)) {
                 if ($produto['ativo'] == 'Não') {
                     echo "<tr class='desativado'>";
                 } else {
-                    if($produto['estoque_minimo'] >= $produto['estoque_total']){
+                    if ($produto['estoque_minimo'] >= $produto['estoque_total']) {
                         echo "<tr style='color:red;'>";
-                    }else{
+                    } else {
                         echo "<tr style='color:green;'>";
                     }
                 }
-                if(!empty($produto['foto'])){
-                echo "<td><img style='width: 50px;' src='imagens/".$produto['foto']."'></td>";
-                }else{
+                if (!empty($produto['foto'])) {
+                    echo "<td><img style='width: 50px;' src='imagens/" . $produto['foto'] . "'></td>";
+                } else {
                     echo "<td><img style='width: 50px;' src='/Shop/img/sem-foto.png'></td>";
                 }
                 echo "<td>" . $produto['nome'] . "</td>";
@@ -121,6 +152,8 @@ if(isset($_POST['pesquisar'])){
                 echo "<td>" . $produto['nome_fornecedor'] . "</td>";
                 echo "<td>";
                 echo "<a href='editar.php?id=" . $produto['id_produto'] . "' title='Editar' style='margin-right:10px; color: #2980b9;'><i class='fa-solid fa-pencil'></i></a>";
+                echo "</td>";
+                echo "<td>";
                 echo "<a href='excluir.php?id=" . $produto['id_produto'] . "' title='Excluir' style='margin-right:10px; color: #c0392b;'><i class='fa-solid fa-trash'></i></a>";
                 echo "</td>";
                 echo "</tr>";

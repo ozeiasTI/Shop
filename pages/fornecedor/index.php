@@ -60,7 +60,7 @@ if(isset($_POST['pesquisar'])){
         <?php
         if ($consultaFornecedor->num_rows > 0) {
             echo "<table>";
-            echo "<tr><th>Nome</th><th>Endereço</th><th>CNPJ</th><th>Ramo</th><th>Email</th><th>Ações</th></tr>";
+            echo "<tr><th>Nome</th><th>Endereço</th><th>CNPJ</th><th>Ramo</th><th>Email</th><th colspan=3>Ações</th></tr>";
             while ($fornecedor = mysqli_fetch_assoc($consultaFornecedor)) {
                 echo "<tr>";
                 echo "<td>" . $fornecedor['nome'] . "</td>";
@@ -70,7 +70,11 @@ if(isset($_POST['pesquisar'])){
                 echo "<td>" . $fornecedor['email'] . "</td>";
                 echo "<td>";
                 echo "<a href='editar.php?id=" . $fornecedor['id_fornecedor'] . "' title='Editar' style='margin-right:10px; color: #2980b9;'><i class='fa-solid fa-pencil'></i></a>";
+                echo "</td>";
+                echo "<td>";
                 echo "<a href='excluir.php?id=" . $fornecedor['id_fornecedor'] . "' title='Excluir' style='margin-right:10px; color: #c0392b;'><i class='fa-solid fa-trash'></i></a>";
+                echo "</td>";
+                echo "<td>";
                 echo "<a href='mail/email.php?id=" . $fornecedor['id_fornecedor'] . "' title='Excluir' style='margin-right:10px; color: #962bc0ff;'><i class='fa-solid fa-envelopes-bulk'></i></a>";
                 echo "</td>";
                 echo "</tr>";

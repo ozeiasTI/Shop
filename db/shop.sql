@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 23/07/2025 às 22:20
+-- Tempo de geração: 24/07/2025 às 22:13
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -198,15 +198,15 @@ CREATE TABLE `produto` (
 --
 
 INSERT INTO `produto` (`id_produto`, `nome`, `categoria_id`, `preco_custo`, `preco_venda`, `estoque_total`, `fornecedor_id`, `estoque_minimo`, `ativo`, `foto`) VALUES
-(8, 'Arroz 5kg', 15, 15.00, 22.00, 10, 7, 11, 'Sim', NULL),
-(9, 'Feijão Carioca 1kg	', 15, 5.00, 7.00, 15, 6, 20, 'Sim', NULL),
-(10, 'Açúcar Cristal 1kg	', 15, 2.00, 3.00, 30, 7, 15, 'Sim', NULL),
-(11, 'Sal Refinado 1kg', 15, 1.00, 2.00, 50, 6, 50, 'Sim', NULL),
-(12, 'Queijo Mussarela 100g', 14, 3.00, 4.00, 100, 6, 50, 'Sim', NULL),
-(13, 'Banana Prata kg', 13, 3.00, 4.00, 100, 7, 50, 'Não', NULL),
-(14, 'Laranja kg', 13, 3.00, 3.00, 200, 6, 100, 'Sim', NULL),
-(15, 'Tomate kg', 13, 6.00, 6.00, 250, 7, 100, 'Sim', NULL),
-(16, 'Pão Francês kg	', 7, 10.00, 13.00, 60, 6, 30, 'Sim', NULL),
+(8, 'Arroz 5kg', 15, 15.00, 22.00, 10, 7, 11, 'Sim', 'arroz-tipo-1-camil--5kg-0-7896006711155.webp'),
+(9, 'Feijão Carioca 1kg	', 15, 5.00, 7.00, 15, 6, 20, 'Sim', 'Kicaldo-feijaocarioca.png'),
+(10, 'Açúcar Cristal 1kg	', 15, 2.00, 3.00, 0, 7, 15, 'Sim', 'Acucar-Cristal-Uniao-Cristalcucar-1kg.png'),
+(11, 'Sal Refinado 1kg', 15, 1.00, 2.00, 50, 6, 50, 'Sim', '219092-800-auto.webp'),
+(12, 'Queijo Mussarela 100g', 14, 3.00, 4.00, 100, 6, 50, 'Sim', 'Queijo-Prato-Pj-Pedaco-Kg.png'),
+(13, 'Banana Prata kg', 13, 3.00, 4.00, 100, 7, 50, 'Sim', 'Banana_pratapng.png'),
+(14, 'Laranja kg', 13, 3.00, 3.00, 200, 6, 100, 'Sim', 'Laranja-Bahia-Importada.png'),
+(15, 'Tomate kg', 13, 6.00, 6.00, 250, 7, 100, 'Sim', 'Tomate-Holandes-Rama.png'),
+(16, 'Pão Francês kg	', 7, 10.00, 13.00, 60, 6, 30, 'Sim', '6914.webp'),
 (17, 'Rosquinha caseira', 7, 5.00, 6.00, 60, 6, 15, 'Sim', NULL),
 (18, 'Refrigerante 2L Sabor Uva', 9, 7.00, 8.00, 100, 7, 50, 'Sim', NULL),
 (19, 'Sabão em Pó 1kg', 10, 9.00, 9.00, 600, 7, 300, 'Sim', NULL),

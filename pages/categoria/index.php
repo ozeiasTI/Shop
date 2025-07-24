@@ -60,12 +60,14 @@ if(isset($_POST['pesquisar'])){
         <?php
         if ($consultaCategoria->num_rows > 0) {
             echo "<table>";
-            echo "<tr><th>Descrição</th><th>Ações</th></tr>";
+            echo "<tr><th>Descrição</th><th colspan=2>Ações</th></tr>";
             while ($categoria = mysqli_fetch_assoc($consultaCategoria)) {
                 echo "<tr>";
                 echo "<td>" . $categoria['descricao'] . "</td>";
                 echo "<td>";
                 echo "<a href='editar.php?id=" . $categoria['id_categoria'] . "' title='Editar' style='margin-right:10px; color: #2980b9;'><i class='fa-solid fa-pencil'></i></a>";
+                 echo "</td>";
+                 echo "<td>";
                 echo "<a href='excluir.php?id=" . $categoria['id_categoria'] . "' title='Excluir' style='margin-right:10px; color: #c0392b;'><i class='fa-solid fa-trash'></i></a>";
                 echo "</td>";
                 echo "</tr>";
