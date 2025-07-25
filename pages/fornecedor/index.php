@@ -75,7 +75,7 @@ if(isset($_POST['pesquisar'])){
                 echo "<a href='excluir.php?id=" . $fornecedor['id_fornecedor'] . "' title='Excluir' style='margin-right:10px; color: #c0392b;'><i class='fa-solid fa-trash'></i></a>";
                 echo "</td>";
                 echo "<td>";
-                echo "<a href='mail/email.php?id=" . $fornecedor['id_fornecedor'] . "' title='Excluir' style='margin-right:10px; color: #962bc0ff;'><i class='fa-solid fa-envelopes-bulk'></i></a>";
+                echo "<a href='mail/email.php?id=" . $fornecedor['id_fornecedor'] . "' title='Mandar E-mail' style='margin-right:10px; color: #962bc0ff;'><i class='fa-solid fa-envelopes-bulk'></i></a>";
                 echo "</td>";
                 echo "</tr>";
             }

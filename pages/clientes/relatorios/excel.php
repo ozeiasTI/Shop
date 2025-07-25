@@ -7,16 +7,16 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 // Consulta os usuários
-$sql = "SELECT * FROM fornecedor ORDER BY nome ASC ";
+$sql = "SELECT * FROM clientes ORDER BY nome ASC ";
 $resultado = mysqli_query($conexao, $sql);
 
 // Cria nova planilha
 $spreadsheet = new Spreadsheet();
 $sheet = $spreadsheet->getActiveSheet();
-$sheet->setTitle('Fornecedores');
+$sheet->setTitle('Clientes');
 
 // Cabeçalhos
-$cabecalhos = ['Nome', 'CNPJ', 'Endreço', 'Ramo','E-mail'];
+$cabecalhos = ['Nome', 'CPF', 'Endereço', 'Telefone','Email'];
 $coluna = 'A';
 foreach ($cabecalhos as $cabecalho) {
     $sheet->setCellValue($coluna . '1', $cabecalho);
@@ -27,9 +27,9 @@ foreach ($cabecalhos as $cabecalho) {
 $linha = 2;
 while ($q = mysqli_fetch_assoc($resultado)) {
     $sheet->setCellValue('A' . $linha, $q['nome']);
-    $sheet->setCellValue('B' . $linha, $q['cnpj']);
+    $sheet->setCellValue('B' . $linha, $q['cpf']);
     $sheet->setCellValue('C' . $linha, $q['endereco']);
-    $sheet->setCellValue('D' . $linha, $q['ramo']);
+    $sheet->setCellValue('D' . $linha, $q['telefone']);
     $sheet->setCellValue('E' . $linha, $q['email']);
     $linha++;
 }
@@ -48,7 +48,7 @@ $sheet->getColumnDimension('E')->setAutoSize(true);
 
 // Cabeçalhos de download
 header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-header('Content-Disposition: attachment;filename="fornecedores.xlsx"');
+header('Content-Disposition: attachment;filename="clientes.xlsx"');
 header('Cache-Control: max-age=0');
 
 // Salva a planilha para o navegador

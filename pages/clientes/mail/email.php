@@ -1,11 +1,12 @@
 <?php
 
 require_once("../../../db/conexao.php");
-$idFornecedor = $_GET['id'];
-$consultaFroenecedor = mysqli_query($conexao,"SELECT * FROM fornecedor WHERE id_fornecedor = '$idFornecedor'");
-$fornecedor = mysqli_fetch_assoc($consultaFroenecedor);
 
-$email = $fornecedor['email'];
+$idcliente = $_GET['id'];
+$consultaCliente = mysqli_query($conexao,"SELECT * FROM clientes WHERE id_cliente = '$idcliente'");
+$cliente = mysqli_fetch_assoc($consultaCliente);
+
+$email = $cliente['email'];
 
 session_start();
 if (!isset($_SESSION['login'])) {

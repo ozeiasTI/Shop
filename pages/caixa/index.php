@@ -17,6 +17,7 @@ if (isset($_POST['pesquisar'])) {
     $consultaPrdoutos = mysqli_query($conexao, "SELECT * FROM produto WHERE ativo = 'Sim' AND estoque_total > 0");
 }
 
+$consultaClientes = mysqli_query($conexao, "SELECT * FROM clientes ORDER BY nome ASC");
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -35,7 +36,7 @@ if (isset($_POST['pesquisar'])) {
 
         .caixa_header {
             display: flex;
-            height: 6.5vh;
+            height: 6.9vh;
             justify-content: space-between;
             align-items: center;
             background-color: var(--cor-principal);
@@ -61,21 +62,24 @@ if (isset($_POST['pesquisar'])) {
 
         #produtos {
             width: 70%;
-            height: 85.5vh;
+            height: 85vh;
             float: left;
             background-color: #1e1e2ff6;
         }
 
         #financeiro {
             width: 30%;
-            height: 85.5vh;
+            height: 85vh;
             float: left;
             background-color: rgba(149, 206, 240, 1);
         }
 
         #categorias {
+            overflow-x: auto;
+            overflow-y: auto;
             padding: 8px;
             height: 7.3vh;
+            width: 100%;
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
@@ -89,7 +93,7 @@ if (isset($_POST['pesquisar'])) {
 
         .categorias-form input {
             width: 100%;
-            height: 50px;
+            height: 40px;
             cursor: pointer;
             background-color: white;
             font-weight: bold;
@@ -108,16 +112,18 @@ if (isset($_POST['pesquisar'])) {
             height: 91.5%;
             background-color: rgba(149, 206, 240, 1);
             padding: 3px;
+            justify-content: center;
         }
 
         .produto {
             background-color: white;
-            width: 19%;
+            width: 210px;
             margin: 0.5%;
             height: 95px;
             float: left;
             border-radius: 5px;
             cursor: pointer;
+            padding: 3px;
         }
 
         .produto:hover {
@@ -177,15 +183,37 @@ if (isset($_POST['pesquisar'])) {
         }
 
         .itens {
-            height: 74.2vh;
+            height: 73vh;
             background-color: white;
             overflow-y: auto;
         }
 
         .finalizar {
+            height: 12.1vh;
             text-align: center;
             background-color: var(--cor-principal);
-            padding: 5px;
+        }
+
+        .sombracarrinho {
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.158);
+            position: fixed;
+            top: 0;
+            display: none;
+        }
+
+        .modalcarrinho {
+            position: absolute;
+            top: 50%;
+            left: 40%;
+            transform: translate(-50%, -50%);
+            background-color: var(--cor-branco);
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 50%;
+            height: 550px;
         }
     </style>
 </head>
@@ -198,9 +226,10 @@ if (isset($_POST['pesquisar'])) {
             <h2 style="color: white;"> Venda</h2>
             <div>
                 <a style="color: white;background-color:#1e7180cb;" href="index.php"><i class="fa-solid fa-cash-register"></i> Venda</a>
-                <a style="color: white;" href="index.php"><i class="fa-solid fa-dollar-sign"></i> Caixa</a>
+                <a style="color: white;" href="modelo.php"><i class="fa-solid fa-dollar-sign"></i> Modelo</a>
             </div>
         </div>
+
         <div id="produtos">
             <div id="categorias">
                 <?php
@@ -243,6 +272,7 @@ if (isset($_POST['pesquisar'])) {
                 ?>
             </div>
         </div>
+
         <div id="financeiro">
             <div class="itens">
                 <div class="header_carrinho">
@@ -291,16 +321,70 @@ if (isset($_POST['pesquisar'])) {
             </div>
             <div class="finalizar">
                 <table>
-                <tr>
-                    <th colspan="3">Valor total</th>
-                    <td colspan="2"><?php echo "R$ " . number_format($total, 2); ?></td>
-                </tr>
+                    <tr>
+                        <th colspan="3">Valor total</th>
+                        <td colspan="2"><?php echo "R$ " . number_format($total, 2); ?></td>
+                    </tr>
                 </table>
 
-                <button style="width: 40%;font-size:18px;" class="btnExcluir" onclick="limparCarrinho()">Limpar Carrinho</button>
-                <button style="width: 40%;font-size:18px;" class="btnEditar">Receber e Finalizar</button>
+                <button style="width: 40%;font-size:18px;" class="btnExcluir" onclick="limparCarrinho()">Cancelar </button>
+                <button style="width: 40%;font-size:18px;" class="btnEditar" onclick="receber()">Receber</button>
             </div>
         </div>
+
+        <div class="sombracarrinho">
+            <div class="modalcarrinho">
+                <div class="cliente">
+                    <div>
+                        <?php
+                        echo "<h3 style='margin-top: 5px;padding-left:25px;color:red;'>Valor Total: R$ ".number_format($total,2)."</h3>";
+                        ?>
+                    </div>
+
+                    <form action="" method="post" class="formulario">
+                        <div class="group">
+                            <label>Tipo de Desconto</label>
+                            <select name="Tipodesconto">
+                                <option value="%">%</option>
+                                <option value="R$">R$</option>
+                            </select>
+                        </div>
+                        <div class="group">
+                            <label>Valor do Desconto </label>
+                            <input type="text" name="desconto" value="0">
+                        </div>
+                        <div class="group"></div>
+                        <div class="group">
+                            <label>Forma de Pagamento</label>
+                            <select name="formaPagamento">
+                                <option value="Dinheiro">Dinheiro</option>
+                                <option value="Cheque">Cheque</option>
+                                <option value="Cartão de Crédito">Cartão de Crédito</option>
+                                <option value="Cartão de Débito">Cartão de Débito</option>
+                                <option value="PIX">PIX</option>
+                                <option value="Vale Alimentação">Vale Alimentação</option>
+                                <option value="Crediário">Crediário</option>
+                            </select>
+                        </div>
+                        <div class="group">
+                            <label>Cliente</label>
+                            <select name="cliente">
+                                <option value="Consumidor não identiifcado">Consumidor não identiifcado</option>
+                                <?php
+                                while ($Cliente = mysqli_fetch_assoc($consultaClientes)) {
+                                    echo "<option value='" . $Cliente['id_cliente'] . "'>" . $Cliente['nome'] . "</option>";
+                                }
+                                ?>
+                            </select>
+                        </div>
+
+                        <button class="btnEditar">Confirmar</button>
+                        <button class="btnExcluir" onclick="receber()">Cancelar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
         <script>
             function adicionar(id_produto) {
                 window.location.href = "adcionar.php?id_produto=" + id_produto;
@@ -309,8 +393,18 @@ if (isset($_POST['pesquisar'])) {
             function excluirItem(id_produto) {
                 window.location.href = "excluir.php?id_produto=" + id_produto;
             }
-            function limparCarrinho(){
+
+            function limparCarrinho() {
                 window.location.href = "limpar.php";
+            }
+
+            function receber() {
+                const modalcarrinho = document.querySelector('.sombracarrinho');
+                if (modalcarrinho.style.display === 'block') {
+                    modalcarrinho.style.display = 'none';
+                    return;
+                }
+                modalcarrinho.style.display = 'block';
             }
         </script>
     </main>

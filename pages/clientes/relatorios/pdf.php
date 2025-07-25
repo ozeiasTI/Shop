@@ -45,7 +45,7 @@ class MYPDF extends TCPDF {
 $pdf = new MYPDF('L', PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 $pdf->SetCreator(PDF_CREATOR);
 $pdf->SetAuthor($_SESSION['empresa']['nome']);
-$pdf->SetTitle('Relatório de Fornecedores');
+$pdf->SetTitle('Relatório de Clientes');
 $pdf->SetMargins(15, 50, 15);
 $pdf->SetAutoPageBreak(TRUE, 25);
 $pdf->setPrintHeader(true);
@@ -76,41 +76,41 @@ $html = '
     }
 </style>
 
-<h1>Relatório de Fornecedores</h1>';
+<h1>Relatório de Clientes</h1>';
 
 // Tabela
 $html .= '<br><table border="1" cellpadding="5">
 <tr>
     <th>Nome</th>
-    <th>CNPJ</th>
+    <th>CPF</th>
     <th>Endereço</th>
-    <th>Ramo</th>
+    <th>Telefone</th>
     <th>E-mail</th>
 </tr>';
 
-$sql = "SELECT * FROM fornecedor ORDER BY nome ASC";
+$sql = "SELECT * FROM clientes ORDER BY nome ASC";
 
 
 $res = $conexao->query($sql);
-$totalfornecedor = 0;
+$totalcliente = 0;
 
 while ($q = $res->fetch_assoc()) {
-    $totalfornecedor++;
+    $totalcliente++;
     $html .= '<tr>
         <td>' . htmlspecialchars($q['nome']) . '</td>
-        <td>' . htmlspecialchars($q['cnpj']) . '</td>
+        <td>' . htmlspecialchars($q['cpf']) . '</td>
         <td>' . htmlspecialchars($q['endereco']) . '</td>
-        <td>' . htmlspecialchars($q['ramo']) . '</td>
+        <td>' . htmlspecialchars($q['telefone']) . '</td>
         <td>' . htmlspecialchars($q['email']) . '</td>
     </tr>';
 }
 
-$html .= "<tr class='total'><td colspan='7'>Total de fornecedores</td><td>" . $totalfornecedor . "</td></tr>";
+$html .= "<tr class='total'><td colspan='7'>Total de Clientes</td><td>" . $totalcliente . "</td></tr>";
 $html .= "</table>";
 
 // Saída do PDF
 $pdf->writeHTML($html, true, false, true, false, '');
-$nome_arquivo = 'relatorio_fornecedor_' . date('Ymd_His') . '.pdf';
+$nome_arquivo = 'relatorio_clientes_' . date('Ymd_His') . '.pdf';
 $pdf->Output($nome_arquivo, 'I');
 
 

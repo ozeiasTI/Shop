@@ -55,6 +55,15 @@
 
         <ul>
             <li>
+                <a href="/Shop/pages/clientes/index.php">
+                    <i class="fa-solid fa-people-group"></i>
+                    Clientes
+                </a>
+            </li>
+        </ul>
+
+        <ul>
+            <li>
                 <a href="/Shop/pages/caixa/index.php">
                     <i class="fa-solid fa-cash-register"></i>
                     Caixa
