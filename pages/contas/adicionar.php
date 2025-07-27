@@ -35,7 +35,6 @@ if (isset($_POST['salvar'])) {
             mysqli_query($conexao, "INSERT INTO contas (descricao_conta, valor, tipo, status_conta, data_acerto, forma_acerto)
                                     VALUES ('$descricao_conta', $valor, '$tipo', '$status_conta', '$dataFormatada', '$forma_acerto')");
         }
-
     } else {
         mysqli_query($conexao, "INSERT INTO contas (descricao_conta, valor, tipo, status_conta, data_acerto, forma_acerto)
                                 VALUES ('$descricao_conta', $valor, '$tipo', '$status_conta', '$data_acerto', '$forma_acerto')");

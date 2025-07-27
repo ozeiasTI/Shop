@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 24/07/2025 às 22:13
+-- Tempo de geração: 27/07/2025 às 21:34
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -80,6 +80,29 @@ INSERT INTO `categoria` (`id_categoria`, `descricao`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estrutura para tabela `clientes`
+--
+
+CREATE TABLE `clientes` (
+  `id_cliente` int(10) UNSIGNED NOT NULL,
+  `nome` varchar(255) DEFAULT NULL,
+  `cpf` varchar(20) DEFAULT NULL,
+  `telefone` varchar(20) DEFAULT NULL,
+  `email` varchar(50) DEFAULT NULL,
+  `endereco` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `clientes`
+--
+
+INSERT INTO `clientes` (`id_cliente`, `nome`, `cpf`, `telefone`, `email`, `endereco`) VALUES
+(1, 'Não Identificado', NULL, NULL, NULL, NULL),
+(6, 'João da Silva Cunha', '025.487.963-24', '69857458', 'joao.dores@gmail.com', 'Av das Dores 5364');
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura para tabela `contas`
 --
 
@@ -91,7 +114,8 @@ CREATE TABLE `contas` (
   `status_conta` varchar(20) DEFAULT NULL,
   `data_lancamento` timestamp NOT NULL DEFAULT current_timestamp(),
   `data_acerto` date DEFAULT NULL,
-  `forma_acerto` varchar(20) DEFAULT NULL
+  `forma_acerto` varchar(20) DEFAULT NULL,
+  `identificador` int(11) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -145,22 +169,6 @@ INSERT INTO `fornecedor` (`id_fornecedor`, `nome`, `cnpj`, `endereco`, `ramo`, `
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `movimentacao_estoque`
---
-
-CREATE TABLE `movimentacao_estoque` (
-  `id_movimentacao` int(10) UNSIGNED NOT NULL,
-  `tipo` varchar(10) NOT NULL,
-  `produto_id` int(10) UNSIGNED DEFAULT NULL,
-  `quantidade` int(11) DEFAULT NULL,
-  `data_movimentacao` timestamp NOT NULL DEFAULT current_timestamp(),
-  `valor` decimal(10,2) DEFAULT NULL,
-  `observacao` text DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
 -- Estrutura para tabela `notificacoes`
 --
 
@@ -198,20 +206,20 @@ CREATE TABLE `produto` (
 --
 
 INSERT INTO `produto` (`id_produto`, `nome`, `categoria_id`, `preco_custo`, `preco_venda`, `estoque_total`, `fornecedor_id`, `estoque_minimo`, `ativo`, `foto`) VALUES
-(8, 'Arroz 5kg', 15, 15.00, 22.00, 10, 7, 11, 'Sim', 'arroz-tipo-1-camil--5kg-0-7896006711155.webp'),
-(9, 'Feijão Carioca 1kg	', 15, 5.00, 7.00, 15, 6, 20, 'Sim', 'Kicaldo-feijaocarioca.png'),
-(10, 'Açúcar Cristal 1kg	', 15, 2.00, 3.00, 0, 7, 15, 'Sim', 'Acucar-Cristal-Uniao-Cristalcucar-1kg.png'),
-(11, 'Sal Refinado 1kg', 15, 1.00, 2.00, 50, 6, 50, 'Sim', '219092-800-auto.webp'),
-(12, 'Queijo Mussarela 100g', 14, 3.00, 4.00, 100, 6, 50, 'Sim', 'Queijo-Prato-Pj-Pedaco-Kg.png'),
-(13, 'Banana Prata kg', 13, 3.00, 4.00, 100, 7, 50, 'Sim', 'Banana_pratapng.png'),
-(14, 'Laranja kg', 13, 3.00, 3.00, 200, 6, 100, 'Sim', 'Laranja-Bahia-Importada.png'),
-(15, 'Tomate kg', 13, 6.00, 6.00, 250, 7, 100, 'Sim', 'Tomate-Holandes-Rama.png'),
-(16, 'Pão Francês kg	', 7, 10.00, 13.00, 60, 6, 30, 'Sim', '6914.webp'),
-(17, 'Rosquinha caseira', 7, 5.00, 6.00, 60, 6, 15, 'Sim', NULL),
-(18, 'Refrigerante 2L Sabor Uva', 9, 7.00, 8.00, 100, 7, 50, 'Sim', NULL),
-(19, 'Sabão em Pó 1kg', 10, 9.00, 9.00, 600, 7, 300, 'Sim', NULL),
-(20, 'Sabonete (unidade)', 11, 1.00, 2.00, 300, 6, 75, 'Sim', NULL),
-(21, 'Milho em grãos 5kg', 12, 17.00, 18.00, 600, 7, 325, 'Sim', NULL);
+(8, 'Arroz 5kg', 15, 15.00, 22.00, 20, 7, 11, 'Sim', 'arroz-tipo-1-camil--5kg-0-7896006711155.webp'),
+(9, 'Feijão Carioca 1kg	', 15, 5.00, 7.00, 20, 6, 20, 'Sim', 'Kicaldo-feijaocarioca.png'),
+(10, 'Açúcar Cristal 1kg	', 15, 2.00, 3.00, 20, 7, 15, 'Sim', 'Acucar-Cristal-Uniao-Cristalcucar-1kg.png'),
+(11, 'Sal Refinado 1kg', 15, 1.00, 2.00, 20, 6, 50, 'Sim', '219092-800-auto.webp'),
+(12, 'Queijo Mussarela 100g', 14, 3.00, 4.00, 20, 6, 50, 'Sim', 'Queijo-Prato-Pj-Pedaco-Kg.png'),
+(13, 'Banana Prata kg', 13, 3.00, 4.00, 20, 7, 50, 'Sim', 'Banana_pratapng.png'),
+(14, 'Laranja kg', 13, 3.00, 3.00, 20, 6, 100, 'Sim', 'Laranja-Bahia-Importada.png'),
+(15, 'Tomate kg', 13, 6.00, 6.00, 20, 7, 100, 'Sim', 'Tomate-Holandes-Rama.png'),
+(16, 'Pão Francês kg	', 7, 10.00, 13.00, 20, 6, 30, 'Sim', '6914.webp'),
+(17, 'Rosquinha caseira', 7, 5.00, 6.00, 20, 6, 15, 'Sim', NULL),
+(18, 'Refrigerante 2L Sabor Uva', 9, 7.00, 8.00, 20, 7, 50, 'Sim', NULL),
+(19, 'Sabão em Pó 1kg', 10, 9.00, 9.00, 20, 7, 300, 'Sim', NULL),
+(20, 'Sabonete (unidade)', 11, 1.00, 2.00, 20, 6, 75, 'Sim', NULL),
+(21, 'Milho em grãos 5kg', 12, 17.00, 18.00, 20, 7, 325, 'Sim', NULL);
 
 -- --------------------------------------------------------
 
@@ -243,6 +251,24 @@ CREATE TABLE `usuarios` (
 INSERT INTO `usuarios` (`id`, `nome`, `email`, `senha`, `setor`, `funcao`, `cpf`, `data_nascimento`, `endereco`, `foto`, `data_cadastro`, `telefone`, `ativo`, `codigo_recuperacao`) VALUES
 (1, 'Ozeias Meira Santos de Souza', 'ozeias.souza@ifro.edu.br', '123', 'Gerência', 'Administrador', '033.662.282-10', '1998-08-12', 'Av guaporé, n° 3230', '1669471212336.jpg', '2025-07-08 21:39:39', '6992726386', 'SIM', 'i957q333');
 
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `vendas`
+--
+
+CREATE TABLE `vendas` (
+  `id_venda` int(10) UNSIGNED NOT NULL,
+  `registro` int(10) UNSIGNED DEFAULT NULL,
+  `produto_id` int(10) UNSIGNED DEFAULT NULL,
+  `quantidade` int(10) UNSIGNED DEFAULT NULL,
+  `data` timestamp NOT NULL DEFAULT current_timestamp(),
+  `cliente_id` int(10) UNSIGNED DEFAULT NULL,
+  `valor_unitario` decimal(10,2) DEFAULT NULL,
+  `valor_total` decimal(10,2) DEFAULT NULL,
+  `desconto` decimal(10,2) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 --
 -- Índices para tabelas despejadas
 --
@@ -267,6 +293,12 @@ ALTER TABLE `categoria`
   ADD PRIMARY KEY (`id_categoria`);
 
 --
+-- Índices de tabela `clientes`
+--
+ALTER TABLE `clientes`
+  ADD PRIMARY KEY (`id_cliente`);
+
+--
 -- Índices de tabela `contas`
 --
 ALTER TABLE `contas`
@@ -283,13 +315,6 @@ ALTER TABLE `empresa`
 --
 ALTER TABLE `fornecedor`
   ADD PRIMARY KEY (`id_fornecedor`);
-
---
--- Índices de tabela `movimentacao_estoque`
---
-ALTER TABLE `movimentacao_estoque`
-  ADD PRIMARY KEY (`id_movimentacao`),
-  ADD KEY `produto_id` (`produto_id`);
 
 --
 -- Índices de tabela `notificacoes`
@@ -315,6 +340,14 @@ ALTER TABLE `usuarios`
   ADD UNIQUE KEY `cpf` (`cpf`);
 
 --
+-- Índices de tabela `vendas`
+--
+ALTER TABLE `vendas`
+  ADD PRIMARY KEY (`id_venda`),
+  ADD KEY `produto_id` (`produto_id`),
+  ADD KEY `cliente_id` (`cliente_id`);
+
+--
 -- AUTO_INCREMENT para tabelas despejadas
 --
 
@@ -328,7 +361,7 @@ ALTER TABLE `anotacoes`
 -- AUTO_INCREMENT de tabela `caixa`
 --
 ALTER TABLE `caixa`
-  MODIFY `id_caixa` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_caixa` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de tabela `categoria`
@@ -337,10 +370,16 @@ ALTER TABLE `categoria`
   MODIFY `id_categoria` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
+-- AUTO_INCREMENT de tabela `clientes`
+--
+ALTER TABLE `clientes`
+  MODIFY `id_cliente` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
 -- AUTO_INCREMENT de tabela `contas`
 --
 ALTER TABLE `contas`
-  MODIFY `id_conta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
+  MODIFY `id_conta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=104;
 
 --
 -- AUTO_INCREMENT de tabela `empresa`
@@ -353,12 +392,6 @@ ALTER TABLE `empresa`
 --
 ALTER TABLE `fornecedor`
   MODIFY `id_fornecedor` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
-
---
--- AUTO_INCREMENT de tabela `movimentacao_estoque`
---
-ALTER TABLE `movimentacao_estoque`
-  MODIFY `id_movimentacao` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de tabela `notificacoes`
@@ -379,6 +412,12 @@ ALTER TABLE `usuarios`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
+-- AUTO_INCREMENT de tabela `vendas`
+--
+ALTER TABLE `vendas`
+  MODIFY `id_venda` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+
+--
 -- Restrições para tabelas despejadas
 --
 
@@ -387,12 +426,6 @@ ALTER TABLE `usuarios`
 --
 ALTER TABLE `anotacoes`
   ADD CONSTRAINT `anotacoes_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE;
-
---
--- Restrições para tabelas `movimentacao_estoque`
---
-ALTER TABLE `movimentacao_estoque`
-  ADD CONSTRAINT `movimentacao_estoque_ibfk_1` FOREIGN KEY (`produto_id`) REFERENCES `produto` (`id_produto`);
 
 --
 -- Restrições para tabelas `notificacoes`
@@ -406,6 +439,13 @@ ALTER TABLE `notificacoes`
 ALTER TABLE `produto`
   ADD CONSTRAINT `produto_ibfk_1` FOREIGN KEY (`fornecedor_id`) REFERENCES `fornecedor` (`id_fornecedor`),
   ADD CONSTRAINT `produto_ibfk_2` FOREIGN KEY (`categoria_id`) REFERENCES `categoria` (`id_categoria`) ON DELETE CASCADE;
+
+--
+-- Restrições para tabelas `vendas`
+--
+ALTER TABLE `vendas`
+  ADD CONSTRAINT `vendas_ibfk_1` FOREIGN KEY (`produto_id`) REFERENCES `produto` (`id_produto`),
+  ADD CONSTRAINT `vendas_ibfk_2` FOREIGN KEY (`cliente_id`) REFERENCES `clientes` (`id_cliente`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

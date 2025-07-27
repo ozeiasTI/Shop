@@ -10,11 +10,10 @@ if (!isset($_SESSION['login'])) {
 
 if (isset($_POST['pesquisar'])) {
     $nome = $_POST['nome'];
-    $consultaclientes = mysqli_query($conexao, "SELECT * FROM clientes WHERE nome LIKE '%$nome%' ORDER BY nome ASC ");
+    $consultaclientes = mysqli_query($conexao, "SELECT * FROM clientes WHERE nome LIKE '%$nome%' AND id_cliente != 1 ORDER BY nome ASC ");
 } else {
-    $consultaclientes = mysqli_query($conexao, "SELECT * FROM clientes ORDER BY nome ASC");
+    $consultaclientes = mysqli_query($conexao, "SELECT * FROM clientes WHERE id_cliente != 1 ORDER BY nome ASC");
 }
-
 
 ?>
 <!DOCTYPE html>
@@ -32,6 +31,10 @@ if (isset($_POST['pesquisar'])) {
             color: gray;
             text-decoration: line-through;
             text-decoration-color: red;
+        }
+
+        a {
+            text-decoration: none;
         }
     </style>
 </head>
@@ -69,6 +72,7 @@ if (isset($_POST['pesquisar'])) {
 
         <table>
             <tr>
+                <th>Contas</th>
                 <th>Nome</th>
                 <th>CPF</th>
                 <th>telefone</th>
@@ -83,9 +87,17 @@ if (isset($_POST['pesquisar'])) {
             }
             while ($clientes = mysqli_fetch_assoc($consultaclientes)) {
                 echo "<tr>";
+                $identificador_cliente = $clientes['id_cliente'];
+                $consultaContas = mysqli_query($conexao, "SELECT * FROM contas WHERE identificador =  $identificador_cliente");
+                if ($consultaContas->num_rows > 0) {
+                    echo "<td><a href='contas.php?id=" . $clientes['id_cliente'] . "'>🔴</a></td>";
+                } else {
+                    echo "<td><a href=''>🟢</a></td>";
+                }
+
                 echo "<td>" . $clientes['nome'] . "</td>";
                 echo "<td>" . $clientes['cpf'] . "</td>";
-                echo "<td> <i class='fa fa-whatsapp' aria-hidden='true'></i> <a style='text-decoration:none;color:black;' href='https://api.whatsapp.com/send/?phone=55".$clientes['telefone']."'>". $clientes['telefone'] . "</a></td>";
+                echo "<td> <i class='fa fa-whatsapp' aria-hidden='true'></i> <a style='text-decoration:none;color:black;' href='https://api.whatsapp.com/send/?phone=55" . $clientes['telefone'] . "'>" . $clientes['telefone'] . "</a></td>";
                 echo "<td>" . $clientes['email'] . "</td>";
                 echo "<td>" . $clientes['endereco'] . "</td>";
                 echo "<td>";
@@ -95,6 +107,7 @@ if (isset($_POST['pesquisar'])) {
                 }
 
                 echo "<button class='btnemail' onclick='mandaremailCliente(\"" . htmlspecialchars($clientes['id_cliente']) . "\")'><i class='fa-solid fa-envelopes-bulk'></i> E-mail</button>";
+
                 echo "</td>";
                 echo "</tr>";
             }

@@ -167,7 +167,7 @@ if (isset($_POST['pesquisar'])) {
         if ($consultaContas->num_rows > 0) {
             $valorTotal = 0;
             echo "<table>";
-            echo "<tr><th>Descrição</th><th>Tipo</th><th>Valor</th><th>Status</th><th>Data Acerto</th><th>Forma de Acerto</th><th>Ações</th></tr>";
+            echo "<tr><th>Nome</th><th>Descrição</th><th>Tipo</th><th>Valor</th><th>Status</th><th>Data Acerto</th><th>Forma de Acerto</th><th>Ações</th></tr>";
             while ($contas = mysqli_fetch_assoc($consultaContas)) {
 
                 if ($contas['data_acerto'] < date('Y-m-d') &&  $contas['status_conta'] == 'Aberta') {
@@ -177,7 +177,12 @@ if (isset($_POST['pesquisar'])) {
                 } elseif ($contas['status_conta'] == 'Pago') {
                     echo "<tr style='color:green'>";
                 }
-
+                if ($contas['identificador'] > 1) {
+                    $idCliente = $contas['identificador'];
+                    $consultaClientes = mysqli_query($conexao, "SELECT * FROM clientes WHERE id_cliente = $idCliente");
+                    $cliente = mysqli_fetch_assoc($consultaClientes);
+                    echo "<td>" . $cliente['nome'] . "</td>";
+                }
                 echo "<td>" . $contas['descricao_conta'] . "</td>";
                 echo "<td>" . $contas['tipo'] . "</td>";
                 echo "<td>R$ " . $contas['valor'] . "</td>";
@@ -200,7 +205,7 @@ if (isset($_POST['pesquisar'])) {
                     $valorTotal += $contas['valor'];
                 }
             }
-            echo "<tr><td colspan='6' style='font-weight:bold;'>Valor total da soma dos Registros de Contas a Pagar e a Receber em Aberto</td><td>R$ $valorTotal</td></tr>";
+            echo "<tr><td colspan='7' style='font-weight:bold;'>Valor total da soma dos Registros de Contas a Pagar e a Receber em Aberto</td><td>R$ " . number_format($valorTotal, 2) . "</td></tr>";
             echo "</table>";
         } else {
             echo "Não há contas Cadastradas";

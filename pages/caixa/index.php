@@ -17,7 +17,7 @@ if (isset($_POST['pesquisar'])) {
     $consultaPrdoutos = mysqli_query($conexao, "SELECT * FROM produto WHERE ativo = 'Sim' AND estoque_total > 0");
 }
 
-$consultaClientes = mysqli_query($conexao, "SELECT * FROM clientes ORDER BY nome ASC");
+$consultaClientes = mysqli_query($conexao, "SELECT * FROM clientes WHERE id_cliente != 1 ORDER BY nome ASC");
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -49,7 +49,7 @@ $consultaClientes = mysqli_query($conexao, "SELECT * FROM clientes ORDER BY nome
 
         .caixa_header a {
             color: white;
-            font-size: 22px;
+            font-size: 20px;
             text-decoration: none;
             font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
             border: 1px solid white;
@@ -77,7 +77,7 @@ $consultaClientes = mysqli_query($conexao, "SELECT * FROM clientes ORDER BY nome
         #categorias {
             overflow-x: auto;
             overflow-y: auto;
-            padding: 8px;
+            padding: 7px;
             height: 7.3vh;
             width: 100%;
             display: flex;
@@ -93,11 +93,11 @@ $consultaClientes = mysqli_query($conexao, "SELECT * FROM clientes ORDER BY nome
 
         .categorias-form input {
             width: 100%;
-            height: 40px;
+            height: 35px;
             cursor: pointer;
             background-color: white;
             font-weight: bold;
-            font-size: 16px;
+            font-size: 15px;
             border: none;
         }
 
@@ -183,13 +183,13 @@ $consultaClientes = mysqli_query($conexao, "SELECT * FROM clientes ORDER BY nome
         }
 
         .itens {
-            height: 73vh;
+            height: 72.2vh;
             background-color: white;
             overflow-y: auto;
         }
 
         .finalizar {
-            height: 12.1vh;
+            height: 13vh;
             text-align: center;
             background-color: var(--cor-principal);
         }
@@ -213,7 +213,25 @@ $consultaClientes = mysqli_query($conexao, "SELECT * FROM clientes ORDER BY nome
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             width: 50%;
-            height: 550px;
+            height: 400px;
+        }
+
+        .opcoes {
+            display: flex;
+        }
+
+        .opcoes i:hover {
+            background-color: #21DB88;
+        }
+
+        .opcoes i {
+            margin-right: 8px;
+            margin-left: 8px;
+            background-color: cadetblue;
+            color: white;
+            padding: 2px;
+            border-radius: 50%;
+            font-size: 15px;
         }
     </style>
 </head>
@@ -252,24 +270,42 @@ $consultaClientes = mysqli_query($conexao, "SELECT * FROM clientes ORDER BY nome
             <div class="listaPrdutos">
                 <?php
                 while ($produtos = mysqli_fetch_assoc($consultaPrdoutos)) {
-                    echo "<div class='produto' onclick='adicionar({$produtos['id_produto']})' title='adicionar ao carrinho'>";
+                    $id = $produtos['id_produto'];
+                    $estoque = $produtos['estoque_total'];
+                    $quantidadeNoCarrinho = 0;
 
-                    echo "<div class ='produto_foto'>";
-                    if (!empty($produtos['foto'])) {
-                        echo "<img style='max-height:80px;' src='../produtos/imagens/" . $produtos['foto'] . "'>";
-                    } else {
-                        echo "<img style='max-height:80px;' src='/Shop/img/sem-foto.png'>";
+                    // Verifica se o produto já está no carrinho
+                    if (isset($_SESSION['carrinho'])) {
+                        foreach ($_SESSION['carrinho'] as $item) {
+                            if ($item['id'] == $id) {
+                                $quantidadeNoCarrinho = $item['quantidade'];
+                                break;
+                            }
+                        }
                     }
-                    echo "</div>";
 
-                    echo "<div class ='produto_info'>";
-                    echo "<p>" . $produtos['nome'] . "</p>";
-                    echo "<p>R$ " . $produtos['preco_venda'] . "</p>";
-                    echo "</div>";
+                    // Só exibe se ainda há estoque disponível
+                    if ($quantidadeNoCarrinho < $estoque) {
+                        echo "<div class='produto' onclick='adicionar({$id})' title='adicionar ao carrinho'>";
 
-                    echo "</div>";
+                        echo "<div class='produto_foto'>";
+                        if (!empty($produtos['foto'])) {
+                            echo "<img style='max-height:80px;' src='../produtos/imagens/" . $produtos['foto'] . "'>";
+                        } else {
+                            echo "<img style='max-height:80px;' src='/Shop/img/sem-foto.png'>";
+                        }
+                        echo "</div>";
+
+                        echo "<div class='produto_info'>";
+                        echo "<p>" . htmlspecialchars($produtos['nome']) . "</p>";
+                        echo "<p>R$ " . number_format($produtos['preco_venda'], 2, ',', '.') . "</p>";
+                        echo "</div>";
+
+                        echo "</div>";
+                    }
                 }
                 ?>
+
             </div>
         </div>
 
@@ -281,10 +317,14 @@ $consultaClientes = mysqli_query($conexao, "SELECT * FROM clientes ORDER BY nome
                         📦
                         <p>
                             <?php
-                            if (isset($_SESSION['carrinho'])) {
-                                echo count($_SESSION['carrinho']);
+                            $itens_carrinho = 0;
+                            if (isset($_SESSION['carrinho']) and !empty($_SESSION['carrinho'])) {
+                                foreach ($_SESSION['carrinho'] as $chave => $valor) {
+                                    $itens_carrinho += $valor['quantidade'];
+                                }
+                                echo $itens_carrinho;
                             } else {
-                                echo 0;
+                                echo $itens_carrinho;
                             }
                             ?>
                         </p>
@@ -299,11 +339,17 @@ $consultaClientes = mysqli_query($conexao, "SELECT * FROM clientes ORDER BY nome
                         <th>Excuir</th>
                     </tr>
                     <?php
+                    if (!empty($_SESSION['mensagem'])) {
+                        echo "<tr><td colspan='5' style='color:red;'>" . $_SESSION['mensagem'] . "</td></tr>";
+                        unset($_SESSION['mensagem']);
+                    }
+                    ?>
+                    <?php
                     $total = 0;
                     if (!empty($_SESSION['carrinho'])) {
                         foreach ($_SESSION['carrinho'] as $chave => $valor) {
                             echo "<tr>";
-                            echo "<td>" . $valor['quantidade'] . "</td>";
+                            echo "<td class='opcoes'><i onclick='diminuir({$chave})' class='fa-solid fa-minus'></i> " . $valor['quantidade'] . " <i onclick='aumentar({$chave})' class='fa-solid fa-plus'></i></td>";
                             echo "<td>" . $valor['nome'] . "</td>";
                             echo "<td>R$ " . $valor['preco'] . "</td>";
                             echo "<td>R$ " . number_format($valor['quantidade'] * $valor['preco'], 2) . "</td>";
@@ -326,22 +372,26 @@ $consultaClientes = mysqli_query($conexao, "SELECT * FROM clientes ORDER BY nome
                         <td colspan="2"><?php echo "R$ " . number_format($total, 2); ?></td>
                     </tr>
                 </table>
+                <?php
+                if (!empty($_SESSION['carrinho'])) {
+                    echo "<button style='width: 40%;font-size:18px;' class='btnExcluir' onclick='limparCarrinho()'>🧹 Limpar </button>";
+                    echo "<button style='width: 40%;font-size:18px;' class='btnEditar' onclick='receber()'>✅ Receber</button>";
+                }
+                ?>
 
-                <button style="width: 40%;font-size:18px;" class="btnExcluir" onclick="limparCarrinho()">Cancelar </button>
-                <button style="width: 40%;font-size:18px;" class="btnEditar" onclick="receber()">Receber</button>
             </div>
         </div>
 
         <div class="sombracarrinho">
             <div class="modalcarrinho">
                 <div class="cliente">
-                    <div>
+                    <div style="display: flex;justify-content: space-between">
                         <?php
-                        echo "<h3 style='margin-top: 5px;padding-left:25px;color:red;'>Valor Total: R$ ".number_format($total,2)."</h3>";
+                        echo "<h3 style='margin-top: 5px;padding-left:25px;color:red;'>Valor Total: R$ " . number_format($total, 2) . "</h3>";
                         ?>
                     </div>
 
-                    <form action="" method="post" class="formulario">
+                    <form action="finalizar.php" method="post" class="formulario">
                         <div class="group">
                             <label>Tipo de Desconto</label>
                             <select name="Tipodesconto">
@@ -369,7 +419,7 @@ $consultaClientes = mysqli_query($conexao, "SELECT * FROM clientes ORDER BY nome
                         <div class="group">
                             <label>Cliente</label>
                             <select name="cliente">
-                                <option value="Consumidor não identiifcado">Consumidor não identiifcado</option>
+                                <option value="1">Consumidor não identificado</option>
                                 <?php
                                 while ($Cliente = mysqli_fetch_assoc($consultaClientes)) {
                                     echo "<option value='" . $Cliente['id_cliente'] . "'>" . $Cliente['nome'] . "</option>";
@@ -377,9 +427,12 @@ $consultaClientes = mysqli_query($conexao, "SELECT * FROM clientes ORDER BY nome
                                 ?>
                             </select>
                         </div>
+                        <label>Parcelas</label>
+                        <input type="number" name="parcelas" value="1" style="width: 99.5%;">
 
-                        <button class="btnEditar">Confirmar</button>
-                        <button class="btnExcluir" onclick="receber()">Cancelar</button>
+                        <i onclick='receber()' style="font-size: 20px;cursor:pointer">↩️</i>
+                        <button class="btnEditar">✅ Confirmar</button>
+
                     </form>
                 </div>
             </div>
@@ -405,6 +458,14 @@ $consultaClientes = mysqli_query($conexao, "SELECT * FROM clientes ORDER BY nome
                     return;
                 }
                 modalcarrinho.style.display = 'block';
+            }
+
+            function diminuir(chave) {
+                window.location.href = "diminuir.php?chave=" + chave;
+            }
+
+            function aumentar(chave) {
+                window.location.href = "aumentar.php?chave=" + chave;
             }
         </script>
     </main>
