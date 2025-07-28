@@ -17,6 +17,7 @@ if (!isset($_SESSION['carrinho']) or empty($_SESSION['carrinho'])) {
     $formaPagamento = $_POST['formaPagamento'];
     $cliente = $_POST['cliente'];
     $parcelas = $_POST['parcelas'];
+    $valor_recebido =str_replace(',','.',$_POST['valor_recebido']);
 
     //Inicia total
     $total = 0;
@@ -68,11 +69,46 @@ if (!isset($_SESSION['carrinho']) or empty($_SESSION['carrinho'])) {
         }
     } else {
         mysqli_query($conexao, "INSERT INTO caixa(valor,tipo,descricao,referencia)VALUES($total,'Entrada','Pagamento de Compra Crediário','Vendas')");
+        $troco = $valor_recebido - $total;
+        if ($troco > 0) {
+            echo "<div class='resultado'>";
+            echo "<strong>Troco total: R$ " . number_format($troco, 2, ',', '.') . "</strong><br><br>";
+
+            // Transformar para centavos (evita erro com casas decimais)
+            $centavos = round($troco * 100);
+
+            // Notas e moedas disponíveis
+            $valores = [10000, 5000, 2000, 1000, 500, 200, 100, 50, 25, 10, 5, 1]; // em centavos
+            $nomes = [
+                "R$ 100",
+                "R$ 50",
+                "R$ 20",
+                "R$ 10",
+                "R$ 5",
+                "R$ 2",
+                "R$ 1 (moeda)",
+                "R$ 0,50",
+                "R$ 0,25",
+                "R$ 0,10",
+                "R$ 0,05",
+                "R$ 0,01"
+            ];
+
+            for ($i = 0; $i < count($valores); $i++) {
+                $qtd = intdiv($centavos, $valores[$i]);
+                if ($qtd > 0) {
+                    echo "$qtd x {$nomes[$i]}<br>";
+                    $centavos %= $valores[$i];
+                }
+            }
+
+            echo "</div>";
+        }
     }
 
     unset($_SESSION['carrinho']);
-    header("Location: index.php");
-    exit;
+    //header("Location: index.php");
+    //exit;
 }
 ?>
 <!DOCTYPE html>

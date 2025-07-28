@@ -110,9 +110,9 @@ $consultaClientes = mysqli_query($conexao, "SELECT * FROM clientes WHERE id_clie
             border-top: 1px solid white;
             overflow-y: auto;
             height: 91.5%;
-            background-color: rgba(149, 206, 240, 1);
             padding: 3px;
             justify-content: center;
+            background-image: linear-gradient(to top, #09203f 0%, #537895 100%);
         }
 
         .produto {
@@ -427,8 +427,14 @@ $consultaClientes = mysqli_query($conexao, "SELECT * FROM clientes WHERE id_clie
                                 ?>
                             </select>
                         </div>
-                        <label>Parcelas</label>
-                        <input type="number" name="parcelas" value="1" style="width: 99.5%;">
+                        <div class="group">
+                            <label>Parcelas</label>
+                            <input type="number" name="parcelas" value="1">
+                        </div>
+                        <div class="group">
+                            <label>Valor Recebido</label>
+                            <input type="text" name="valor_recebido" placeholder="Digite o valor recebido pelo cliente">
+                        </div>
 
                         <i onclick='receber()' style="font-size: 20px;cursor:pointer">↩️</i>
                         <button class="btnEditar">✅ Confirmar</button>
